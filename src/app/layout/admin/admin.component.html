@@ -1,0 +1,18 @@
+<app-header></app-header>
+<section class="row p-0">
+    <div class="col-2">
+        <div class="d-flex" id="wrapper">
+            <div class="bg-secondary border-right" id="sidebar-wrapper">
+                <div class="list-group list-group-flush vh-100">
+                <a [routerLink]="['/admin/dashboard']" class="list-group-item list-group-item-action bg-secondary text-white-50">Dashboard</a>
+                <a [routerLink]="['/admin/simulador']" class="list-group-item list-group-item-action bg-secondary text-white-50">Simulador</a>
+                <a [routerLink]="['/admin/gestaodecontas']" class="list-group-item list-group-item-action bg-secondary text-white-50">Gestão de contas</a>
+                <a [routerLink]="['/admin/gestaosimulador']" class="list-group-item list-group-item-action bg-secondary text-white-50">Gestão do simulador</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-10">
+        <router-outlet></router-outlet>
+    </div>
+</section>

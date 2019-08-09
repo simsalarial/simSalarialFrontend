@@ -1,8 +1,29 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { LoginComponent } from './login/login.component';
+import { NotFoundComponent } from './not-found/not-found.component';
+import { AuthGuard } from './core';
+import { AdminComponent } from './layout/admin/admin.component';
+
+// const routes: Routes = [
+//   {path: "", 
+//    loadChildren: () => import('./layout/layout.module').then(module => module.LayoutModule),
+//    canActivate: [AuthGuard]
+//   },
+//   {path: "login", component: LoginComponent},
+//   {path: "not-found", component: NotFoundComponent},
+//   {path: "**", redirectTo: "not-found"},
+// ];
 
 
-const routes: Routes = [];
+const routes: Routes = [
+  {path: "", 
+   loadChildren: () => import('./layout/admin/admin.module').then(module => module.AdminModule)
+  },
+  {path: "login", component: LoginComponent},
+  {path: "not-found", component: NotFoundComponent},
+  {path: "**", redirectTo: "not-found"},
+];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
