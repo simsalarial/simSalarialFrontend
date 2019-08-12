@@ -2,14 +2,14 @@ export class Account {
     
     'id'?: number;
     'email': string;
-    'password': string;
-    'userRole': UserRole;
+    'password'?: string;
+    'accountRole'?: AccountRole;
     constructor(data?: any) {
         Object.assign(this, data);
     }
 }
 
-enum UserRole {
+enum AccountRole {
     Admin = "ADMIN",
     BaseUser = "USER"
 }

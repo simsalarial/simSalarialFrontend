@@ -26,9 +26,10 @@ export class LoginComponent implements OnInit {
   }
 
   public login() {
+    console.log("entrei");
     this.accountApi.login(this.account).subscribe(
       (account: any) => {
-        const url = '/' + (account.userRole == 1 ) ? 'user' : 'admin';
+        const url = '/' + (account.accountRole == "ADMIN" ) ? 'admin' : 'user';
         this.router.navigate([url]);
       },
       (error) => {

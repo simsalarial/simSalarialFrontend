@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { SimulationFields } from 'src/app/core/models/simulationFields';
 import { SimFieldsData } from 'src/app/core/models/simFieldsData';
-import { ReplaySubject } from 'rxjs';
+//import { ReplaySubject } from 'rxjs';
 
 
 @Component({
@@ -10,8 +10,9 @@ import { ReplaySubject } from 'rxjs';
   styleUrls: ['./sim-manag.component.scss']
 })
 export class SimManagComponent implements OnInit {
-  simFields = new SimulationFields();
+  
   simFieldsData = new SimFieldsData();
+  showForm = true;
   //public fields$: ReplaySubject<SimulationFields[]>;
   subAlim;
 
@@ -22,9 +23,12 @@ export class SimManagComponent implements OnInit {
     }
   }
 
-  ngOnInit() {}
+  ngOnInit() { 
+   
+  }
 
-  onChangeSubAlim() {
+  onChangeSubAlim(event) {
+    console.log(event);
     this.simFieldsData.value = this.subAlim.days * this.subAlim.valuePerDay;
   }
 
