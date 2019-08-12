@@ -14,7 +14,7 @@ export class HeaderComponent implements OnInit {
     private router: Router,
     private accountApi: AccountServiceService
   ) {
-    this.userRole = accountApi.getUserRole();
+    this.userRole = accountApi.getAccountRole();
   }
 
   ngOnInit() {

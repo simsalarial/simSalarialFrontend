@@ -22,7 +22,7 @@ export class AccountServiceService {
   }
 
   public isAdmin(): boolean {
-    if(this.currentAccount.userRole == "ADMIN"){
+    if(this.currentAccount.accountRole == "ADMIN"){
       return true;
     } else {
       return false;
@@ -37,19 +37,13 @@ export class AccountServiceService {
     return this.currentAccount.email;
   }
 
-  public getUserRole(): string {
-    return this.currentAccount.userRole;
+  public getAccountRole(): string {
+    return this.currentAccount.accountRole;
   }
 
   public login(account: Account) {
     // Simulate Jax-rs Api request
-    return this.http.post('', account);
-    // if (account.email === 'admin' && account.password === 'admin') {
-    //   account.id = 1;
-    //   account.name = 'Administrador';
-    //   this.currentAccount = account;
-    // }
-
+    return this.http.post('http://localhost:8080/simuladorsalarial/api/accounts/login', account);
   }
 
   public logout() {

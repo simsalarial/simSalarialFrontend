@@ -7,7 +7,7 @@
     </div>
   </div>
 </div>
-<!--<app-tables [header]='["Nome","Ativo/Não ativo","Editar"]' [data$]='fields$' (clickedRow)='clickRow($event)'></app-tables>-->
+<!--<app-tables [header]='["Nome","Ativo/Não ativo","Editar"]' [data]='data' (clickedRow)='clickRow($event)'></app-tables>-->
 <div class="row custom-row">
   <div class= "col-sm-6 custom-container jumbotron">
     <form class="form-horizontal">
@@ -15,15 +15,15 @@
           <legend>Subsídio alimentação</legend>
             <div class="form-group mt-5">
               <label for="inputDays">Número médio de dias do mês</label>
-              <input (keyup)="onChangeSubAlim()" type="number" id="inputDays" class="ml-2" placeholder="" [(ngModel)]="subAlim.days" name="days" required>
+              <input (ngModelChange)="onChangeSubAlim($event)" type="number" id="inputDays" class="ml-2" placeholder="" [(ngModel)]="subAlim.days" name="days" required>
             </div>
             <div class="form-group">
               <label for="inputValue">Valor limite subsídio de alimentação</label>
-              <input (keyup)="onChangeSubAlim()" type="number" step="0.01" id="inputValue" [(ngModel)]="subAlim.valuePerDay"  name="valuePerDay" class="ml-2" placeholder="" required>
+              <input (ngModelChange)="onChangeSubAlim($event)" type="number" step="0.01" id="inputValue" [(ngModel)]="subAlim.valuePerDay"  name="valuePerDay" class="ml-2" placeholder="" required>
             </div>
             <div class="form-group">
                 <p>Valor médio mensal do subsídio de alimentação</p>
-                <p>{{simFieldsData.value}}</p>
+                <input id="valueTotal" [(ngModel)]="simFieldsData.value" step="0.01" name="value" disabled>
               </div>
             <div class="form-group">
                 <button type="reset" class="btn btn-dark">Cancelar</button>
@@ -33,36 +33,4 @@
     </form>
   </div>
 </div>
-<div class="row custom-row">
-    <div class= "col-sm-6 custom-container jumbotron">
-      <form class="form-horizontal">
-          <fieldset>
-            <legend>Telemóvel</legend>
-              <div class="form-group mt-5">
-                <div class="row text-center">
-                  <div class="col-3">
-                    <label for="inputSS">Segurança social</label>
-                    <input type="number" id="inputSS" class="ml-2" placeholder="Porcentagem" [(ngModel)]="simFields.SS" name="SS" required>
-                  </div>
-                  <div class="col-3">
-                    <label for="inputTA">Tributação autónoma</label>
-                    <input type="number" id="inputTA" class="ml-2" placeholder="Porcentagem" [(ngModel)]="simFields.TA"  name="TA" required>
-                  </div>
-                  <div class="col-3">
-                    <label for="inputBE">Benefício não monetário</label>
-                    <input type="number" id="inputBE" class="ml-2" placeholder="Porcentagem" [(ngModel)]="simFields.BE"  name="BE" required>
-                  </div>
-                  <div class="col-3">
-                    <label for="inputVAR">Componente variável da remuneração</label>
-                    <input type="number" id="inputVAR" class="ml-2" placeholder="Porcentagem" [(ngModel)]="simFields.varComponent"  name="varComponent" required>
-                  </div>
-                </div>
-              </div>
-              <div class="form-group">
-                  <button type="reset" class="btn btn-dark">Cancelar</button>
-                  <button type="button" class="btn btn-secondary ml-1" (click)="saveSubAlim()">Guardar</button>
-              </div> 
-          </fieldset>
-      </form>
-    </div>
-  </div>
+<app-field-tax *ngIf="showForm" (onClose)="showForm = false" [name]="'Telemóvel'"></app-field-tax>

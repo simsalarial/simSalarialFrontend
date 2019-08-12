@@ -13,7 +13,7 @@ export class AdminComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.role = this.accountApi.getUserRole();
+    this.role = this.accountApi.getAccountRole();
   }
 
 }
