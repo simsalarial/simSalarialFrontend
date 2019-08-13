@@ -21,7 +21,6 @@ const routes: Routes = [
       {path: "importarIRS", component: ImportTableComponent}
     ]
   }
-
 ];
 
 @NgModule({

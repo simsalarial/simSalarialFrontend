@@ -17,9 +17,8 @@ export class LoginComponent implements OnInit {
   submitClicked = false;
 
   constructor(
-    private fb: FormBuilder,
-    private router: Router,
-    private accountApi: AccountServiceService
+    private readonly router: Router,
+    private readonly accountApi: AccountServiceService
   ) {
     // Fill email and password
     this.account.email = '';
@@ -34,22 +33,12 @@ export class LoginComponent implements OnInit {
   }
 
   public login() {
-    this.submitClicked = true;
-    console.log("entrei");
-    Object.assign(this.account, this.loginForm.value);
-    console.log(this.account);
-    if (this.loginForm.status == 'VALID'){
-      this.accountApi.login(this.account).subscribe(
-        (account: any) => {
-          const url = '/' + (account.accountRole == "ADMIN" ) ? 'admin' : 'user';
-          this.router.navigate([url]);
-        },
-        (error) => {
-          console.log(this.msg = error.msg);
-        }
-      );
-    }
-    
+    this.accountApi.login(this.account).subscribe(
+      (account: any) => {
+        const url = '/' + (account.accountRole == "ADMIN") ? 'admin' : 'user';
+        this.router.navigate([url]);
+      },
+      error => console.error(this.msg = error.msg)
+    );
   }
 }
-

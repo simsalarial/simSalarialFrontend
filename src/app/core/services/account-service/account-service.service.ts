@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Account } from '../../models';
 import { HttpClient } from '@angular/common/http';
-
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -9,9 +9,8 @@ import { HttpClient } from '@angular/common/http';
 export class AccountServiceService {
   private currentAccount: Account = new Account();
 
-  constructor(
-    private http: HttpClient
-  ) { }
+  constructor(private http: HttpClient) {
+  }
 
   public isAuthenticated(): boolean {
     if (this.currentAccount.id) {
@@ -22,11 +21,7 @@ export class AccountServiceService {
   }
 
   public isAdmin(): boolean {
-    if(this.currentAccount.accountRole == "ADMIN"){
-      return true;
-    } else {
-      return false;
-    }
+    return this.currentAccount.accountRole == "ADMIN";
   }
 
   public getCurrentId(): number {
@@ -41,7 +36,7 @@ export class AccountServiceService {
     return this.currentAccount.accountRole;
   }
 
-  public login(account: Account) {
+  public login(account: Account): Observable<Object> {
     // Simulate Jax-rs Api request
     return this.http.post('http://localhost:8080/simuladorsalarial/api/accounts/login', account);
   }
@@ -49,5 +44,4 @@ export class AccountServiceService {
   public logout() {
     this.currentAccount = null;
   }
-
 }
