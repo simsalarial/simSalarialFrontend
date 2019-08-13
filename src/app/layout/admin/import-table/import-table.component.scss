@@ -1,0 +1,18 @@
+$input-group-color : #007bff;
+
+.my-input-group {
+  span, input, label {
+    background-color: transparent;
+    color: $input-group-color;
+    border-color: $input-group-color;
+  }
+  .custom-file-label::after {
+    background-color: $input-group-color;
+    color: white;
+    border-color: $input-group-color;
+  }
+}
+
+.vh-50 {
+  height: 50vh;
+}

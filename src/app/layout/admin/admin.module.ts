@@ -9,15 +9,21 @@ import { AdminMainComponent } from './admin-main/admin-main.component';
 import { AccountManagComponent } from './account-manag/account-manag.component';
 import { SimManagComponent } from './sim-manag/sim-manag.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { ImportTableComponent } from './import-table/import-table.component';
+
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 
 
 @NgModule({
-  declarations: [AdminComponent, AdminMainComponent, AccountManagComponent,SimManagComponent, DashboardComponent],
+  declarations: [AdminComponent, AdminMainComponent, AccountManagComponent,SimManagComponent, DashboardComponent, ImportTableComponent],
   imports: [
     CommonModule,
     FormsModule,
     SharedModule,
     AdminRoutingModule,
+    FontAwesomeModule,
+    NgxDatatableModule,
   ]
 })
 export class AdminModule { }
