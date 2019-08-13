@@ -10,11 +10,13 @@ import { FormBuilder, Validators } from '@angular/forms';
 })
 export class SimuladorComponent implements OnInit {
 state = "first";
-select = "yes";
 sim: Simulation;
 profileForm: any;
+simForm: any;
 private col: Colaborator;
 submitClicked = false;
+valPhone: number;
+valVehicle: number;
 
   constructor(private fb: FormBuilder) { }
 
@@ -24,6 +26,23 @@ submitClicked = false;
       dependents:  ['', Validators.required],
       status:  ['', Validators.required],
     })
+
+    this.simForm = this.fb.group({
+      baseSalary: ['', Validators.required],
+      foodSubsidy:  ['', Validators.required],
+      phone:  ['', Validators.required],
+      vehicle: ['', Validators.required],
+      fuel: ['', Validators.required],
+      healthInsurance: ['', Validators.required],
+      workInsurance: ['', Validators.required],
+      mobileNet: ['', Validators.required],
+      zPass: ['', Validators.required],
+      otherWithTA: ['', Validators.required],
+      vehicleMaintenance: ['', Validators.required],
+      otherWithoutTA: ['', Validators.required],
+      otherAwards: ['', Validators.required]
+    })
+
     this.col = new Colaborator();
     this.sim = new Simulation ();
   }
@@ -43,8 +62,5 @@ submitClicked = false;
     console.log(this.sim);
   }
 
-  onChange() {
-    
-  }
 
 }

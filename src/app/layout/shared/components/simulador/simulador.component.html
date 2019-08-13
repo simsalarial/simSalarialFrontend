@@ -1,123 +1,166 @@
 <div *ngIf="state == 'first'" class="row custom-row offset-md-1">
-    <div class= "col-sm-10 custom-container jumbotron">
-      <form class="form-horizontal" [formGroup]="profileForm">
-          <fieldset>
-            <legend>Simulação 1 - Dados fiscais</legend>
-              <div class="form-group mt-5">
-                <label for="inputName">Nome</label>
-                <input class="ml-2" type="text" id="inputName" formControlName="name" placeholder="Colaborador">
-                <div *ngIf="profileForm.controls['name'].invalid && submitClicked" class="alert alert-danger">
-                  <div *ngIf="profileForm.controls['name'].errors.required">Insira o nome do colaborador.</div>
-                </div>
-              </div>
-              <div class="form-group">
-                <label for="select">Número de dependentes</label>
-                 <select formControlName="dependents" id="selectDependents"  class="ml-2" required>
-                   <option value="0">0</option>
-                   <option value="1">1</option>
-                   <option value="2">2</option>
-                   <option value="3">3</option>
-                   <option value="4">4</option>
-                   <option value="5">5 ou mais</option>
-                 </select>
-                 <div *ngIf="profileForm.controls['dependents'].invalid && submitClicked" class="alert alert-danger">
-                  <div *ngIf="profileForm.controls['dependents'].errors.required">Selecione o número de dependentes.</div>
-                </div>
-             </div>
-              <div class="form-group">
-                <label for="select">Número de titulares de rendimento</label>
-                  <select formControlName="status" id="selectStatus" class="ml-2" required>
-                    <option value="NÃO CASADO">Não casado</option>
-                    <option value="CASADO UNICO TITULAR">Casado único titular</option>
-                    <option value="CASADO DOIS TITULARES">Casado dois titulares</option>
-                  </select>
-                  <div *ngIf="profileForm.controls['status'].invalid && submitClicked" class="alert alert-danger">
-                    <div *ngIf="profileForm.controls['status'].errors.required">Selecione uma opção.</div>
-                  </div>
-              </div>
-              <div class="form-group">
-                  <button type="reset" class="btn btn-dark">Cancelar</button>
-                  <button type="button" class="btn btn-secondary ml-1" (click)="submitForm()">Seguinte</button>
-              </div> 
-          </fieldset>
-      </form>
-    </div>
+  <div class="col-sm-10 custom-container jumbotron">
+    <form class="form-horizontal" [formGroup]="profileForm">
+      <fieldset>
+        <legend>Simulação 1 - Dados fiscais</legend>
+        <div class="form-group mt-5">
+          <label for="inputName">Nome</label>
+          <input class="ml-2" type="text" id="inputName" formControlName="name" placeholder="Colaborador">
+          <div *ngIf="profileForm.controls['name'].invalid && submitClicked" class="text-danger">
+            <small *ngIf="profileForm.controls['name'].errors.required">Insira o nome do colaborador.</small>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="select">Número de dependentes</label>
+          <select formControlName="dependents" id="selectDependents" class="ml-2" required>
+            <option value="0">0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5 ou mais</option>
+          </select>
+          <div *ngIf="profileForm.controls['dependents'].invalid && submitClicked" class="text-danger">
+            <small *ngIf="profileForm.controls['dependents'].errors.required">Selecione o número de dependentes.</small>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="select">Número de titulares de rendimento</label>
+          <select formControlName="status" id="selectStatus" class="ml-2" required>
+            <option value="NÃO CASADO">Não casado</option>
+            <option value="CASADO UNICO TITULAR">Casado único titular</option>
+            <option value="CASADO DOIS TITULARES">Casado dois titulares</option>
+          </select>
+          <div *ngIf="profileForm.controls['status'].invalid && submitClicked" class="text-danger">
+            <small *ngIf="profileForm.controls['status'].errors.required">Selecione uma opção.</small>
+          </div>
+        </div>
+        <div class="form-group">
+          <button type="reset" class="btn btn-dark">Cancelar</button>
+          <button type="button" class="btn btn-secondary ml-1" (click)="submitForm()">Seguinte</button>
+        </div>
+      </fieldset>
+    </form>
+  </div>
 </div>
 <div *ngIf="state == 'second'" class="row custom-row offset-md-1">
-    <div class= "col-sm-10 custom-container jumbotron">
-      <form class="form-horizontal">
-          <fieldset>
-            <legend>Simulação 1 - Cálculo | Colaborador: {{col.name}}</legend>
-              <div class="form-group mt-5">
-                <label for="inputName">Salário base</label>
-                <input type="number" step="0.01" class="ml-2" id="salary" rquired>
-              </div>
-              <div class="form-group">
-                <label for="subAlim">Subsídio de alimentação</label>
-                <select id="selectSubAlim" class="ml-2"required>
-                  <option>Selecione</option>
-                  <option (click)="select = 'yes'" >Sim</option>
-                  <option>Não</option>
-                </select>
-                <p *ngIf="select == 'yes'">{{sim.subAlim}}</p>
-              </div>
-              <div class="form-group">
-                  <button type="button" class="btn btn-dark" (click)="state = 'first'">Voltar</button>
-                  <button type="button" class="btn btn-secondary ml-1">Calcular</button>
-                  <button type="button" class="btn btn-secondary ml-1" (click)="state = 'third'">Visualizar resumo</button>
-              </div> 
-          </fieldset>
-      </form>
-    </div>
+  <div class="col-sm-10 custom-container jumbotron">
+    <form class="form-horizontal" [formGroup]="simForm">
+      <fieldset>
+        <legend>Simulação 1 - Cálculo | Colaborador: {{col.name}}</legend>
+        <div class="form-group mt-5">
+          <label for="inputName">Salário base</label>
+          <input type="number" step="0.01" class="ml-2" style="width: 90px;" id="salary" formControlName="baseSalary" required>
+          <span class="ml-3">Taxa base de IRS: </span>
+          <div *ngIf="simForm.controls['baseSalary'].invalid" class="text-danger">
+            <small *ngIf="simForm.controls['baseSalary'].errors.required">Insira um valor.</small>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="subAlim">Subsídio de alimentação:</label>
+          <span class="ml-3">160,23</span> <!--colocar variável vinda do admin-->
+        </div>
+        <div class="form-group">
+          <label for="phone">Telemóvel</label>
+          <span><input formControlName="phone"  type="number" step="0.01" class="ml-2" style="width: 90px;" id="phone" required></span>
+        </div>
+        <div class="form-group">
+          <label for="vehicle">Renting Viatura</label>
+          <span><input formControlName="vehicle"  type="number" step="0.01" class="ml-2" style="width: 90px;" id="vehicle" required></span>
+        </div>
+        <div class="form-group">
+          <label for="fuel">Combustível Viatura</label>
+          <span><input formControlName="fuel"  type="number" step="0.01" class="ml-2" style="width: 90px;" id="fuel" required></span>
+        </div>
+        <div class="form-group">
+          <label for="workInsurance">Seguro de Trabalho</label>
+          <span><input formControlName="workInsurance"  type="number" step="0.01" class="ml-2" style="width: 90px;" id="workInsurance" required></span>
+        </div>
+        <div class="form-group">
+          <label for="healthInsurance">Seguro de Saúde</label>
+          <span><input formControlName="healthInsurance"  type="number" step="0.01" class="ml-2" style="width: 90px;" id="healthInsurance" required></span>
+        </div>
+        <div class="form-group">
+          <label for="mobileNet">Banda Larga em casa</label>
+          <span><input formControlName="mobileNet"  type="number" step="0.01" class="ml-2" style="width: 90px;" id="mobileNet" required></span>
+        </div>
+        <div class="form-group">
+          <label for="zPass">Via verde</label>
+          <span><input formControlName="zPass"  type="number" step="0.01" class="ml-2" style="width: 90px;" id="zPass" required></span>
+        </div>
+        <div class="form-group">
+          <label for="otherWithTA">Outras despesas com Tributação Autônoma</label>
+          <span><input formControlName="otherWithTA"  type="number" step="0.01" class="ml-2" style="width: 90px;" id="otherWithTA" required></span>
+        </div>
+        <div class="form-group">
+          <label for="vehicleMaintenance">Manutenção da viatura</label>
+          <span><input formControlName="vehicleMaintenance"  type="number" step="0.01" class="ml-2" style="width: 90px;" id="vehicleMaintenance" required></span>
+        </div>
+        <div class="form-group">
+          <label for="otherWithoutTA">Outras despesas sem Tributação Autônoma</label>
+          <span><input formControlName="otherWithoutTA"  type="number" step="0.01" class="ml-2" style="width: 90px;" id="otherWithoutTA" required></span>
+        </div>
+        <div class="form-group">
+          <label for="otherAwards">Outros prémios</label>
+          <span><input formControlName="otherAwards"  type="number" step="0.01" class="ml-2" style="width: 90px;" id="otherAwards" required></span>
+        </div>
+        <div class="form-group">
+          <button type="button" class="btn btn-dark" (click)="state = 'first'">Voltar</button>
+          <button type="button" class="btn btn-secondary ml-1">Calcular</button>
+          <button type="button" class="btn btn-secondary ml-1" (click)="state = 'third'">Visualizar resumo</button>
+        </div>
+      </fieldset>
+    </form>
+  </div>
 </div>
 <div *ngIf="state == 'third'" class="row custom-row offset-md-1">
-    <div class= "col-sm-10 custom-container jumbotron">
-      <form class="form-horizontal">
-          <fieldset>
-            <legend>Simulação 1 - Resumo |  Colaborador: {{col.name}}</legend>
-              <div class="form-group mt-5">
-                <label for="inputName">Nome</label>
-                <input type="text" id="inputName" class="ml-2" required>
-              </div>
-              <div class="form-group">
-                  <button type="button" class="btn btn-dark" (click)="state = 'second'">Voltar</button>
-                  <button type="button" class="btn btn-secondary ml-1" (click)="newSim()">Guardar</button>
-                  <button type="button" class="btn btn-secondary ml-1" (click)="state = 'second'">Nova simulação</button>
-                  <button type="button" class="btn btn-secondary ml-1" (click)="state = 'fourth'">Visualizar simulações</button>
-              </div> 
-          </fieldset>
-      </form>
-    </div>
+  <div class="col-sm-10 custom-container jumbotron">
+    <form class="form-horizontal">
+      <fieldset>
+        <legend>Simulação 1 - Resumo | Colaborador: {{col.name}}</legend>
+        <div class="form-group mt-5">
+          <label for="inputName">Nome</label>
+          <input type="text" id="inputName" class="ml-2" required>
+        </div>
+        <div class="form-group">
+          <button type="button" class="btn btn-dark" (click)="state = 'second'">Voltar</button>
+          <button type="button" class="btn btn-secondary ml-1" (click)="newSim()">Guardar</button>
+          <button type="button" class="btn btn-secondary ml-1" (click)="state = 'second'">Nova simulação</button>
+          <button type="button" class="btn btn-secondary ml-1" (click)="state = 'fourth'">Visualizar simulações</button>
+        </div>
+      </fieldset>
+    </form>
+  </div>
 </div>
 <div *ngIf="state == 'fourth'" class="row custom-row offset-md-1">
-    <div class= "col-sm-10 custom-container jumbotron">
-      <form class="form-horizontal">
-          <fieldset>
-            <legend>Simulações |  Colaborador: {{col.name}}</legend>
-            <div class="container vh-100 mt-5">
-                    <div class="row h-50 text-center">
-                      <div class="col-sm-6">
-                        Simulação 1
-                      </div>
-                      <div class="col-sm-6">
-                        Simulação 2
-                      </div>
-                    </div>
-                    <div class="row h-50 text-center">
-                      <div class="col-sm-6">
-                        Simulação 3
-                      </div>
-                      <div class="col-sm-6">
-                        Simulação 4
-                      </div>
-                    </div>
-                  </div>
-              <div class="form-group">
-                  <button type="reset" class="btn btn-dark" (click)="state = 'first'">Cancelar</button>
-                  <button type="submit" class="btn btn-secondary ml-1" (click)="state = 'second'">Guardar todas</button>
-                  <button type="button" class="btn btn-secondary ml-1" (click)="state = 'first'">Nova simulação</button>
-              </div> 
-          </fieldset>
-      </form>
-    </div>
+  <div class="col-sm-10 custom-container jumbotron">
+    <form class="form-horizontal">
+      <fieldset>
+        <legend>Simulações | Colaborador: {{col.name}}</legend>
+        <div class="container vh-100 mt-5">
+          <div class="row h-50 text-center">
+            <div class="col-sm-6">
+              Simulação 1
+            </div>
+            <div class="col-sm-6">
+              Simulação 2
+            </div>
+          </div>
+          <div class="row h-50 text-center">
+            <div class="col-sm-6">
+              Simulação 3
+            </div>
+            <div class="col-sm-6">
+              Simulação 4
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <button type="reset" class="btn btn-dark" (click)="state = 'first'">Cancelar</button>
+          <button type="submit" class="btn btn-secondary ml-1" (click)="state = 'second'">Guardar todas</button>
+          <button type="button" class="btn btn-secondary ml-1" (click)="state = 'first'">Nova simulação</button>
+        </div>
+      </fieldset>
+    </form>
+  </div>
 </div>

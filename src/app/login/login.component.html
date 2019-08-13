@@ -1,19 +1,24 @@
 <div class="login">
     <div class="wrapper">
       <a target="_blank">
-        <img src="https://www.aubay.com/wp-content/uploads/2015/10/cropped-logo_aubay_RGB_with-halo.png"
-          class="w-100 pb-3" />
+        <img src="https://www.aubay.com/wp-content/uploads/2015/10/cropped-logo_aubay_RGB_with-halo.png" class="w-100 pb-3">
       </a>
-      <form role="form">
+      <form [formGroup]="loginForm">
         <div class="form-content">
           <div class="form-group">
-            <input class="w-100" name="email" type="email" [(ngModel)]="account.email" placeholder="Email" />
+            <input class="w-100" formControlName="email" type="email" placeholder="Email" />
+            <div *ngIf="loginForm.controls['email'].invalid && submitClicked" class="text-danger">
+              <small *ngIf="loginForm.controls['email'].errors.required">Insira um endereço de email válido.</small>
+            </div>
           </div>
           <div class="form-group">
-            <input class="w-100" name="password" type="password" [(ngModel)]="account.password" placeholder="Password" />
+            <input class="w-100" formControlName="password" type="password"  placeholder="Password" />
+            <div *ngIf="loginForm.controls['password'].invalid && submitClicked" class="text-danger">
+              <small *ngIf="loginForm.controls['password'].errors.required">Insira uma senha.</small>
+            </div>
           </div>
         </div>
-        <button type="button" class="btn btn-dark w-100" (click)="login()"> Log in </button>
+        <button type="button" class="btn btn-dark w-100" (click)="login()"> Login </button>
         {{msg}}
       </form>
     </div>

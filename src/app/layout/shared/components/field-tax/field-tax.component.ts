@@ -9,15 +9,17 @@ import { SimulationFields } from 'src/app/core/models/simulationFields';
 export class FieldTaxComponent implements OnInit {
   @Input() name:string;
   @Output() onClose = new EventEmitter<any>();
+  newField = false;
+  selectIRS: string;
   selectSS: string;
   selectTA: string;
   selectBE: string;
   selectVAR: string;
   simFields = new SimulationFields();
+  newFieldName: string;
   constructor() { }
 
   ngOnInit() {
-    console.log(this.name);
     this.selectSS = '';
     this.selectTA = '';
     this.selectBE = '';
@@ -36,6 +38,10 @@ export class FieldTaxComponent implements OnInit {
     console.log(this.name);
     console.log(this.simFields);
     this.onClose.emit();
+  }
+
+  createNewField(){
+    this.simFields.name = this.newFieldName;
   }
 
   

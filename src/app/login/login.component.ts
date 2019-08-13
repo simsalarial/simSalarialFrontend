@@ -3,6 +3,7 @@ import { Account } from '../core/models';
 import { Router } from '@angular/router';
 
 import { AccountServiceService } from '../core';
+import { FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
@@ -12,8 +13,11 @@ import { AccountServiceService } from '../core';
 export class LoginComponent implements OnInit {
   public account: Account = new Account();
   public msg: string;
+  loginForm: any;
+  submitClicked = false;
 
   constructor(
+    private fb: FormBuilder,
     private router: Router,
     private accountApi: AccountServiceService
   ) {
@@ -23,20 +27,29 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.loginForm = this.fb.group({
+      email: ['', Validators.required],
+      password:  ['', Validators.required]
+    })
   }
 
   public login() {
+    this.submitClicked = true;
     console.log("entrei");
-    this.accountApi.login(this.account).subscribe(
-      (account: any) => {
-        const url = '/' + (account.accountRole == "ADMIN" ) ? 'admin' : 'user';
-        this.router.navigate([url]);
-      },
-      (error) => {
-        console.log(this.msg = error.msg);
-      }
-    );
+    Object.assign(this.account, this.loginForm.value);
+    console.log(this.account);
+    if (this.loginForm.status == 'VALID'){
+      this.accountApi.login(this.account).subscribe(
+        (account: any) => {
+          const url = '/' + (account.accountRole == "ADMIN" ) ? 'admin' : 'user';
+          this.router.navigate([url]);
+        },
+        (error) => {
+          console.log(this.msg = error.msg);
+        }
+      );
+    }
+    
   }
-
 }
 
