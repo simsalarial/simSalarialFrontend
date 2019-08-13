@@ -27,9 +27,9 @@
               <div class="form-group">
                 <label for="select">Número de titulares de rendimento</label>
                   <select formControlName="status" id="selectStatus" class="ml-2" required>
-                    <option>Não casado</option>
-                    <option>Casado único titular</option>
-                    <option>Casado dois titulares</option>
+                    <option value="NÃO CASADO">Não casado</option>
+                    <option value="CASADO UNICO TITULAR">Casado único titular</option>
+                    <option value="CASADO DOIS TITULARES">Casado dois titulares</option>
                   </select>
                   <div *ngIf="profileForm.controls['status'].invalid && submitClicked" class="alert alert-danger">
                     <div *ngIf="profileForm.controls['status'].errors.required">Selecione uma opção.</div>
