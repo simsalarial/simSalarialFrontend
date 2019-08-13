@@ -45,11 +45,10 @@ export class LoginComponent implements OnInit {
           this.router.navigate([url]);
         },
         (error) => {
-          console.log(this.msg = error.msg);
+          console.error(this.msg = error.msg);
         }
       );
     }
-    
   }
 }
 

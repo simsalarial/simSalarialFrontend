@@ -4,6 +4,7 @@ export class Account {
     'email': string;
     'password'?: string;
     'accountRole'?: AccountRole;
+    
     constructor(data?: any) {
         Object.assign(this, data);
     }

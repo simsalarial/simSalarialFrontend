@@ -22,5 +22,4 @@ export class OwnerGuard implements CanActivate {
         this.router.navigate(['/admin']);
       }
   }
-  
 }
