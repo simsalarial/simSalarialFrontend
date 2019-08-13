@@ -6,7 +6,7 @@ export class Colaborator {
     'name': string;
 	'status': string;
     'dependents': number;
-    'simulations': Array<Simulation>
+    'simulations': Array<Simulation>;
     constructor(data?: any) {
         Object.assign(this, data);
     }

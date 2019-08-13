@@ -28,7 +28,6 @@ export class SimManagComponent implements OnInit {
   }
 
   onChangeSubAlim(event) {
-    console.log(event);
     this.simFieldsData.value = this.subAlim.days * this.subAlim.valuePerDay;
   }
 

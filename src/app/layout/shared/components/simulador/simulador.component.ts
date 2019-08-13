@@ -11,12 +11,14 @@ import { ExcelServiceService } from 'src/app/core/services/excel-service.service
   styleUrls: ['./simulador.component.scss']
 })
 export class SimuladorComponent implements OnInit {
-  state = "first";
-  select = "yes";
-  sim: Simulation;
-  profileForm: any;
-  private col: Colaborator;
-  submitClicked = false;
+state = "first";
+sim: Simulation;
+profileForm: any;
+simForm: any;
+private col: Colaborator;
+submitClicked = false;
+valPhone: number;
+valVehicle: number;
 
   constructor(
     private fb: FormBuilder,
@@ -29,6 +31,23 @@ export class SimuladorComponent implements OnInit {
       dependents: ['', Validators.required],
       status: ['', Validators.required],
     })
+
+    this.simForm = this.fb.group({
+      baseSalary: ['', Validators.required],
+      foodSubsidy:  ['', Validators.required],
+      phone:  ['', Validators.required],
+      vehicle: ['', Validators.required],
+      fuel: ['', Validators.required],
+      healthInsurance: ['', Validators.required],
+      workInsurance: ['', Validators.required],
+      mobileNet: ['', Validators.required],
+      zPass: ['', Validators.required],
+      otherWithTA: ['', Validators.required],
+      vehicleMaintenance: ['', Validators.required],
+      otherWithoutTA: ['', Validators.required],
+      otherAwards: ['', Validators.required]
+    })
+
     this.col = new Colaborator();
     this.sim = new Simulation();
   }
@@ -49,10 +68,6 @@ export class SimuladorComponent implements OnInit {
   newSim() {
     console.log(this.col);
     console.log(this.sim);
-  }
-
-  onChange() {
-
   }
 
 }
