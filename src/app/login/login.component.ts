@@ -18,8 +18,8 @@ export class LoginComponent implements OnInit {
     private accountApi: AccountServiceService
   ) {
     // Fill email and password
-    this.account.email = '';
-    this.account.password = '';
+    this.account.email = 'admin';
+    this.account.password = 'admin';
   }
 
   ngOnInit() {
