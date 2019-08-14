@@ -50,59 +50,60 @@
         <legend>Simulação 1 - Cálculo | Colaborador: {{col.name}}</legend>
         <div class="form-group mt-5">
           <label for="inputName">Salário base</label>
-          <input type="number" step="0.01" class="ml-2" style="width: 90px;" id="salary" formControlName="baseSalary" required>
-          <span class="ml-3">Taxa base de IRS: </span>
+          <input type="number" min="0" (change)="getIRS($event)" step="0.01" class="ml-2" style="width: 90px;" id="salary" formControlName="baseSalary" required>
+          <span class="ml-3">Taxa base de IRS (%): {{this.tempTax}}</span>
           <div *ngIf="simForm.controls['baseSalary'].invalid" class="text-danger">
             <small *ngIf="simForm.controls['baseSalary'].errors.required">Insira um valor.</small>
           </div>
         </div>
         <div class="form-group">
-          <label for="subAlim">Subsídio de alimentação:</label>
-          <span class="ml-3">160,23</span> <!--colocar variável vinda do admin-->
+          <label for="foodSubsidy">Subsídio de alimentação:</label>
+          <!-- TODO make value a variable -->
+          <span><input formControlName="foodSubsidy" type="number" min="0" step="0.01" class="ml-2" style="width: 90px;" id="foodSubsidy" value="" disabled></span>
         </div>
         <div class="form-group">
           <label for="phone">Telemóvel</label>
-          <span><input formControlName="phone"  type="number" step="0.01" class="ml-2" style="width: 90px;" id="phone" required></span>
+          <span><input formControlName="phone"  type="number" min="0" step="0.01" class="ml-2" style="width: 90px;" id="phone"></span>
         </div>
         <div class="form-group">
           <label for="vehicle">Renting Viatura</label>
-          <span><input formControlName="vehicle"  type="number" step="0.01" class="ml-2" style="width: 90px;" id="vehicle" required></span>
+          <span><input formControlName="vehicle"  type="number" min="0" step="0.01" class="ml-2" style="width: 90px;" id="vehicle"></span>
         </div>
         <div class="form-group">
           <label for="fuel">Combustível Viatura</label>
-          <span><input formControlName="fuel"  type="number" step="0.01" class="ml-2" style="width: 90px;" id="fuel" required></span>
+          <span><input formControlName="fuel"  type="number" min="0" step="0.01" class="ml-2" style="width: 90px;" id="fuel"></span>
         </div>
         <div class="form-group">
           <label for="workInsurance">Seguro de Trabalho</label>
-          <span><input formControlName="workInsurance"  type="number" step="0.01" class="ml-2" style="width: 90px;" id="workInsurance" required></span>
+          <span><input formControlName="workInsurance" value="{{tempWorkInsurance}}" type="number" min="0" step="0.01" class="ml-2" style="width: 90px;" id="workInsurance" disabled></span>
         </div>
         <div class="form-group">
           <label for="healthInsurance">Seguro de Saúde</label>
-          <span><input formControlName="healthInsurance"  type="number" step="0.01" class="ml-2" style="width: 90px;" id="healthInsurance" required></span>
+          <span><input formControlName="healthInsurance"  type="number" min="0" step="0.01" class="ml-2" style="width: 90px;" id="healthInsurance"></span>
         </div>
         <div class="form-group">
           <label for="mobileNet">Banda Larga em casa</label>
-          <span><input formControlName="mobileNet"  type="number" step="0.01" class="ml-2" style="width: 90px;" id="mobileNet" required></span>
+          <span><input formControlName="mobileNet"  type="number" min="0" step="0.01" class="ml-2" style="width: 90px;" id="mobileNet"></span>
         </div>
         <div class="form-group">
-          <label for="zPass">Via verde</label>
-          <span><input formControlName="zPass"  type="number" step="0.01" class="ml-2" style="width: 90px;" id="zPass" required></span>
+          <label for="zPass">Via Verde</label>
+          <span><input formControlName="zPass"  type="number" min="0" step="0.01" class="ml-2" style="width: 90px;" id="zPass"></span>
         </div>
         <div class="form-group">
           <label for="otherWithTA">Outras despesas com Tributação Autônoma</label>
-          <span><input formControlName="otherWithTA"  type="number" step="0.01" class="ml-2" style="width: 90px;" id="otherWithTA" required></span>
+          <span><input formControlName="otherWithTA"  type="number" min="0" step="0.01" class="ml-2" style="width: 90px;" id="otherWithTA"></span>
         </div>
         <div class="form-group">
           <label for="vehicleMaintenance">Manutenção da viatura</label>
-          <span><input formControlName="vehicleMaintenance"  type="number" step="0.01" class="ml-2" style="width: 90px;" id="vehicleMaintenance" required></span>
+          <span><input formControlName="vehicleMaintenance"  type="number" min="0" step="0.01" class="ml-2" style="width: 90px;" id="vehicleMaintenance"></span>
         </div>
         <div class="form-group">
           <label for="otherWithoutTA">Outras despesas sem Tributação Autônoma</label>
-          <span><input formControlName="otherWithoutTA"  type="number" step="0.01" class="ml-2" style="width: 90px;" id="otherWithoutTA" required></span>
+          <span><input formControlName="otherWithoutTA"  type="number" min="0" step="0.01" class="ml-2" style="width: 90px;" id="otherWithoutTA"></span>
         </div>
         <div class="form-group">
-          <label for="otherAwards">Outros prémios</label>
-          <span><input formControlName="otherAwards"  type="number" step="0.01" class="ml-2" style="width: 90px;" id="otherAwards" required></span>
+          <label for="otherBonus">Outros prémios</label>
+          <span><input formControlName="otherBonus"  type="number" min="0" step="0.01" class="ml-2" style="width: 90px;" id="otherBonus"></span>
         </div>
         <div class="form-group">
           <button type="button" class="btn btn-dark" (click)="state = 'first'">Voltar</button>
