@@ -20,7 +20,7 @@ export class FieldTaxComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    this.selectSS = '';
+    this.selectSS;
     this.selectTA = '';
     this.selectBE = '';
     this.selectVAR = '';
