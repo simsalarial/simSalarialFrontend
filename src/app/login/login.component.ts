@@ -17,6 +17,7 @@ export class LoginComponent implements OnInit {
   submitClicked = false;
 
   constructor(
+    private fb: FormBuilder,
     private readonly router: Router,
     private readonly accountApi: AccountServiceService
   ) {
