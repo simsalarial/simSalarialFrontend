@@ -1,10 +1,53 @@
-   <div class="container">
-        <div class="d-flex" id="wrapper">
-                <div id="page-content-wrapper">
-                  <div class="container-fluid">
-                    <h1 class="mt-4">Dashboard</h1>
-                  </div>
-                </div>
-            </div>
-   </div> 
-    
+<div class="container">
+  <div class="d-flex" id="wrapper">
+    <div id="page-content-wrapper">
+      <div class="container-fluid">
+        <h1 class="mt-4">Dashboard</h1>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--////////////// Example of Possible Filter and Table with ngx//////////////-->
+
+<div class="container">
+<input type="text" style="padding:8px;margin:15px auto;width:30%;" placeholder="Type to filter by Comercial..." 
+(keyup)="updateFilter($event)" />
+</div>
+<ngx-datatable #table class="bootstrap" [columns]="columns" [columnMode]="'force'" [headerHeight]="50"
+      [footerHeight]="50" [rowHeight]="'auto'" [limit]="20" [rows]="rows" >
+    </ngx-datatable>
+
+<!--////////////// Example of Possible Table//////////////-->
+
+<table class="table">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Comercial</th>
+      <th scope="col">Consultor</th>
+      <th scope="col">Simulacao N.</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">1</th>
+      <td>Rita</td>
+      <td>Jose</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th scope="row">2</th>
+      <td>Joana</td>
+      <td>Ricardo</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th scope="row">3</th>
+      <td>Joana</td>
+      <td>Ricardo</td>
+      <td>2</td>
+    </tr>
+  </tbody>
+</table>
