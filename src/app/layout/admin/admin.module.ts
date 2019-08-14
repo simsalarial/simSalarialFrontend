@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { SharedModule } from '../shared/shared.module';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AdminComponent } from './admin.component';
 import { AdminRoutingModule } from './admin-routing.module';
 import { AdminMainComponent } from './admin-main/admin-main.component';
@@ -24,6 +24,7 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
     AdminRoutingModule,
     FontAwesomeModule,
     NgxDatatableModule,
+    ReactiveFormsModule
   ]
 })
 export class AdminModule { }

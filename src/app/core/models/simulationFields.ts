@@ -2,12 +2,12 @@ export class SimulationFields {
     
     'id'?: number;
     'name': string;
-    'SA': number;
-    'IRS': number;
-    'SS': number;
-    'TA': number;
-    'BE': number;
-    'varComponent': number;
+    'SA': boolean;
+    'IRS': boolean;
+    'SS': boolean;
+    'TA': boolean;
+    'BE': boolean;
+    'varComponent': boolean;
 
     constructor(data?: any) {
         Object.assign(this, data);

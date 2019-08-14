@@ -9,9 +9,10 @@
         </thead>
         <tbody>
         <tr *ngFor="let row of data">
-            <td *ngFor="let col of header" (click)="clickRow(row)">
+            <td *ngFor="let col of keys" (click)="clickRow(row)">
             {{row[col]}}
             </td>
+            <td><button class="btn btn-danger" (click)="delete(row)">Apagar</button></td>
         </tr>
         </tbody>
     </table>
