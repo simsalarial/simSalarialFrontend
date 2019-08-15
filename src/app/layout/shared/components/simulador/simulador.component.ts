@@ -187,11 +187,12 @@ export class SimuladorComponent implements OnInit {
     // tslint:disable-next-line: max-line-length
     this.simForm.value.netSalaryWithoutDuo = Number(((this.simForm.value.baseSalary - (this.simForm.value.baseSalary * this.tempTax / 100) - (this.simForm.value.baseSalary * this.workerSocialSecurity)) + (this.simForm.value.otherBonus - (this.simForm.value.otherBonus * this.tempTax / 100)) + this.simForm.value.foodSubsidy).toFixed(2));
     this.calculateNetSalaryWithDuo();
+    
   }
 
   calculateNetSalaryWithDuo() {
     // tslint:disable-next-line: max-line-length
-    this.simForm.value.netSalaryWithDuo = (this.simForm.value.netSalaryWithoutDuo + ((this.simForm.value.baseSalary * (1 - this.workerSocialSecurity - this.tempTax / 100) / this.monthsInAYear)));
+    this.simForm.value.netSalaryWithDuo = Number((this.simForm.value.netSalaryWithoutDuo + ((this.simForm.value.baseSalary * (1 - this.workerSocialSecurity - this.tempTax / 100) / this.monthsInAYear))).toFixed(2));
   }
 
   calculateMarkUp() {
