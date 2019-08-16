@@ -6,7 +6,8 @@ import { BehaviorSubject } from 'rxjs';
 import { DatatableComponent } from '@swimlane/ngx-datatable';
 import { Variable } from '@angular/compiler/src/render3/r3_ast';
 import { HttpClient } from '@angular/common/http';
-import { ExcelServiceService } from 'src/app/core/services';
+import { ExcelServiceService } from 'src/app/core/services/excel-service/excel-service.service';
+
 
 @Component({
   selector: 'app-import-table',
@@ -50,7 +51,7 @@ export class ImportTableComponent implements OnInit {
   } */
 
   saveInDB(){
-    this.excelService.saveInDB(this.rows).subscribe( data => console.log(data));  
+    this.excelService.saveInDB(this.rows).subscribe( data => console.log(data));
   }
 
   incomingfile(event) {
@@ -110,7 +111,7 @@ export class ImportTableComponent implements OnInit {
       }
     }
     // console.log(response);
-    this.rows = this.temp; 
+    this.rows = this.temp;
     console.log(this.rows);
     // this.data = this.rows;
   }
