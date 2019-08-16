@@ -13,10 +13,11 @@ import { ImportTableComponent } from './import-table/import-table.component';
 
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
-
+import { NewAccountComponent } from './account-manag/new-account/new-account.component';
+import { ModalModule } from 'ngx-bootstrap/modal';
 
 @NgModule({
-  declarations: [AdminComponent, AdminMainComponent, AccountManagComponent,SimManagComponent, DashboardComponent, ImportTableComponent],
+  declarations: [AdminComponent, AdminMainComponent, AccountManagComponent,SimManagComponent, DashboardComponent, ImportTableComponent, NewAccountComponent],
   imports: [
     CommonModule,
     FormsModule,
@@ -24,7 +25,9 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
     AdminRoutingModule,
     FontAwesomeModule,
     NgxDatatableModule,
-    ReactiveFormsModule
-  ]
+    ReactiveFormsModule,
+    ModalModule.forRoot()
+  ],
+  entryComponents: [NewAccountComponent]
 })
 export class AdminModule { }

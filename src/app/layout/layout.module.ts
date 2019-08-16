@@ -7,13 +7,15 @@ import { SharedModule } from './shared/shared.module';
 import { FormsModule } from '@angular/forms';
 import { AdminComponent } from './admin/admin.component';
 import { UserComponent } from './user/user.component';
+import { AdminModule } from './admin/admin.module';
 
 
 @NgModule({
-  declarations: [LayoutComponent, AdminComponent, UserComponent],
+  declarations: [LayoutComponent, UserComponent],
   imports: [
     CommonModule,
     LayoutRoutingModule,
+    //AdminModule,
     FormsModule,
     SharedModule
   ]

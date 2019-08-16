@@ -8,6 +8,7 @@ import { LoginComponent } from './login/login.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { HttpClientModule } from '@angular/common/http';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { ModalModule } from 'ngx-bootstrap/modal';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
     FormsModule,
     HttpClientModule,
     ReactiveFormsModule,
-    NgxDatatableModule
+    NgxDatatableModule,
+    ModalModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]

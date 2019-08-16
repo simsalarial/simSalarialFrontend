@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { Account } from 'src/app/core';
+import { Account, AccountServiceService } from 'src/app/core';
+import { HttpClient } from '@angular/common/http';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { NewAccountComponent } from './new-account/new-account.component';
+import { ReplaySubject, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-account-manag',
@@ -9,38 +13,38 @@ import { Account } from 'src/app/core';
 })
 export class AccountManagComponent implements OnInit {
   state: string;
-  data = [{ name: 'Alice', email: 'aliceburigo@gmail.com'}];
-  newUserForm: any;
-  submitClicked = false;
-  newAccount = new Account();
-
-  constructor(private fb: FormBuilder) { }
+  data = [];
+  modalRef: BsModalRef;
+ 
+  receivedData = false;
+  constructor( private modalService: BsModalService, private accountService:AccountServiceService) { }
 
   ngOnInit() {
     this.state = 'table';
-    this.newUserForm = this.fb.group({
-      name: ['', Validators.required],
-      email: ['', Validators.required]
+    this.accountService.getAllAccounts().subscribe( (res:any) => {
+      console.log(res);
+      res.forEach(element => {
+        let account = new Account();
+        account.name = element.name;
+        account.email = element.email;
+        this.data.push(account);
+      });
+     // this.data = res;
+      this.receivedData = true;
     })
-  }
+  }  
+
   showCreateAccount() {
     this.state = 'newUser';
+    this.modalRef = this.modalService.show(NewAccountComponent);
+    this.modalRef.content.onClose.subscribe(result => {
+      console.log('results', result);
+      this.data.push(result);
+      // create shallow copy of array, since this is a new array (and new reference) ngOnChanges hook of the ng-table.component will fire
+      this.data = this.data.slice(0);
+    })
   }
 
-  createAccount() {
-    this.submitClicked = true;
-    if (this.newUserForm.status == 'VALID') {
-      this.data.push(this.newUserForm.value);
-      this.newAccount.email = this.newUserForm.value.email;
-      console.log(this.newAccount);
-      this.resetForm();
-    }
-  }
-
-  resetForm() {
-    this.newUserForm.reset();
-    this.submitClicked = false;
-    this.state = 'table';
-  }
   
 }
+

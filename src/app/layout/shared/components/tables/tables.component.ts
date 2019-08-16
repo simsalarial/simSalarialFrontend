@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, SimpleChanges } from '@angular/core';
 
 @Component({
   selector: 'app-tables',
@@ -7,10 +7,10 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 })
 export class TablesComponent implements OnInit {
   @Input() header: any;
-  @Input() data: any;
+  @Input() data: any[];
   @Output() clickedRow = new EventEmitter();
   public keys;
-
+  dataSub = [];
 
   constructor() { }
 
@@ -18,12 +18,12 @@ export class TablesComponent implements OnInit {
     this.keys = Object.keys(this.data[0]);
   }
 
+
   clickRow(row) {
     this.clickedRow.emit(row);
   }
 
-  delete(row) {
-    
-  }
+  
+  
 
 }
