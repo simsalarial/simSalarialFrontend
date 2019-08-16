@@ -10,12 +10,8 @@ export class SimulationService {
   constructor(private readonly http: HttpClient) {
   }
 
-  getSimulationsByPerson(): Promise<Array<SimulationByPerson>> {
-    //return this.http.get<   >("http://localhost:8080/api/simulations").toPromise();
+  getSimulationsByPerson(): Promise<SimulationByPerson[]> {
+    return this.http.get<SimulationByPerson[]>("http://localhost:8080/api/simulations").toPromise();
 
-
-    return new Promise((resolve, reject) => {
-      // resolve([ new Simulation({id: 1, baseSalary: 2432}) ]);
-    });
   }
 }
