@@ -247,7 +247,7 @@ export class SimuladorComponent implements OnInit {
     this.simForm.value.hourlyRate = Number((this.simForm.value.dailyRate / this.hoursWorkedInADay).toFixed(2));
   }
 
-  exportToPDF() {
+  
     // let doc = new jsPDF();
     // // tslint:disable-next-line: only-arrow-functions
     // doc.addHTML(document.getElementById('teste'), function() {
@@ -272,12 +272,32 @@ export class SimuladorComponent implements OnInit {
     //   var string = pdf.output('datauristring')
     //   $('.testes').attr('src', string);
     // })
-    var x = Object.values(this.simForm.value);
+    //var x = Object.values(this.simForm.value);
+    //var doc = new jsPDF();
+    //doc.text('Salario Base: ',10,10);
+    //doc.text(this.profileForm.name,10,10);
+    //doc.save('a4.pdf');
+
+
+    exportToPDF() {
+    ///// variaveis /////
     var doc = new jsPDF();
-    doc.text('Salario Base: ',10,10);
-    doc.text(this.profileForm.name,10,10);
-    doc.save('a4.pdf');
+    var consultant = 'Jose';
+    var salesPerson = 'Rita';
+    var imgData = 'https://www.aubay.pt/img/aubayCopy.png';
+
+    ///// header /////
+    doc.addImage(imgData, 'PNG', 15, 10, 30, 30);
+    doc.setFontSize(20);
+    doc.text(65, 30, "Simulation of consultant " + consultant);
+
+    ///// body /////
 
 
-  }
+    ///// footer /////
+    doc.setFontSize(13);
+    doc.text(150, 270, "Simulation by " + salesPerson);
+    
+    }
+  
 }
