@@ -1,15 +1,16 @@
 import { Injectable } from '@angular/core';
 import { Account } from '../../models';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable, ReplaySubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AccountServiceService {
-  private currentAccount: Account = new Account();
-
+  public currentAccount: Account = new Account();
+  public accounts$: ReplaySubject<Account[]>;
   constructor(private http: HttpClient) {
+   
   }
 
   public isAuthenticated(): boolean {
@@ -34,6 +35,18 @@ export class AccountServiceService {
 
   public getAccountRole(): string {
     return this.currentAccount.accountRole;
+  }
+
+  public getAllAccounts() {
+    return this.http.get('http://localhost:8080/simuladorsalarial/api/accounts');
+  }
+
+  public createAccount(newAccount: Account) {
+   return this.http.post('http://localhost:8080/simuladorsalarial/api/accounts', newAccount, {responseType: 'text'});
+  }
+
+  public deleteAccount(email) {
+    return this.http.delete('http://localhost:8080/simuladorsalarial/api/accounts/'+ email, {responseType: 'text'});
   }
 
   public login(account: Account): Observable<Object> {

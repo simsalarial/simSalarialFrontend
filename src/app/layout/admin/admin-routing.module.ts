@@ -10,7 +10,7 @@ import { ImportTableComponent } from './import-table/import-table.component';
 
 const routes: Routes = [
   {
-    path: "admin",
+    path: "",
     component: AdminComponent,
     children: [
       {path: "simulador", component: SimuladorComponent },
