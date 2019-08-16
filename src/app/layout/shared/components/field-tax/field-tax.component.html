@@ -21,10 +21,7 @@
                 <option value="yesSS">Sim</option>
                 <option value="noSS">Não</option>
               </select>
-              <div *ngIf="selectSS == 'yesSS'">
-                <input type="number" id="inputSS" class="ml-2 mt-2" placeholder="%" [(ngModel)]="simFields.SS" name="SS"
-                  style="width: 100px" required>
-              </div>
+              
             </div>
             <div class="col-2">
               <label for="inputTA">Tributação autónoma</label>
@@ -33,10 +30,7 @@
                 <option value="yesTA">Sim</option>
                 <option value="noTA">Não</option>
               </select>
-              <div *ngIf="selectTA == 'yesTA'">
-                <input type="number" id="inputTA" class="ml-2 mt-2" placeholder="%" [(ngModel)]="simFields.TA" name="TA"
-                  style="width: 100px" required>
-              </div>
+             
             </div>
             <div class="col-3">
               <label for="inputBE">Benefício não monetário</label>
@@ -45,10 +39,6 @@
                 <option value="yesBE">Sim</option>
                 <option value="noBE">Não</option>
               </select>
-              <div *ngIf="selectBE == 'yesBE'">
-                <input type="number" id="inputBE" class="ml-2 mt-2" placeholder="%" [(ngModel)]="simFields.BE" name="BE"
-                  style="width: 100px" required>
-              </div>
             </div>
             <div class="col-3">
               <label for="inputVAR">Componente variável da remuneração</label>
@@ -57,10 +47,7 @@
                 <option value="yesVAR">Sim</option>
                 <option value="noVAR">Não</option>
               </select>
-              <div *ngIf="selectVAR == 'yesVAR'">
-                <input type="number" id="inputVAR" class="ml-2 mt-2" placeholder="%" [(ngModel)]="simFields.VAR"
-                  name="VAR" style="width: 100px" required>
-              </div>
+              
             </div>
           </div>
         </div>

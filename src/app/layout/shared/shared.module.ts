@@ -19,7 +19,8 @@ import { FieldTaxComponent } from './components/field-tax/field-tax.component';
   ],
   exports: [
     HeaderComponent,
-    FieldTaxComponent
+    FieldTaxComponent,
+    TablesComponent
   ]
 })
 export class SharedModule { }

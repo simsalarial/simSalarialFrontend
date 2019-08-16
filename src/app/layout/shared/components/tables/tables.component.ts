@@ -1,4 +1,5 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, SimpleChanges } from '@angular/core';
+import { AccountServiceService } from 'src/app/core';
 
 @Component({
   selector: 'app-tables',
@@ -7,18 +8,32 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 })
 export class TablesComponent implements OnInit {
   @Input() header: any;
- //@Input() data$: any;
+  @Input() data: any[];
   @Output() clickedRow = new EventEmitter();
+  @Output() onDelete = new EventEmitter();
+  public keys;
+  dataSub = [];
 
-  data = [{}];
-
-  constructor() { }
+  constructor(private accountService: AccountServiceService) { }
 
   ngOnInit() {
+    if (this.data.length > 0) {
+      this.keys = Object.keys(this.data[0]);
+    }
+    
   }
+
+  delete(row){
+    console.log(row.email);
+    this.onDelete.emit(row.email);
+  }
+
 
   clickRow(row) {
     this.clickedRow.emit(row);
   }
+
+  
+  
 
 }
