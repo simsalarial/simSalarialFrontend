@@ -11,7 +11,7 @@ export class SimulationService {
   }
 
   getSimulationsByPerson(): Promise<SimulationByPerson[]> {
-    return this.http.get<SimulationByPerson[]>("http://localhost:8080/api/simulations").toPromise();
+    return this.http.get<SimulationByPerson[]>("http://localhost:8080/simuladorSalarial/simulacoes").toPromise();
 
   }
 }
