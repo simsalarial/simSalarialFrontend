@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Colaborator } from 'src/app/core/models/colaborator';
 import { Simulation } from 'src/app/core/models/simulation';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, Validators, FormGroup, FormArray } from '@angular/forms';
 import { ExcelServiceService } from 'src/app/core/services/excel-service.service';
 import { getLocaleFirstDayOfWeek } from '@angular/common';
 
@@ -35,6 +35,8 @@ export class SimuladorComponent implements OnInit {
   marginPercentage;
   markUp;
   usagePercentage = 100;
+  extras: FormArray;
+  extrasArray: any;
 
   constructor(
     private fb: FormBuilder,
@@ -76,12 +78,29 @@ export class SimuladorComponent implements OnInit {
       monthlyRate: [0],
       dailyRate: [0],
       hourlyRate: [0],
+      extras: this.fb.array( [] ),
     });
     this.simForm.reset();
+    this.simForm.value.extras= ['1'];
     this.usagePercentage = 100;
     console.log(this.simForm.value);
     this.col = new Colaborator();
     this.sim = new Simulation();
+  }
+
+  addExtras() {//faz pedido a api
+    this.extrasArray.forEach(extra => {
+      this.extras = this.simForm.get('extras') as FormArray;
+      this.extras.push(this.createExtras());    
+    });
+  }
+
+  createExtras(): FormGroup {
+    return this.fb.group({
+      name: '',
+      description: '',
+      price: ''
+    });
   }
 
   submitForm() {
@@ -150,8 +169,12 @@ export class SimuladorComponent implements OnInit {
   }
 
   calculateTotalAnualCost() {
+    var array= Object.keys(this.simForm.value);
+    array.filter(key => this.simForm.value[key]).forEach( key => {
+      console.log(key, this.simForm.value[key] );
+    })
     this.calculateWorkInsuranceValue()
-    console.log(this.simForm.value.workInsurance);
+    console.log(this.simForm.value);
     // tslint:disable-next-line: max-line-length
     this.simForm.value.anualTotalCost = Number((((this.simForm.value.baseSalary * this.totalPayedMonths) + (this.simForm.value.baseSalary * this.totalPayedMonths) * this.companySocialSecurity) + (this.simForm.value.foodSubsidy * this.monthsWithoutVacation) + (this.simForm.value.phone * this.monthsInAYear) + (this.simForm.value.vehicle * this.monthsInAYear) + (this.simForm.value.vehicle * this.autonomousTributation * this.monthsInAYear) + ((this.simForm.value.fuel * this.monthsInAYear) + (this.simForm.value.fuel * this.autonomousTributation * this.monthsInAYear)) + (this.simForm.value.workInsurance * this.monthsInAYear) + (this.simForm.value.healthInsurance * this.monthsInAYear) + (this.simForm.value.mobileNet * this.monthsInAYear) + (this.simForm.value.zPass * this.monthsInAYear) + ((this.simForm.value.vehicleMaintenance * this.monthsInAYear) + (this.simForm.value.vehicleMaintenance * this.autonomousTributation * this.monthsInAYear)) + (this.simForm.value.otherBonus * this.monthsInAYear) + ((this.simForm.value.otherWithTA * this.monthsInAYear) + (this.simForm.value.otherWithTA * this.autonomousTributation * this.monthsInAYear)) + (this.simForm.value.otherWithoutTA * this.monthsInAYear)).toFixed(2));
 
