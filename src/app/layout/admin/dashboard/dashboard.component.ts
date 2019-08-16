@@ -13,14 +13,14 @@ export class DashboardComponent implements OnInit {
 
 
   
-  dataSource: SimulationByPerson[];                                                          // variavel de array de simulacoes vazio
+  dataSource: SimulationByPerson[];                                                              // variavel com array de vazio com 3 parametros
 
-  constructor(private simulationSummary: SimulationService) {
+  constructor(private simulationsList: SimulationService) {
   }
 
   ngOnInit() {                                      
-    this.simulationSummary.getSimulationsByPerson().then((data: SimulationByPerson[]) => {   // promessa que vem do servidor dentro do data
-    this.dataSource = data;                                                                  //o data é armazenada dentro do dataSource que é o Array vazio
+    this.simulationsList.getSimulationsByPerson().subscribe((data: SimulationByPerson[]) => {   // subscribe que tras do backend um array data com os 3 parametros do construtor
+    this.dataSource = data;                                                                       // data é guardada dentro do dataSource que era o Array vazio
     });
   }
   
