@@ -14,7 +14,7 @@ const EXCEL_EXTENSION = '.xlsx';
 export class ExcelServiceService {
   arrayBuffer: any;
 
-  constructor(private http: HttpClient) {
+  constructor(private readonly http: HttpClient) {
     
   }
 

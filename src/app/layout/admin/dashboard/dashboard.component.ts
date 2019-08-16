@@ -1,5 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { DatatableComponent } from '@swimlane/ngx-datatable';
+
+import { SimulationService } from 'src/app/core/services/simulationService';
+import { SimulationByPerson } from 'src/app/core/models/simulationByPerson';
 
 @Component({
   selector: 'app-dashboard',
@@ -7,46 +9,17 @@ import { DatatableComponent } from '@swimlane/ngx-datatable';
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit {
-  columns: any = [];
-  rows: any = [];
-  temp: any = [];
-  @ViewChild(DatatableComponent, { static: false }) table: DatatableComponent;
-  
-  constructor() {
-    this.columns = [
-      { name: 'Comercial' },
-      { name: 'Consultor' },
-      { prop: 'simulacao_n' }
-    ];
-    this.temp = [{
-      comercial: 'Rita',
-      consultor: 'Jose',
-      simulacao_n: 1
-    },
-    {
-      comercial: 'Joana',
-      consultor: 'Ze Manel',
-      simulacao_n: 1
-    },
-    {
-      comercial: 'Joana',
-      consultor: 'Ze Manel',
-      simulacao_n: 2
-    }];
-    this.rows = this.temp;
+  displayedColumns: string[] = ['salesPerson', 'consultant', 'number'];
+
+  dataSource: SimulationByPerson[];
+
+  constructor(private simulationSummary: SimulationService) {
   }
 
   ngOnInit() {
-  }
-
-  updateFilter(event) {
-    const filterAttr =  'comercial';
-    const val = event.target.value.toLowerCase();
-    const temp = this.temp.filter((d) => {
-      return (d[filterAttr] != null) ? d[filterAttr].toLowerCase().indexOf(val) !== -1 : false;
+    this.simulationSummary.getSimulationsByPerson().then((data: SimulationByPerson[]) => {
+    this.dataSource = data;
     });
-    this.rows = temp;
-    this.table.offset = 0;
   }
-
-}
+  
+}   
