@@ -44,10 +44,11 @@ export class SimuladorComponent implements OnInit {
 
   ngOnInit() {
     this.profileForm = this.fb.group({
-      name: ['Filipe Braz', Validators.required],
-      dependents: ['2', Validators.required],
-      status: ['NÃO CASADO', Validators.required],
+      name: ['', Validators.required],
+      dependents: ['', Validators.required],
+      status: ['', Validators.required],
     })
+    console.log(this.profileForm);
     this.usagePercentage = 100;
     this.simForm = this.fb.group({
       baseSalary: [Number, Validators.required],
