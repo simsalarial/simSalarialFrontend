@@ -1,4 +1,4 @@
-<div *ngIf="state == 'first'" class="row custom-row offset-md-1">
+<div *ngIf="state == 'first'" class="row custom-row offset-md-1" id="teste">
   <div class="col-sm-10 custom-container jumbotron">
     <form class="form-horizontal" [formGroup]="profileForm">
       <fieldset>
@@ -35,10 +35,11 @@
             <small *ngIf="profileForm.controls['status'].errors.required">Selecione uma opção.</small>
           </div>
         </div>
-        <div class="form-group">
+        <button class="form-group">
           <button type="reset" class="btn btn-dark">Cancelar</button>
           <button type="button" class="btn btn-secondary ml-1" (click)="submitForm()">Seguinte</button>
-        </div>
+          <button type="button" class="btn btn-secondary ml-1" (click)="exportToPDF()">Exportar</button>
+        </button>
       </fieldset>
     </form>
   </div>
@@ -174,22 +175,22 @@
                         <div class="form-group">
                           <label for="anualRate">Valor Cobrado(Rate) Anual</label>
                           <span><input formControlName="anualRate" type="number" value="{{simForm.value.anualRate}}" min="0" step="0.01" class="ml-2"
-                              style="width: 90px;" id="anualRate"></span>
+                              style="width: 90px;" id="anualRate" disabled></span>
                         </div>
                         <div class="form-group">
                           <label for="monthlyRate">Valor Cobrado(Rate) Mês</label>
                           <span><input formControlName="monthlyRate" type="number" value="{{simForm.value.monthlyRate}}" min="0" step="0.01" class="ml-2"
-                              style="width: 90px;" id="monthlyRate"></span>
+                              style="width: 90px;" id="monthlyRate" disabled></span>
                         </div>
                         <div class="form-group">
                             <label for="dailyRate">Valor Cobrado(Rate) Dia</label>
                             <span><input formControlName="dailyRate" type="number" value="{{simForm.value.dailyRate}}" min="0" step="0.01" class="ml-2"
-                                style="width: 90px;" id="dailyRate"></span>
+                                style="width: 90px;" id="dailyRate" disabled></span>
                         </div>
                         <div class="form-group">
                             <label for="hourlyRate">Valor Cobrado(Rate) Hora</label>
                             <span><input formControlName="hourlyRate" type="number" value="{{simForm.value.hourlyRate}}" min="0" step="0.01" class="ml-2"
-                                style="width: 90px;" id="hourlyRate"></span>
+                                style="width: 90px;" id="hourlyRate" disabled></span>
                         </div>
                       </div>
                     </div>
@@ -202,10 +203,9 @@
               <div class="row">
                   <div class="form-group">
                       <label for="marginPercentage">Margem(%)</label>
-                      <span><input [(ngModel)]="marginPercentage" type="number" (ngModelChange)="calculateMarkUp()" min="0" step="0.01" class="ml-2"
-                          style="width: 90px;" id="marginPercentage"></span>
+                      <span><input [(ngModel)]="marginPercentage" type="number" (ngModelChange)="calculateMarkUp()" min="-100" step="0.01" class="ml-2" style="width: 90px;" id="marginPercentage"></span>
                   </div>
-                  <div class="form-group">
+                  <div class="form-group" >
                       <label for="marginValue">Mark Up</label>
                       <span><input [ngModel]="markUp" type="number" min="0" step="0.01" class="ml-2"
                           style="width: 90px;" id="marginValue" disabled></span>
@@ -232,6 +232,7 @@
           <button type="button" class="btn btn-secondary ml-1">Calcular</button>
           <button type="button" class="btn btn-secondary ml-1" (click)="state = 'third'">Visualizar resumo</button>
           <button type="button" class="btn btn-secondary ml-1" (click)="reset()">Reset</button>
+          <button type="button" class="btn btn-secondary ml-1" (click)="exportToPDF()">Exportar para PDF</button>
         </div>
       </fieldset>
   </div>

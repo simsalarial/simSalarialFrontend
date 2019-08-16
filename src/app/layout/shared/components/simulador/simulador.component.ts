@@ -4,6 +4,7 @@ import { Simulation } from 'src/app/core/models/simulation';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ExcelServiceService } from 'src/app/core/services/excel-service.service';
 import { getLocaleFirstDayOfWeek } from '@angular/common';
+import * as jsPDF from 'jspdf';
 
 
 @Component({
@@ -91,6 +92,7 @@ export class SimuladorComponent implements OnInit {
     if (this.profileForm.status == 'VALID') {
       this.state = 'second';
       this.excelService.retrieveFromDB(this.col).subscribe((res) => {
+        // tslint:disable-next-line: no-unused-expression
         res;
         console.log(res);
         Object.assign(this.irsValues, res);
@@ -167,7 +169,6 @@ export class SimuladorComponent implements OnInit {
   }
 
   calculateDailyTotalCost() {
-    console.log("entrei");
     // tslint:disable-next-line: max-line-length
     this.simForm.value.dailyTotalCost = Number((this.simForm.value.anualTotalCost / this.monthsWithoutVacation / this.averageDaysInAMonth / (this.simForm.value.usagePercentage / 100)).toFixed(2));
     console.log(this.simForm.value.dailyTotalCost);
@@ -187,7 +188,6 @@ export class SimuladorComponent implements OnInit {
     // tslint:disable-next-line: max-line-length
     this.simForm.value.netSalaryWithoutDuo = Number(((this.simForm.value.baseSalary - (this.simForm.value.baseSalary * this.tempTax / 100) - (this.simForm.value.baseSalary * this.workerSocialSecurity)) + (this.simForm.value.otherBonus - (this.simForm.value.otherBonus * this.tempTax / 100)) + this.simForm.value.foodSubsidy).toFixed(2));
     this.calculateNetSalaryWithDuo();
-    
   }
 
   calculateNetSalaryWithDuo() {
@@ -207,26 +207,13 @@ export class SimuladorComponent implements OnInit {
   }
 
   calculateRate() {
-    // tslint:disable-next-line: max-line-length
-    if (this.markUp < 0) {
-      this.simForm.value.anualRate = Number(-(this.simForm.value.anualTotalCost + this.markUp).toFixed(2));
-    } else {
-      this.simForm.value.anualRate = Number((this.simForm.value.anualTotalCost + this.markUp).toFixed(2));
-    }
-    
+    this.simForm.value.anualRate = Number((this.simForm.value.anualTotalCost + this.markUp).toFixed(2));
     this.calculateMonthlyRate ();
   }
   calculateMonthlyRate() {
     // tslint:disable-next-line: max-line-length
-    if (this.simForm.value.anualRate == 0){
-      this.simForm.value.monthlyRate = 0
-    } else if (this.markUp < 0) {
-      this.simForm.value.monthlyRate = Number(-(this.simForm.value.anualTotalCost / this.monthsWithoutVacation / (this.simForm.value.usagePercentage / 100)).toFixed(2));
-    } else {
-      this.simForm.value.monthlyRate = Number((this.simForm.value.anualTotalCost / this.monthsWithoutVacation / (this.simForm.value.usagePercentage / 100)).toFixed(2));
-    }
+    this.simForm.value.monthlyRate = Number((this.simForm.value.anualTotalCost / this.monthsWithoutVacation / (this.simForm.value.usagePercentage / 100)).toFixed(2));
     this.calculateDailyRate ();
- 
   }
   calculateDailyRate() {
     this.simForm.value.dailyRate = Number((this.simForm.value.monthlyRate / this.averageDaysInAMonth).toFixed(2));
@@ -234,5 +221,39 @@ export class SimuladorComponent implements OnInit {
   }
   calculateHourlyRate() {
     this.simForm.value.hourlyRate = Number((this.simForm.value.dailyRate / this.hoursWorkedInADay).toFixed(2));
+  }
+
+  exportToPDF() {
+    // let doc = new jsPDF();
+    // // tslint:disable-next-line: only-arrow-functions
+    // doc.addHTML(document.getElementById('teste'), function() {
+    //    doc.save('teste.pdf');
+    // });
+
+
+    // window.print();
+
+    // var doc =  new jsPDF();
+    // doc.setFontSize(22);
+    // doc.text(20,20, 'Este é o PDF');
+    // // doc.setFontSize()
+    // // doc.text(this.simForm.value);
+    // doc.setFontSize(16);
+    // doc.text(20,30, 'Isto é texto no fim');
+    // doc.setTextColor(0,0,255);
+    // doc.text(20,30, 'Isto é azul');
+
+    // var pdf = new jsPDF('p','pt','a4');
+    // pdf.addHTML(document.body,function(){
+    //   var string = pdf.output('datauristring')
+    //   $('.testes').attr('src', string);
+    // })
+    var x = Object.values(this.simForm.value);
+    var doc = new jsPDF();
+    doc.text('Salario Base: ',10,10);
+    doc.text(this.profileForm.name,10,10);
+    doc.save('a4.pdf');
+
+
   }
 }
