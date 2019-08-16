@@ -20,6 +20,7 @@ export class AccountManagComponent implements OnInit {
   constructor( private modalService: BsModalService, private accountService:AccountServiceService) { }
 
   ngOnInit() {
+    console.log('entrei');
     this.state = 'table';
     this.accountService.getAllAccounts().subscribe( (res:any) => {
       console.log(res);
@@ -33,6 +34,15 @@ export class AccountManagComponent implements OnInit {
       this.receivedData = true;
     })
   }  
+
+  onDelete(email) {
+    this.accountService.deleteAccount(email).subscribe ((res:any) => {
+      console.log(res);
+      this.data = this.data.filter(function( obj ) {
+        return obj.email !== email;
+      });
+    });
+  }
 
   showCreateAccount() {
     this.state = 'newUser';

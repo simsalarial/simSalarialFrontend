@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Account, AccountServiceService } from 'src/app/core';
-import { HttpClient } from '@angular/common/http';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { Subject } from 'rxjs';
 
@@ -46,7 +45,6 @@ public onClose: Subject<any> = new Subject<any>();
         this.state = 'error';
       })
       console.log(this.newAccount);
-   
     }
   }
 

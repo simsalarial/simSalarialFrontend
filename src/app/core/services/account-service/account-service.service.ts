@@ -45,6 +45,10 @@ export class AccountServiceService {
    return this.http.post('http://localhost:8080/simuladorsalarial/api/accounts', newAccount, {responseType: 'text'});
   }
 
+  public deleteAccount(email) {
+    return this.http.delete('http://localhost:8080/simuladorsalarial/api/accounts/'+ email, {responseType: 'text'});
+  }
+
   public login(account: Account): Observable<Object> {
     // Simulate Jax-rs Api request
     return this.http.post('http://localhost:8080/simuladorsalarial/api/accounts/login', account);
