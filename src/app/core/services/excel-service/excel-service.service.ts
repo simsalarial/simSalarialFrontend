@@ -15,7 +15,7 @@ export class ExcelServiceService {
   arrayBuffer: any;
 
   constructor(private http: HttpClient) {
-    
+
   }
 
   public exportAsExcelFile(json: any[], excelFileName: string): void {

@@ -1,3 +1,5 @@
+import { Extras } from './extras';
+
 export class Simulation {
 
     'id'?: number;
@@ -14,7 +16,8 @@ export class Simulation {
     'vehicleMaintenance': number;
     'otherWithoutTA': number;
     'otherAwards': number;
-    
+    'extras': Array<Extras>;
+
     constructor(data?: any) {
         Object.assign(this, data);
     }

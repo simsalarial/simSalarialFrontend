@@ -5,6 +5,7 @@ import { FormBuilder, Validators, FormGroup, FormArray } from '@angular/forms';
 import { getLocaleFirstDayOfWeek } from '@angular/common';
 import * as jsPDF from 'jspdf';
 import { ExcelServiceService } from 'src/app/core/services/excel-service/excel-service.service';
+import { DataService } from 'src/app/core/services/data-service/data.service';
 
 
 @Component({
@@ -42,6 +43,7 @@ export class SimuladorComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private excelService: ExcelServiceService,
+    private dataService: DataService,
   ) {
   }
 
