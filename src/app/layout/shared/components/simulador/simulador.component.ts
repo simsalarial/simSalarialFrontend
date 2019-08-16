@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Colaborator } from 'src/app/core/models/colaborator';
 import { Simulation } from 'src/app/core/models/simulation';
 import { FormBuilder, Validators, FormGroup, FormArray } from '@angular/forms';
-import { ExcelServiceService } from 'src/app/core/services/excel-service.service';
 import { getLocaleFirstDayOfWeek } from '@angular/common';
 import * as jsPDF from 'jspdf';
+import { ExcelServiceService } from 'src/app/core/services/excel-service/excel-service.service';
 
 
 @Component({
@@ -82,7 +82,7 @@ export class SimuladorComponent implements OnInit {
       extras: this.fb.array( [] ),
     });
     this.simForm.reset();
-    this.simForm.value.extras= ['1'];
+    this.simForm.value.extras = ['1'];
     this.usagePercentage = 100;
     console.log(this.simForm.value);
     this.col = new Colaborator();
@@ -92,7 +92,7 @@ export class SimuladorComponent implements OnInit {
   addExtras() {//faz pedido a api
     this.extrasArray.forEach(extra => {
       this.extras = this.simForm.get('extras') as FormArray;
-      this.extras.push(this.createExtras());    
+      this.extras.push(this.createExtras());
     });
   }
 
