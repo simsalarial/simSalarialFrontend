@@ -11,14 +11,16 @@ import { SimulationByPerson } from 'src/app/core/models/simulationByPerson';
 export class DashboardComponent implements OnInit {
   displayedColumns: string[] = ['salesPerson', 'consultant', 'number'];
 
-  dataSource: SimulationByPerson[];
+
+  
+  dataSource: SimulationByPerson[];                                                          // variavel de array de simulacoes vazio
 
   constructor(private simulationSummary: SimulationService) {
   }
 
-  ngOnInit() {
-    this.simulationSummary.getSimulationsByPerson().then((data: SimulationByPerson[]) => {
-    this.dataSource = data;
+  ngOnInit() {                                      
+    this.simulationSummary.getSimulationsByPerson().then((data: SimulationByPerson[]) => {   // promessa que vem do servidor dentro do data
+    this.dataSource = data;                                                                  //o data é armazenada dentro do dataSource que é o Array vazio
     });
   }
   
