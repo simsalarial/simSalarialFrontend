@@ -50,8 +50,6 @@ export class SimuladorComponent implements OnInit {
   usagePercentage = 100;
   extras: FormArray;
   extrasArray: any;
-  selectExtra: any;
-
 
   constructor(
     private fb: FormBuilder,
@@ -71,15 +69,15 @@ export class SimuladorComponent implements OnInit {
     this.simForm = this.fb.group({
       baseSalary: [Number, Validators.required],
       foodSubsidy: [160.23, Validators.required],
-      phone: [0],
-      vehicle: [0],
-      fuel: [0],
+      // phone: [0],
+      // vehicle: [0],
+      // fuel: [0],
       healthInsurance: [0],
       workInsurance: [0],
-      mobileNet: [0],
-      zPass: [0],
+      // mobileNet: [0],
+      // zPass: [0],
       otherWithTA: [0],
-      vehicleMaintenance: [0],
+      // vehicleMaintenance: [0],
       otherWithoutTA: [0],
       otherBonus: [0],
       anualTotalCost: [0],
@@ -287,7 +285,7 @@ export class SimuladorComponent implements OnInit {
     var array = Object.keys(this.simForm.value);
     array.filter(key => this.simForm.value[key]).forEach( key => {
       console.log(key, this.simForm.value[key] );
-    })
+    });
     this.calculateWorkInsuranceValue();
     console.log(this.simForm.value);
     // tslint:disable-next-line: max-line-length
@@ -414,12 +412,4 @@ export class SimuladorComponent implements OnInit {
 
 
   }
-
-  teste(){
-    console.log($('#extraSelector').val());
-    this.selectExtra = $('#extraSelector').val();
-  }
-
-
-
 }
