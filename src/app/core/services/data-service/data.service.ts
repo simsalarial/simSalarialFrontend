@@ -14,22 +14,22 @@ export class DataService {
 
 
   retrieveDataServiceTaxes(data) {
-    console.log(data);
-    return this.http.get('http://localhost:8080/simuladorsalarial/api/taxation', data);
+    return this.http.get('http://localhost:8080/simuladorsalarial/api/taxes/all', data);
+  }
+
+  postNewTaxes(data) {
+    this.http.post('http://localhost:8080/simuladorsalarial/api/taxes/', data);
   }
 
   retrieveDataServiceExtras(extras) {
-    console.log(extras);
-    return this.http.get('http://localhost:8080/simuladorsalarial/api/extras', extras);
+    return this.http.get('http://localhost:8080/simuladorsalarial/api/simulationfields/', extras);
   }
 
   postNewExtra(extra) {
     this.http.post('http://localhost:8080/simuladorsalarial/api/extras', extra);
   }
 
- postNewTaxes(data) {
-   this.http.post('http://localhost:8080/simuladorsalarial/api/taxation', data);
- }
+
 
 }
 
