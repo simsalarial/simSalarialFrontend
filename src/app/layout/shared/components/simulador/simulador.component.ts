@@ -39,6 +39,8 @@ export class SimuladorComponent implements OnInit {
   usagePercentage = 100;
   extras: FormArray;
   extrasArray: any;
+  selectExtra: any;
+
 
   constructor(
     private fb: FormBuilder,
@@ -276,4 +278,12 @@ export class SimuladorComponent implements OnInit {
 
 
   }
+
+  teste(){
+    console.log($('#extraSelector').val());
+    this.selectExtra = $('#extraSelector').val();
+  }
+
+
+
 }
