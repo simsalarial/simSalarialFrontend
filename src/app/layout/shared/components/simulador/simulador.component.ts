@@ -23,7 +23,7 @@ export class SimuladorComponent implements OnInit {
   valVehicle: number;
   private irsValues = new Array<object>();
   private tempTax: number;
-  rateForWorkInsurance = 0.007;
+  workInsuranceVariable = 0.007;
   varAccountedForWorkInsurance = 14;
   totalPayedMonths = 15;
   monthsWithoutVacation = 11;
@@ -104,6 +104,21 @@ export class SimuladorComponent implements OnInit {
     });
   }
 
+<<<<<<< Updated upstream
+=======
+  teste(event){
+    this.selectExtra = event.target.value;
+    this.extrasSelected.push(this.selectExtra);
+    console.log(this.extrasSelected);
+    console.log(this.selectExtra);
+  }
+
+  placeExtras(){
+    var index;
+    for(index = 0; )
+  }
+
+>>>>>>> Stashed changes
   submitForm() {
     this.submitClicked = true;
     console.log(this.profileForm.value);
@@ -117,6 +132,32 @@ export class SimuladorComponent implements OnInit {
         console.log(res);
         Object.assign(this.irsValues, res);
       });
+<<<<<<< Updated upstream
+=======
+        // Get overall taxes //
+      this.dataService.retrieveDataServiceTaxes(this.taxation).subscribe((taxRes) => {
+        // tslint:disable-next-line: no-unused-expression
+        //taxRes;
+          Object.assign(this.taxation, taxRes);
+          console.log(this.taxation);
+          this.parseTaxationToIndividualValue(this.taxation);
+      });
+        // Get elements for simulation and the way they're taxed //
+      this.dataService.retrieveDataServiceExtras(this.extras).subscribe((extraRes) => {
+        // tslint:disable-next-line: no-unused-expression
+        //extraRes;
+        console.log(extraRes);
+
+        Object.assign(this.simExtraElements, extraRes);
+        this.resolveSimExtraElements();
+
+      });
+
+      this.dataService.retriveWorkInsuranceVariable(this.workInsuranceVariable).subscribe((workInsRes) =>{
+        Object.assign(this.workInsuranceVariable, workInsRes);
+        console.log(this.workInsuranceVariable);
+      })
+>>>>>>> Stashed changes
     }
   }
 
@@ -167,7 +208,7 @@ export class SimuladorComponent implements OnInit {
 
   calculateWorkInsuranceValue() {
     // tslint:disable-next-line: max-line-length
-    this.simForm.value.workInsurance = Number((((this.rateForWorkInsurance * (this.varAccountedForWorkInsurance * this.simForm.value.baseSalary + this.monthsWithoutVacation * this.simForm.value.foodSubsidy)) / this.monthsInAYear)).toFixed(2));
+    this.simForm.value.workInsurance = Number((((this.workInsuranceVariable * (this.varAccountedForWorkInsurance * this.simForm.value.baseSalary + this.monthsWithoutVacation * this.simForm.value.foodSubsidy)) / this.monthsInAYear)).toFixed(2));
   }
 
   calculateTotalAnualCost() {
