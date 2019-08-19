@@ -29,6 +29,10 @@ export class DataService {
     this.http.post('http://localhost:8080/simuladorsalarial/api/extras', extra);
   }
 
+  retrieveWorkInsurance(data) {
+    return this.http.get('http://localhost:8080/simuladorsalarial/api/workinsurance', data)
+  }
+
 
 
 }
