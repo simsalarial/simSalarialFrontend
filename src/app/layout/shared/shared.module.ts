@@ -6,6 +6,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SimuladorComponent } from './components/simulador/simulador.component';
 import { TablesComponent } from './components/tables/tables.component';
 import { FieldTaxComponent } from './components/field-tax/field-tax.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 
 
@@ -15,7 +16,8 @@ import { FieldTaxComponent } from './components/field-tax/field-tax.component';
     CommonModule,
     RouterModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FontAwesomeModule
   ],
   exports: [
     HeaderComponent,
