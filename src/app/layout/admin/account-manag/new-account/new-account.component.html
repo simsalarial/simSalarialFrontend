@@ -9,16 +9,28 @@
     <p *ngIf="state == 'confirm'">Conta criada com sucesso! Credenciais enviadas para o email {{newAccount.email}}</p>
     <p *ngIf="state == 'error'">Esta conta já existe.</p>
     <form *ngIf="state == 'create'" class="form-horizontal" [formGroup]="newUserForm">
-        <div class="form-group mt-5">
-            <label for="inputName">Nome</label>
-            <input class="ml-2" type="text" id="inputName" formControlName="name" placeholder="Nome">
+        <div class="form-group mt-2">
+            <div class="input-group ml-2 mr-2 row">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"  for="inputName" id="basic-addon1">Nome</span>
+                </div>
+                <input id="inputName" style="width: 395px" type="text" class="form-control" formControlName="name" placeholder="Nome" aria-label="Username" aria-describedby="basic-addon1">
+            </div>
             <div *ngIf="newUserForm.controls['name'].invalid && submitClicked" class="text-danger">
-            <small *ngIf="newUserForm.controls['name'].errors.required">Insira o nome.</small>
+                 <small *ngIf="newUserForm.controls['name'].errors.required">Insira o nome.</small>
             </div>
         </div>
         <div class="form-group mt-2">
-            <label for="inputEmail">Email</label>
-            <input class="ml-2" type="email" id="inputEmail" formControlName="email" placeholder="Email">
+            <div class="input-group ml-2 mr-2 row">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"  for="inputEmail" id="basic-addon1">Email</span>
+                </div>
+                <input type="text" style="width: 185px" class="form-control" formControlName="email"  placeholder="Email" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                <div class="input-group-append">
+                    <span class="input-group-text" id="inputEmail">@aubay.com</span>
+                </div>
+                
+            </div>
             <div *ngIf="newUserForm.controls['email'].invalid && submitClicked" class="text-danger">
             <small *ngIf="newUserForm.controls['email'].errors.required">Insira o email.</small>
             </div>
