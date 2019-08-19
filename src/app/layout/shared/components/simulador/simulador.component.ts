@@ -8,6 +8,7 @@ import { ExcelServiceService } from 'src/app/core/services/excel-service/excel-s
 import { DataService } from 'src/app/core/services/data-service/data.service';
 import { Taxation } from 'src/app/core/models/taxation';
 import { Extras } from 'src/app/core/models/extras';
+import { SimFieldsData } from 'src/app/core/models/simFieldsData';
 
 
 @Component({
@@ -27,8 +28,8 @@ export class SimuladorComponent implements OnInit {
   valPhone: number;
   valVehicle: number;
   private simExtraElements = new Array<Extras>();
-  extrasWithTa = new Array<object>();
-  extrasWithoutTa = new Array<object>();
+  extrasWithTa = new Array<SimFieldsData>();
+  extrasWithoutTa = new Array<SimFieldsData>();
   private irsValues = new Array<object>();
   private tempTax: number;
   rateForWorkInsurance = 0.007;
@@ -37,19 +38,20 @@ export class SimuladorComponent implements OnInit {
   monthsWithoutVacation = 11;
   monthsInAYear = 12;
   averageDaysInAMonth = 21;
-
+  selectExtra = "";
   // Tributações //
   private workerSocialSecurity: number;
   private companySocialSecurity: number;
   private autonomousTributation: number;
 
-
+  SimFieldsData:  SimFieldsData;
   hoursWorkedInADay = 8;
   marginPercentage;
   markUp;
   usagePercentage = 100;
   extras: FormArray;
   extrasArray: any;
+  extrasSelected = [];
 
   constructor(
     private fb: FormBuilder,
@@ -60,7 +62,7 @@ export class SimuladorComponent implements OnInit {
 
   ngOnInit() {
     this.profileForm = this.fb.group({
-      name: ['Sr. Carlitos', Validators.required],
+      name: ['Sr. Ricas', Validators.required],
       dependents: ['2', Validators.required],
       status: ['Não Casado', Validators.required],
     })
@@ -69,15 +71,15 @@ export class SimuladorComponent implements OnInit {
     this.simForm = this.fb.group({
       baseSalary: [Number, Validators.required],
       foodSubsidy: [160.23, Validators.required],
-      // phone: [0],
-      // vehicle: [0],
-      // fuel: [0],
+      phone: [0],
+      vehicle: [0],
+      fuel: [0],
       healthInsurance: [0],
       workInsurance: [0],
-      // mobileNet: [0],
-      // zPass: [0],
+      mobileNet: [0],
+      zPass: [0],
       otherWithTA: [0],
-      // vehicleMaintenance: [0],
+      vehicleMaintenance: [0],
       otherWithoutTA: [0],
       otherBonus: [0],
       anualTotalCost: [0],
@@ -137,6 +139,12 @@ export class SimuladorComponent implements OnInit {
     });
   }
 
+  teste(event){
+    this.selectExtra = event.target.value;
+    console.log(this.selectExtra);
+    
+  }
+
   submitForm() {
     this.submitClicked = true;
     console.log(this.profileForm.value);
@@ -146,74 +154,51 @@ export class SimuladorComponent implements OnInit {
       this.state = 'second';
       this.excelService.retrieveFromDB(this.col).subscribe((res) => {
         // tslint:disable-next-line: no-unused-expression
-        res;
+      //  res;
         console.log(res);
         Object.assign(this.irsValues, res);
-
+      });
         // Get overall taxes //
-        this.dataService.retrieveDataServiceTaxes(this.taxation).subscribe((taxRes => {
+      this.dataService.retrieveDataServiceTaxes(this.taxation).subscribe((taxRes) => {
         // tslint:disable-next-line: no-unused-expression
-        taxRes;
-        Object.assign(this.taxation, taxRes);
-        console.log(this.taxation);
-        this.parseTaxationToIndividualValue(this.taxation);
-
+        //taxRes;
+          Object.assign(this.taxation, taxRes);
+          console.log(this.taxation);
+          this.parseTaxationToIndividualValue(this.taxation);
+      });
         // Get elements for simulation and the way they're taxed //
-        this.dataService.retrieveDataServiceExtras(this.extras).subscribe((extraRes => {
-          // tslint:disable-next-line: no-unused-expression
-          extraRes;
-          Object.assign(this.simExtraElements, extraRes);
-          this.resolveSimExtraElements(this.simExtraElements);
+      this.dataService.retrieveDataServiceExtras(this.extras).subscribe((extraRes) => {
+        // tslint:disable-next-line: no-unused-expression
+        //extraRes;
+        console.log(extraRes);
+        
+        Object.assign(this.simExtraElements, extraRes);
+        this.resolveSimExtraElements();
 
-        }));
-
-      }));
       });
     }
   }
-  resolveSimExtraElements(simExtraElements: Extras[]) {
+  resolveSimExtraElements() {
     console.log(this.simExtraElements);
     console.log(this.simExtraElements[0].name);
 
 
-    for ( let i = 0; i < simExtraElements.length; i++ ) {
-      if (this.simExtraElements[i].tA === true) {
-        delete this.simExtraElements[i].id;
-        delete this.simExtraElements[i].bE;
-        delete this.simExtraElements[i].iRS;
-        delete this.simExtraElements[i].sA;
-        delete this.simExtraElements[i].sS;
-        delete this.simExtraElements[i].tA;
-        delete this.simExtraElements[i].varComponent;
-        this.extrasWithTa.push({name: this.simExtraElements[i].name, value: 0});
-        // this.simForm.value.extras.name = this.simExtraElements[i].name;
-      }
-      if (this.simExtraElements[i].tA === false) {
-        delete this.simExtraElements[i].id;
-        delete this.simExtraElements[i].bE;
-        delete this.simExtraElements[i].iRS;
-        delete this.simExtraElements[i].sA;
-        delete this.simExtraElements[i].sS;
-        delete this.simExtraElements[i].tA;
-        delete this.simExtraElements[i].varComponent;
-        this.extrasWithoutTa.push({name: this.simExtraElements[i].name, value: 0});
+    for ( let i = 0; i < this.simExtraElements.length; i++ ) {
+      this.SimFieldsData = new SimFieldsData();
+      this.SimFieldsData.name = this.simExtraElements[i].name;
+      this.SimFieldsData.value = 0;
+      if (this.simExtraElements[i].tA) {
+        this.extrasWithTa.push(this.SimFieldsData);
+      } else {
+        this.extrasWithoutTa.push(this.SimFieldsData);
       }
     }
-
-
-    this.simForm.value.extrasWithTa.name = this.extrasWithTa;
-    this.simForm.value.extrasWithoutTa.name = this.extrasWithoutTa;
-    console.log(this.extrasWithTa);
-    console.log(this.extrasWithoutTa);
-    console.log(this.simForm.value.extrasWithTa.name[0].value);
-    console.log(this.simForm.value.extrasWithTa.name[0].name);
-    console.log(this.simForm.value);
-    console.log(this.simForm.value.extrasWithTa.name);
-    console.log(this.simForm.value.extrasWithoutTa.name);
-
-
-
-
+    this.simForm.value.extrasWithTa = this.extrasWithTa;
+    this.simForm.value.extrasWithoutTa = this.extrasWithoutTa;
+    this.extrasArray = this.extrasWithTa.concat(this.extrasWithoutTa);
+    console.log(this.extrasArray);
+    console.log(this.simForm.value.extrasWithTa);
+    console.log(this.simForm.value.extrasWithoutTa);
   }
 
   parseTaxationToIndividualValue(taxation: Taxation) {

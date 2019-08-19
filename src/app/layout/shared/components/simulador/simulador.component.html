@@ -113,21 +113,14 @@
                   <div class="input-group-prepend">
                     <span class="input-group-text transparentBg">Telemóvel</span>
                   </div>
-                  <input class="form-control inputAlignRigth" formControlName="phone"
+                  <input class="form-control inputAlignRigth" formControlName="phone" value="{{extra.value}}"
                     oninput="validity.valid||(value='');" (change)="calculateTotalAnualCost()" type="number">
                 </div>
                 <div class="input-group mt-3" style="width: 100%">
-                  <select class="custom-select transparentBg" formControlName="selectExtra" (change)="teste()"
+                  <select class="custom-select transparentBg" (change)="teste($event)"
                     id="extraSelector">
                     <option disabled="true" [selected]="true">Outros</option>
-                    <option value="phone">Telemóvel</option>
-                    <option value="vehicle">Renting Viatura</option>
-                    <option value="fuel">Combustível Viatura</option>
-                    <option value="vehicleMaintenance">Manutenção da Viatura</option>
-                    <option value="zPass">Via Verde</option>
-                    <option value="mobileNet">Banda Larga em casa</option>
-                    <option value="otherWithTA">Outras c/ Tributação Autônoma</option>
-                    <option value="otherWithoutTA">Outras s/ Tributação Autônoma</option>
+                    <option value="{{extra.name}}" *ngFor="let extra of extrasArray">{{extra.name}}</option>
                   </select>
                 </div>
               </div>
@@ -146,7 +139,7 @@
                   <input class="form-control inputAlignRigth" formControlName="netSalaryWithoutDuo" value="{{simForm.value.netSalaryWithoutDuo}}"
                   type="number" min="0" id="netSalaryWithoutDuo"disabled>
                 </div>
-                <div class="input-group mt-0" style="padding-left: 108px;">
+                <div class="input-group mt-0" style="padding-left: 107px;">
                   <div class="input-group-prepend">
                     <span class="input-group-text transparentBg">C/ Duodécimos</span>
                   </div>
