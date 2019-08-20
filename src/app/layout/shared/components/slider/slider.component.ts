@@ -15,21 +15,21 @@ export class SliderComponent implements OnInit {
   ngOnInit() {
   }
 
-  @Input() value: number = 12;
+  @Input() value: number = 30;
   @Input() options: Options = {
     floor: -100,
     ceil: 500,
     showSelectionBar: true,
     getSelectionBarColor: (value: number): string => {
-      if (value <= 3) {
+      if (value <= -100) {
           return 'red';
       }
-      if (value <= 6) {
+     /*  if (value <= 6) {
           return 'orange';
       }
       if (value <= 9) {
           return 'yellow';
-      }
+      } */
       return '#2AE02A';
     }
   };
