@@ -48,14 +48,14 @@ export class LoginComponent implements OnInit {
       this.accountApi.login(this.account).subscribe(
         (account: any) => {
           let path = '';
-          
+          delete account.message;
           this.accountApi.currentAccount = account;
           if (account.accountRole === "ADMIN") {
             path = 'layout/admin';
           } else {
             path = 'layout/user';
           }
-          
+
           const url = '/' + path;
           this.router.navigate([url]);
         },
@@ -64,5 +64,6 @@ export class LoginComponent implements OnInit {
         }
       );
     }
+    console.log(this.accountApi);
   }
 }

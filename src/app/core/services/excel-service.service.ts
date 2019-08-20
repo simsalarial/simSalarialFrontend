@@ -15,7 +15,7 @@ export class ExcelServiceService {
   arrayBuffer: any;
 
   constructor(private http: HttpClient) {
-    
+
   }
 
   public exportAsExcelFile(json: any[], excelFileName: string): void {
@@ -34,11 +34,15 @@ export class ExcelServiceService {
 
   saveInDB(data){
     console.log(data);
-    return this.http.post('http://localhost:8080/simuladorsalarial/api/irstable',data)
+    return this.http.post('http://localhost:8080/simuladorsalarial/api/irstable', data);
   }
 
-  retrieveFromDB(colaborator){
-      return this.http.post('http://localhost:8080/simuladorsalarial/api/irstable/filtertable', colaborator)
+  retrieveFromDB(colaborator) {
+      return this.http.post('http://localhost:8080/simuladorsalarial/api/irstable/filtertable', colaborator);
+  }
+
+  saveColaboratorInDbAndGetItsID(colaborator) {
+    return this.http.post('http://localhost:8080/simuladorsalarial/api/colaborator', colaborator);
   }
 
   public importExcelFile(file) {

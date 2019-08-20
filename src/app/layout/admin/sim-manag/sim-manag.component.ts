@@ -10,21 +10,12 @@ import { SimFieldsData } from 'src/app/core/models/simFieldsData';
   styleUrls: ['./sim-manag.component.scss']
 })
 export class SimManagComponent implements OnInit {
-  
+
   simFieldsData = new SimFieldsData();
   showForm = true;
   //public fields$: ReplaySubject<SimulationFields[]>;
   subAlim;
-  rows = [
-    { name: 'Austin', gender: 'Male', company: 'Swimlane' },
-    { name: 'Dany', gender: 'Male', company: 'KFC' },
-    { name: 'Molly', gender: 'Female', company: 'Burger King' },
-  ];
-  columns = [
-    { prop: 'name' },
-    { name: 'Gender' },
-    { name: 'Company' }
-  ];
+
 
 
   constructor() {
@@ -34,8 +25,8 @@ export class SimManagComponent implements OnInit {
     }
   }
 
-  ngOnInit() { 
-   
+  ngOnInit() {
+
   }
 
   onChangeSubAlim(event) {

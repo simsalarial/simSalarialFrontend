@@ -2,6 +2,7 @@
     background-color: transparent;
   }
 
+ // :host ::ng-deep 
   .ngx-datatable.bootstrap {
     box-shadow: none;
     font-size: medium;
@@ -45,7 +46,7 @@
         background-color: #334D65 !important;
       }
       .datatable-pager {
-        background-color: #334D65 !important;
+        background-color: #334D65;
         margin: 0 10px;
         vertical-align: top;
         ul {
@@ -63,9 +64,9 @@
           }
         }
         a {
-          height: 22px;
+          height: 18px;
           min-width: 24px;
-          line-height: 22px;
+          line-height: 18px;
           padding: 0;
           border-radius: 3px;
           margin: 0 3px;
