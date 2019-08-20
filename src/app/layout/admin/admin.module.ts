@@ -10,6 +10,7 @@ import { AccountManagComponent } from './account-manag/account-manag.component';
 import { SimManagComponent } from './sim-manag/sim-manag.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ImportTableComponent } from './import-table/import-table.component';
+import { MatTableModule } from '@angular/material';
 
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
@@ -26,8 +27,8 @@ import { ModalModule } from 'ngx-bootstrap/modal';
     FontAwesomeModule,
     NgxDatatableModule,
     ReactiveFormsModule,
+    MatTableModule,
     ModalModule.forRoot()
   ],
-  entryComponents: [NewAccountComponent]
 })
 export class AdminModule { }
