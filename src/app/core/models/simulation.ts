@@ -5,17 +5,17 @@ export class Simulation {
     'id'?: number;
     'baseSalary': number;
     'foodSubsidy': number;
-    'phone': number;
-    'vehicle': number;
-    'fuel': number;
+    // 'phone': number;
+    // 'vehicle': number;
+    // 'fuel': number;
     'healthInsurance': number;
     'workInsurance': number;
-    'mobileNet': number;
-    'zPass': number;
+    // 'mobileNet': number;
+    // 'zPass': number;
     'otherWithTA': number;
-    'vehicleMaintenance': number;
+    // 'vehicleMaintenance': number;
     'otherWithoutTA': number;
-    'otherAwards': number;
+    'otherBonus': number;
     'extras': Array<Extras>;
 
     constructor(data?: any) {

@@ -1,3 +1,4 @@
+import { ColaboratorServiceService } from './../../../../core/services/colaborator-service/colaborator-service.service';
 import { FoodSubsidy } from './../../../../core/models/foodSubsidy';
 import { WorkInsurance } from './../../../../core/models/workInsurance';
 import { Component, OnInit } from '@angular/core';
@@ -12,6 +13,7 @@ import { Taxation } from 'src/app/core/models/taxation';
 import { Extras } from 'src/app/core/models/extras';
 import { SimFieldsData } from 'src/app/core/models/simFieldsData';
 import { Margin } from 'src/app/core/models/margin';
+import { AccountServiceService } from 'src/app/core';
 
 
 @Component({
@@ -24,7 +26,9 @@ export class SimuladorComponent implements OnInit {
   sim: Simulation;
   profileForm: any;
   simForm: any;
+
   private col: Colaborator;
+
   taxation: Taxation;
   taxationForm: any;
   submitClicked = false;
@@ -40,6 +44,7 @@ export class SimuladorComponent implements OnInit {
 
   foodSubsidy = new Array<FoodSubsidy>();
   foodSubsidyMonth: number;
+
 
   workInsuranceVariable: number;
   varAccountedForWorkInsurance: number;
@@ -67,10 +72,15 @@ export class SimuladorComponent implements OnInit {
   extrasArray: any;
   extrasSelected = [];
 
+
+  saveSimulator = Array<SimFieldsData>();
+
   constructor(
     private fb: FormBuilder,
     private excelService: ExcelServiceService,
     private dataService: DataService,
+    private colaboratorservice: ColaboratorServiceService,
+    private currentAccount: AccountServiceService,
   ) {
   }
 
@@ -207,9 +217,21 @@ export class SimuladorComponent implements OnInit {
         this.resolveFoodSubsidyValue(this.foodSubsidy);
 
       });
+
+      this.createColaboratorWithAccountId();
+
     }
 
   }
+  createColaboratorWithAccountId() {
+    this.col.account = this.currentAccount.currentAccount;
+    this.colaboratorservice.saveColaboratorInDbAndGetItsID(this.col).subscribe((colabRes) => {
+      Object.assign(this.col, colabRes);
+      console.log(this.col);
+    });
+  }
+
+
   resolveWorkInsuranceVariables(receiveworkInsuranceVariable) {
     this.workInsuranceVariable = receiveworkInsuranceVariable.workInsuranceVariable;
     this.varAccountedForWorkInsurance = receiveworkInsuranceVariable.varAccountedForWorkInsurance;
@@ -348,10 +370,11 @@ export class SimuladorComponent implements OnInit {
       this.simForm.value.anualTotalCost += (this.simForm.value.extrasWithoutTa[j].name.value * this.monthsInAYear) + (this.simForm.value.extrasWithoutTa[j].name.value * this.autonomousTributation * this.monthsInAYear);
     }
 
-    this.simForm.value.anualTotalCost = Number(this.simForm.value.anualTotalCost).toFixed(2);
+    this.simForm.value.anualTotalCost = Number((this.simForm.value.anualTotalCost).toFixed(2));
 
 
     console.log(this.simForm.value.anualTotalCost);
+    this.calculateWorkInsuranceValue();
     this.calculateMonthlyTotalCost();
     this.calculateAverageGrossSalary();
     this.calculateNetSalaryWithoutDuo();
@@ -422,6 +445,29 @@ export class SimuladorComponent implements OnInit {
   }
   calculateHourlyRate() {
     this.simForm.value.hourlyRate = Number((this.simForm.value.dailyRate / this.hoursWorkedInADay).toFixed(2));
+  }
+
+  saveThisSim() {
+    console.log(this.simForm);
+    console.log("AQUI");
+
+    Object.entries(this.simForm.value).forEach(element => {
+      console.log(element);
+      if (element[1].constructor === Array) {
+        console.log("array na mulher")
+        for (let i = 0; i < element[1].length; i++) {
+          console.log(element[1]);
+          this.saveSimulator.push({name: element[1].name, value: element[1].value});
+        }
+        // element[1].for((extra: SimFieldsData) => {
+
+        // });
+      }
+      else {
+        this.saveSimulator.push({name: element[0], value: Number(element[1])});
+      }
+    });
+    console.log(this.saveSimulator);
   }
 
   exportToPDF() {
