@@ -1,7 +1,8 @@
-import { Component, OnInit, Input, Output, EventEmitter, SimpleChanges, TemplateRef } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, SimpleChanges, TemplateRef, ViewChild } from '@angular/core';
 import { AccountServiceService } from 'src/app/core';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import { DatatableComponent } from '@swimlane/ngx-datatable';
 
 @Component({
   selector: 'app-tables',
@@ -19,15 +20,24 @@ export class TablesComponent implements OnInit {
   state: string;
   emailToDelete;
   faSearch = faSearch;
+  temp = [];
+  rows = [];
+  @ViewChild(DatatableComponent, { static: false }) table: DatatableComponent;
+
+  constructor(private modalService: BsModalService) { 
+    this.keys = [
+      {prop: 'name'},
+      {prop: 'email'}
+    ]
+    }
   
-  constructor(private accountService: AccountServiceService, private modalService: BsModalService) { }
 
   ngOnInit() {
-    if (this.data.length > 0) {
-      this.keys = Object.keys(this.data[0]);
-    }
+    this.temp = this.data;
+    this.rows = this.temp;
     
   }
+
   showConfirmModal(template: TemplateRef<any>, row) {
     console.log(row);
     this.emailToDelete = row.email;
@@ -49,16 +59,18 @@ export class TablesComponent implements OnInit {
     this.onDelete.emit(this.emailToDelete);
   }
 
-  clickRow(row) {
-    this.clickedRow.emit(row);
-  }
+  search(event) {
+    const val = event.target.value.toLowerCase();
 
-  search() { /* 
-    var $rows = $('#favoritos-body tr'); 
-    console.log($rows); $('#search').keyup(function () { var val = $.trim($(this).val()).replace(/ +/g, ' ').toLowerCase(); 
-    $rows.show().filter(function () { var text = $(this).text().replace(/\s+/g, ' ').toLowerCase(); 
-    return !~text.indexOf(val); }).hide(); }); } */
-  
+    // filter data
+    const temp = this.temp.filter(function(d) {
+      return d.name.toLowerCase().indexOf(val) !== -1 || !val;
+    });
+
+    // update the rows
+    this.rows = temp;
+    // Whenever the filter changes, always go back to the first page
+    this.table.offset = 0;
   }
 
 }

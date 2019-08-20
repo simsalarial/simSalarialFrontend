@@ -1,1 +1,17 @@
-<p>user actually works!</p>
+<app-header></app-header>
+
+<div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 offset-md-6">
+                <button (click)="state = 'simList'"  type="button" class="btn btn-link">Listar simulações</button>
+                <button (click)="state = 'profile'"  type="button" class="btn btn-link">Gestão da conta</button>
+            </div>
+           
+        </div>
+    </div>
+
+    <app-simulador></app-simulador>
+</div>
+
+

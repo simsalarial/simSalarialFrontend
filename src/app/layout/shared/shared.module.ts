@@ -7,6 +7,7 @@ import { SimuladorComponent } from './components/simulador/simulador.component';
 import { TablesComponent } from './components/tables/tables.component';
 import { FieldTaxComponent } from './components/field-tax/field-tax.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 
 
 
@@ -17,12 +18,14 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     RouterModule,
     FormsModule,
     ReactiveFormsModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    NgxDatatableModule
   ],
   exports: [
     HeaderComponent,
     FieldTaxComponent,
-    TablesComponent
+    TablesComponent,
+    SimuladorComponent
   ]
 })
 export class SharedModule { }

@@ -8,10 +8,12 @@ import { FormsModule } from '@angular/forms';
 import { AdminComponent } from './admin/admin.component';
 import { UserComponent } from './user/user.component';
 import { AdminModule } from './admin/admin.module';
+import { SimListComponent } from './user/sim-list/sim-list.component';
+import { AccountManagComponent } from './user/account-manag/account-manag.component';
 
 
 @NgModule({
-  declarations: [LayoutComponent, UserComponent],
+  declarations: [LayoutComponent, UserComponent, SimListComponent, AccountManagComponent],
   imports: [
     CommonModule,
     LayoutRoutingModule,
