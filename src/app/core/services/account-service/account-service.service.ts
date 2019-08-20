@@ -54,6 +54,10 @@ export class AccountServiceService {
     return this.http.post('http://localhost:8080/simuladorsalarial/api/accounts/login', account);
   }
 
+  public editUserPass(account: Account) {
+    return this.http.put('http://localhost:8080/simuladorsalarial/api/accounts/editAccount', account, {responseType: 'text'});
+  }
+
   public logout() {
     this.currentAccount = null;
   }
