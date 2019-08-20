@@ -61,6 +61,9 @@ export class DataService {
 
   postNewFoodSubsidyValue(foodSubsidyMonth) {
     this.http.put('http://localhost:8080/simuladorsalarial/api/foodsubsidy/newvalue', foodSubsidyMonth);
+
+    retriveWorkInsuranceVariable(workIns) {
+    return this.http.get('http://localhost:8080/simuladorsalarial/api/workinsurance/', workIns);
   }
 
 
