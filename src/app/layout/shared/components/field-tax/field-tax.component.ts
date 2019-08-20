@@ -12,6 +12,10 @@ export class FieldTaxComponent implements OnInit {
   newField = false;
   simFields = new SimulationFields();
   newFieldName: string;
+  selectSS: any;
+  selectTA: string;
+  selectBE: string;
+  selectVAR: string;
   constructor() { }
 
   ngOnInit() {
