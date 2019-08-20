@@ -36,12 +36,9 @@ export class AccountManagComponent implements OnInit {
   }  
 
   onDelete(email) {
-    this.accountService.deleteAccount(email).subscribe ((res:any) => {
-      console.log(res);
       this.data = this.data.filter(function( obj ) {
         return obj.email !== email;
       });
-    });
   }
 
   showCreateAccount() {

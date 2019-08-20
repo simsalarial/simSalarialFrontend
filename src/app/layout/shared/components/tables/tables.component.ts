@@ -11,7 +11,7 @@ import { DatatableComponent } from '@swimlane/ngx-datatable';
 })
 export class TablesComponent implements OnInit {
   @Input() header: any;
-  @Input() data: any[];
+  @Input() temp: any[];
   @Output() clickedRow = new EventEmitter();
   @Output() onDelete = new EventEmitter();
   public keys;
@@ -20,22 +20,25 @@ export class TablesComponent implements OnInit {
   state: string;
   emailToDelete;
   faSearch = faSearch;
-  temp = [];
+  //temp = [];
   rows = [];
   @ViewChild(DatatableComponent, { static: false }) table: DatatableComponent;
 
-  constructor(private modalService: BsModalService) { 
+  constructor(private modalService: BsModalService, private accountService:AccountServiceService) { 
     this.keys = [
       {prop: 'name'},
       {prop: 'email'}
     ]
     }
   
-
   ngOnInit() {
-    this.temp = this.data;
+    //this.temp = this.data;
     this.rows = this.temp;
-    
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    console.log(changes);
+    this.rows = changes.temp.currentValue;
   }
 
   showConfirmModal(template: TemplateRef<any>, row) {
@@ -56,7 +59,16 @@ export class TablesComponent implements OnInit {
 
   delete(){
     this.state = 'confirm';
+   // this.onDelete.emit(this.emailToDelete);
+   let email = this.emailToDelete;
+   this.accountService.deleteAccount(this.emailToDelete).subscribe ((res:any) => {
+    console.log(res);
+    this.temp = this.temp.filter(function( obj ) {
+      return obj.email !== email;
+    });
+    this.rows = this.temp;
     this.onDelete.emit(this.emailToDelete);
+  });
   }
 
   search(event) {
