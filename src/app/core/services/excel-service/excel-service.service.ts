@@ -4,6 +4,7 @@ import { Observable, Subscriber } from 'rxjs';
 import * as FileSaver from 'file-saver';
 import * as XLSX from 'xlsx';
 import { HttpClient } from '@angular/common/http';
+import { Colaborator } from '../../models/colaborator';
 
 const EXCEL_TYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
 const EXCEL_EXTENSION = '.xlsx';
@@ -13,6 +14,8 @@ const EXCEL_EXTENSION = '.xlsx';
 })
 export class ExcelServiceService {
   arrayBuffer: any;
+
+
 
   constructor(private http: HttpClient) {
 
@@ -37,9 +40,10 @@ export class ExcelServiceService {
     return this.http.post('http://localhost:8080/simuladorsalarial/api/irstable',data)
   }
 
-  retrieveFromDB(colaborator){
+  retrieveFromDB(colaborator) {
       return this.http.post('http://localhost:8080/simuladorsalarial/api/irstable/filtertable', colaborator)
   }
+
 
   public importExcelFile(file) {
     const fileReader = new FileReader();
