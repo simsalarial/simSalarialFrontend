@@ -109,21 +109,33 @@
                   <input class="form-control inputAlignRigth" formControlName="otherBonus" type="number" id="otherBonus"
                     oninput="validity.valid||(value='');" (change)="getValueForIRS()">
                 </div>
-                <div class="input-group mt-3" *ngIf="this.selectExtra == 'phone'">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text transparentBg">Telemóvel</span>
+
+                <ng-container *ngFor="let extra of t.controls">
+                  <div class="input-group mt-3" [formGroup]="extra">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text transparentBg">{{extra.value.name}}</span>
+                    </div>
+                    <input class="form-control inputAlignRigth" formControlName="value"
+                      oninput="validity.valid||(value='');" (change)="calculateTotalAnualCost()" type="number">
                   </div>
-                  <input class="form-control inputAlignRigth" formControlName="phone" value="{{extra.value}}"
-                    oninput="validity.valid||(value='');" (change)="calculateTotalAnualCost()" type="number">
-                </div>
-                <div class="input-group mt-3" style="width: 100%">
-                  <select class="custom-select transparentBg" (change)="teste($event)"
-                    id="extraSelector">
-                    <option disabled="true" [selected]="true">Outros</option>
+                </ng-container>
+                <ng-container *ngFor="let extraWithout of g.controls">
+                  <div class="input-group mt-3" [formGroup]="extraWithout">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text transparentBg">{{extraWithout.value.name}}</span>
+                    </div>
+                    <input class="form-control inputAlignRigth" formControlName="value"
+                      oninput="validity.valid||(value='');" (change)="calculateTotalAnualCost()" type="number">
+                  </div>
+                </ng-container>
+                <div class="input-group mt-3" style="width: 100%" *ngIf="extrasArray.length > 0">
+                  <select class="custom-select transparentBg" (change)="teste($event)" id="extraSelector">
+                    <option value="" [selected]="true">Outros</option>
                     <option value="{{extra.name}}" *ngFor="let extra of extrasArray">{{extra.name}}</option>
                   </select>
                 </div>
               </div>
+              <!--ACABA A COLUNA DA ESQUERDA-->
               <div class="col-sm">
                 <div class="input-group">
                   <div class="input-group-prepend">
@@ -132,62 +144,31 @@
                   <input type="number" min="0" class="form-control inputAlignRigth" formControlName="monthlyTotalCost"
                     type="number" value={{simForm.value.monthlyTotalCost}} id="monthlyTotalCost" disabled>
                 </div>
-                <div class="input-group mt-3">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text transparentBg">Salário Líquido S/ Duodécimos</span>
+                <div class="input-group">
+                  <div class="input-group mt-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text transparentBg">Salário Líquido S/ Duodécimos</span>
+                    </div>
+                    <input class="form-control inputAlignRigth" formControlName="netSalaryWithoutDuo"
+                      value="{{simForm.value.netSalaryWithoutDuo}}" type="number" min="0" id="netSalaryWithoutDuo"
+                      disabled>
                   </div>
-                  <input class="form-control inputAlignRigth" formControlName="netSalaryWithoutDuo" value="{{simForm.value.netSalaryWithoutDuo}}"
-                  type="number" min="0" id="netSalaryWithoutDuo"disabled>
-                </div>
-                <div class="input-group mt-0" style="padding-left: 107px;">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text transparentBg">C/ Duodécimos</span>
+                  <div class="input-group mt-0" style="padding-left: 107px;">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text transparentBg">C/ Duodécimos</span>
+                    </div>
+                    <input class="form-control inputAlignRigth" formControlName="netSalaryWithDuo"
+                      value="{{simForm.value.netSalaryWithDuo}}" type="number" min="0" id="netSalaryWithDuo" disabled>
                   </div>
-                  <input class="form-control inputAlignRigth" formControlName="netSalaryWithDuo" value="{{simForm.value.netSalaryWithDuo}}"
-                  type="number" min="0" id="netSalaryWithDuo" disabled>
                 </div>
+                <app-slider></app-slider>
               </div>
               <!--ACABA A COLUNA DA DIREITA-->
               <div class="row">
                 <div class="col">
                   <div class="form-group mt-5">
                   </div>
-                  <div class="form-group">
-                    <label for="phone">Telemóvel</label>
-                    <span><input formControlName="phone" oninput="validity.valid||(value='');"
-                        (change)="calculateTotalAnualCost()" type="number" min="0" step="0.01" class="ml-2"
-                        style="width: 90px;" id="phone"></span>
-                  </div>
-                  <div class="form-group">
-                    <label for="vehicle">Renting Viatura</label>
-                    <span><input formControlName="vehicle" (change)="calculateTotalAnualCost()"
-                        oninput="validity.valid||(value='');" type="number" min="0" step="0.01" class="ml-2"
-                        style="width: 90px;" id="vehicle"></span>
-                  </div>
-                  <div class="form-group">
-                    <label for="fuel">Combustível Viatura</label>
-                    <span><input formControlName="fuel" (change)="calculateTotalAnualCost()"
-                        oninput="validity.valid||(value='');" type="number" min="0" step="0.01" class="ml-2"
-                        style="width: 90px;" id="fuel"></span>
-                  </div>
-                  <div class="form-group">
-                    <label for="vehicleMaintenance">Manutenção da viatura</label>
-                    <span><input formControlName="vehicleMaintenance" (change)="calculateTotalAnualCost()"
-                        oninput="validity.valid||(value='');" type="number" min="0" step="0.01" class="ml-2"
-                        style="width: 90px;" id="vehicleMaintenance"></span>
-                  </div>
-                  <div class="form-group">
-                    <label for="zPass">Via Verde</label>
-                    <span><input formControlName="zPass" (change)="calculateTotalAnualCost()"
-                        oninput="validity.valid||(value='');" type="number" min="0" step="0.01" class="ml-2"
-                        style="width: 90px;" id="zPass"></span>
-                  </div>
-                  <div class="form-group">
-                    <label for="mobileNet">Banda Larga em casa</label>
-                    <span><input formControlName="mobileNet" (change)="calculateTotalAnualCost()"
-                        oninput="validity.valid||(value='');" type="number" min="0" step="0.01" class="ml-2"
-                        style="width: 90px;" id="mobileNet"></span>
-                  </div>
+
                   <div class="form-group">
                     <label for="otherWithTA">Outras despesas com Tributação Autônoma</label>
                     <span><input formControlName="otherWithTA" (change)="calculateTotalAnualCost()"
@@ -199,12 +180,6 @@
                     <span><input formControlName="otherWithoutTA" (change)="calculateTotalAnualCost()"
                         oninput="validity.valid||(value='');" type="number" min="0" step="0.01" class="ml-2"
                         style="width: 90px;" id="otherWithoutTA"></span>
-                  </div>
-                  <div class="form-group">
-                    <label for="otherBonus">Outros prémios</label>
-                    <span><input formControlName="otherBonus" type="number" min="0" step="0.01" class="ml-2"
-                        style="width: 90px;" id="otherBonus" oninput="validity.valid||(value='');"
-                        (change)="getValueForIRS()" value=""></span>
                   </div>
                 </div>
                 <div class="col">
