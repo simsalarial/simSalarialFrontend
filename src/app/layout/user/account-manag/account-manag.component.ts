@@ -33,6 +33,7 @@ msg: string;
   }
 
   editAccount() {
+    this.submitClicked = true;
     if(this.editUserForm.newPass === this.editUserForm.confirmPass && this.editUserForm.status == 'VALID'){
       this.account.password = this.editUserForm.value.confirmPass;
       this.account.email = this.email;
