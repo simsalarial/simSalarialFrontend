@@ -1,4 +1,3 @@
-
 <div class="modal-header">
     <h4 class="modal-title pull-left">Criar nova conta</h4>
     <button type="button" class="close pull-right" aria-label="Close" (click)="onCloseModal()">
@@ -6,33 +5,33 @@
     </button>
 </div>
 <div class="modal-body">
-    <p *ngIf="state == 'confirm'">Conta criada com sucesso! Credenciais enviadas para o email {{newAccount.email}}</p>
+    <p *ngIf="state == 'confirm'">Conta criada com sucesso! Credenciais enviadas para o email {{newAccount.email}}.</p>
     <p *ngIf="state == 'error'">Esta conta já existe.</p>
     <form *ngIf="state == 'create'" class="form-horizontal" [formGroup]="newUserForm">
         <div class="form-group mt-2">
             <div class="input-group ml-2 mr-2 row">
                 <div class="input-group-prepend">
-                    <span class="input-group-text"  for="inputName" id="basic-addon1">Nome</span>
+                    <span [ngClass]="{'borderedRed' : newUserForm.controls['name'].invalid && submitClicked}"class="input-group-text form-control transparentBg"  for="inputName">Nome</span>
                 </div>
-                <input id="inputName" style="width: 395px" type="text" class="form-control" formControlName="name" placeholder="Nome" aria-label="Username" aria-describedby="basic-addon1">
+                <input [ngClass]="{'is-invalid' : newUserForm.controls['name'].invalid && submitClicked}" id="inputName" style="width: 395px" type="text" class="form-control" formControlName="name" placeholder="Nome">
             </div>
-            <div *ngIf="newUserForm.controls['name'].invalid && submitClicked" class="text-danger">
+            <div *ngIf="newUserForm.controls['name'].invalid && submitClicked"class="text-danger ml-2">
                  <small *ngIf="newUserForm.controls['name'].errors.required">Insira o nome.</small>
             </div>
         </div>
         <div class="form-group mt-2">
             <div class="input-group ml-2 mr-2 row">
                 <div class="input-group-prepend">
-                    <span class="input-group-text"  for="inputEmail" id="basic-addon1">Email</span>
+                    <span [ngClass]="{'borderedRed' : newUserForm.controls['email'].invalid && submitClicked}" class="input-group-text form-control transparentBg"  for="inputEmail">Email</span>
                 </div>
-                <input type="text" style="width: 185px" class="form-control" formControlName="email"  placeholder="Email" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                <input [ngClass]="{'is-invalid' : newUserForm.controls['email'].invalid && submitClicked}" type="text" style="width: 185px" class="form-control" formControlName="email"  placeholder="Email" aria-label="Recipient's username" aria-describedby="basic-addon2">
                 <div class="input-group-append">
-                    <span class="input-group-text" id="inputEmail">@aubay.com</span>
+                    <span class="input-group-text transparentBg" id="inputEmail">@aubay.com</span>
                 </div>
                 
             </div>
-            <div *ngIf="newUserForm.controls['email'].invalid && submitClicked" class="text-danger">
-            <small *ngIf="newUserForm.controls['email'].errors.required">Insira o email.</small>
+            <div *ngIf="newUserForm.controls['email'].invalid && submitClicked" class="text-danger ml-2">
+                <small *ngIf="newUserForm.controls['email'].errors.required">Insira o email.</small>
             </div>
         </div>
         <div class="modal-footer">
