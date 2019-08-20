@@ -1,3 +1,5 @@
+import { FoodSubsidy } from './../../../../core/models/foodSubsidy';
+import { WorkInsurance } from './../../../../core/models/workInsurance';
 import { Component, OnInit } from '@angular/core';
 import { Colaborator } from 'src/app/core/models/colaborator';
 import { Simulation } from 'src/app/core/models/simulation';
@@ -9,6 +11,7 @@ import { DataService } from 'src/app/core/services/data-service/data.service';
 import { Taxation } from 'src/app/core/models/taxation';
 import { Extras } from 'src/app/core/models/extras';
 import { SimFieldsData } from 'src/app/core/models/simFieldsData';
+import { Margin } from 'src/app/core/models/margin';
 
 
 @Component({
@@ -32,8 +35,14 @@ export class SimuladorComponent implements OnInit {
   extrasWithoutTa = new Array<SimFieldsData>();
   private irsValues = new Array<object>();
   private tempTax: number;
-  rateForWorkInsurance = 0.007;
-  varAccountedForWorkInsurance = 14;
+
+  receiveworkInsuranceVariable = new Array<WorkInsurance>();
+
+  foodSubsidy = new Array<FoodSubsidy>();
+  foodSubsidyMonth: number;
+
+  workInsuranceVariable: number;
+  varAccountedForWorkInsurance: number;
   totalPayedMonths = 15;
   monthsWithoutVacation = 11;
   monthsInAYear = 12;
@@ -47,6 +56,11 @@ export class SimuladorComponent implements OnInit {
   SimFieldsData:  SimFieldsData;
   hoursWorkedInADay = 8;
   marginPercentage;
+
+  marginValues = new Array<Margin>();
+  margin_min: number;
+  margin_max: number;
+
   markUp;
   usagePercentage = 100;
   extras: FormArray;
@@ -70,7 +84,7 @@ export class SimuladorComponent implements OnInit {
     this.usagePercentage = 100;
     this.simForm = this.fb.group({
       baseSalary: [Number, Validators.required],
-      foodSubsidy: [160.23, Validators.required],
+      foodSubsidy: [0, Validators.required],
       phone: [0],
       vehicle: [0],
       fuel: [0],
@@ -97,7 +111,7 @@ export class SimuladorComponent implements OnInit {
       extrasWithTa: this.fb.array( [] ),
       extrasWithoutTa: this.fb.array( [] )
     });
-    this.simForm.reset();
+    // this.simForm.reset();
     // this.simForm.value.extras = [];
     this.usagePercentage = 100;
     console.log(this.simForm.value);
@@ -142,7 +156,7 @@ export class SimuladorComponent implements OnInit {
   teste(event){
     this.selectExtra = event.target.value;
     console.log(this.selectExtra);
-    
+
   }
 
   submitForm() {
@@ -171,18 +185,59 @@ export class SimuladorComponent implements OnInit {
         // tslint:disable-next-line: no-unused-expression
         //extraRes;
         console.log(extraRes);
-        
+
         Object.assign(this.simExtraElements, extraRes);
         this.resolveSimExtraElements();
 
       });
+
+      this.dataService.retrieveWorkInsurance(this.workInsuranceVariable).subscribe((workInsRes) => {
+        Object.assign(this.receiveworkInsuranceVariable, workInsRes);
+        this.resolveWorkInsuranceVariables(this.receiveworkInsuranceVariable);
+      });
+
+      this.dataService.retrieveMarginValues(this.marginValues).subscribe((marginRes) => {
+        Object.assign(this.marginValues, marginRes);
+        this.resolveMarginValues(this.marginValues);
+      });
+
+      this.dataService.retrieveFoodSubsidyValue(this.foodSubsidy).subscribe((foodSubsidyRes) => {
+        Object.assign(this.foodSubsidy, foodSubsidyRes);
+        console.log(this.foodSubsidy);
+        this.resolveFoodSubsidyValue(this.foodSubsidy);
+
+      });
     }
+
   }
+  resolveWorkInsuranceVariables(receiveworkInsuranceVariable) {
+    this.workInsuranceVariable = receiveworkInsuranceVariable.workInsuranceVariable;
+    this.varAccountedForWorkInsurance = receiveworkInsuranceVariable.varAccountedForWorkInsurance;
+    console.log(this.varAccountedForWorkInsurance);
+    console.log(this.workInsuranceVariable);
+
+  }
+
+  resolveMarginValues(marginValues) {
+
+    this.margin_max = marginValues[0].margin_max;
+    this.margin_min = marginValues[0].margin_min;
+    console.log(this.margin_max);
+    console.log(this.margin_min);
+
+  }
+
+  resolveFoodSubsidyValue(foodSubsidy) {
+    this.foodSubsidyMonth = foodSubsidy.foodSubsidyMonth;
+    console.log(this.foodSubsidyMonth);
+  }
+
   resolveSimExtraElements() {
     console.log(this.simExtraElements);
     console.log(this.simExtraElements[0].name);
 
 
+    // tslint:disable-next-line: prefer-for-of
     for ( let i = 0; i < this.simExtraElements.length; i++ ) {
       this.SimFieldsData = new SimFieldsData();
       this.SimFieldsData.name = this.simExtraElements[i].name;
@@ -262,16 +317,19 @@ export class SimuladorComponent implements OnInit {
   }
 
   calculateWorkInsuranceValue() {
+
+    this.simForm.value.foodSubsidy = this.foodSubsidyMonth;
+
     // tslint:disable-next-line: max-line-length
-    this.simForm.value.workInsurance = Number((((this.rateForWorkInsurance * (this.varAccountedForWorkInsurance * this.simForm.value.baseSalary + this.monthsWithoutVacation * this.simForm.value.foodSubsidy)) / this.monthsInAYear)).toFixed(2));
+    this.simForm.value.workInsurance = Number((((this.workInsuranceVariable * (this.varAccountedForWorkInsurance * this.simForm.value.baseSalary + this.monthsWithoutVacation * this.simForm.value.foodSubsidy)) / this.monthsInAYear)).toFixed(2));
   }
 
   calculateTotalAnualCost() {
-    var array = Object.keys(this.simForm.value);
-    array.filter(key => this.simForm.value[key]).forEach( key => {
-      console.log(key, this.simForm.value[key] );
-    });
-    this.calculateWorkInsuranceValue();
+    // var array = Object.keys(this.simForm.value);
+    // array.filter(key => this.simForm.value[key]).forEach( key => {
+    //   console.log(key, this.simForm.value[key] );
+    // });
+    // this.calculateWorkInsuranceValue();
     console.log(this.simForm.value);
     // tslint:disable-next-line: max-line-length
     // this.simForm.value.anualTotalCost = Number((((this.simForm.value.baseSalary * this.totalPayedMonths) + (this.simForm.value.baseSalary * this.totalPayedMonths) * this.companySocialSecurity) + (this.simForm.value.foodSubsidy * this.monthsWithoutVacation) + (this.simForm.value.workInsurance * this.monthsInAYear) + (this.simForm.value.healthInsurance * this.monthsInAYear) + (this.simForm.value.otherBonus * this.monthsInAYear) + (this.simForm.value.phone * this.monthsInAYear) + (this.simForm.value.vehicle * this.monthsInAYear) + (this.simForm.value.vehicle * this.autonomousTributation * this.monthsInAYear) + ((this.simForm.value.fuel * this.monthsInAYear) + (this.simForm.value.fuel * this.autonomousTributation * this.monthsInAYear)) + (this.simForm.value.mobileNet * this.monthsInAYear) + (this.simForm.value.zPass * this.monthsInAYear) + ((this.simForm.value.vehicleMaintenance * this.monthsInAYear) + (this.simForm.value.vehicleMaintenance * this.autonomousTributation * this.monthsInAYear))  + ((this.simForm.value.otherWithTA * this.monthsInAYear) + (this.simForm.value.otherWithTA * this.autonomousTributation * this.monthsInAYear)) + (this.simForm.value.otherWithoutTA * this.monthsInAYear)).toFixed(2));
@@ -280,15 +338,17 @@ export class SimuladorComponent implements OnInit {
     this.simForm.value.anualTotalCost = (((this.simForm.value.baseSalary * this.totalPayedMonths) + (this.simForm.value.baseSalary * this.totalPayedMonths) * this.companySocialSecurity) + (this.simForm.value.foodSubsidy * this.monthsWithoutVacation) + (this.simForm.value.workInsurance * this.monthsInAYear) + (this.simForm.value.healthInsurance * this.monthsInAYear) + (this.simForm.value.otherBonus * this.monthsInAYear));
 
     // tslint:disable-next-line: prefer-for-of
-    for (let i = 0; i < this.simForm.value.extrasWithTa.name.length; i++) {
+    for (let i = 0; i < this.simForm.value.extrasWithTa.length; i++) {
       // tslint:disable-next-line: max-line-length
       this.simForm.value.anualTotalCost += (this.simForm.value.extrasWithTa[i].name.value * this.monthsInAYear) + (this.simForm.value.extrasWithTa[i].name.value * this.autonomousTributation * this.monthsInAYear);
     }
     // tslint:disable-next-line: prefer-for-of
-    for (let j = 0; j < this.simForm.value.extrasWithoutTa.name.length; j++) {
+    for (let j = 0; j < this.simForm.value.extrasWithoutTa.length; j++) {
       // tslint:disable-next-line: max-line-length
       this.simForm.value.anualTotalCost += (this.simForm.value.extrasWithoutTa[j].name.value * this.monthsInAYear) + (this.simForm.value.extrasWithoutTa[j].name.value * this.autonomousTributation * this.monthsInAYear);
     }
+
+    this.simForm.value.anualTotalCost = Number(this.simForm.value.anualTotalCost).toFixed(2);
 
 
     console.log(this.simForm.value.anualTotalCost);
