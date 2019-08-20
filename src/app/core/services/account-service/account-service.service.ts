@@ -10,7 +10,7 @@ export class AccountServiceService {
   public currentAccount: Account = new Account();
   public accounts$: ReplaySubject<Account[]>;
   constructor(private http: HttpClient) {
-   
+
   }
 
   public isAuthenticated(): boolean {
@@ -49,7 +49,7 @@ export class AccountServiceService {
     return this.http.delete('http://localhost:8080/simuladorsalarial/api/accounts/'+ email, {responseType: 'text'});
   }
 
-  public login(account: Account): Observable<Object> {
+  public login(account: Account): Observable<object> {
     // Simulate Jax-rs Api request
     return this.http.post('http://localhost:8080/simuladorsalarial/api/accounts/login', account);
   }

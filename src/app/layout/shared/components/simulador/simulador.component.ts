@@ -1,9 +1,17 @@
+import { FoodSubsidy } from './../../../../core/models/foodSubsidy';
+import { WorkInsurance } from './../../../../core/models/workInsurance';
 import { Component, OnInit } from '@angular/core';
 import { Colaborator } from 'src/app/core/models/colaborator';
 import { Simulation } from 'src/app/core/models/simulation';
-import { FormBuilder, Validators } from '@angular/forms';
-import { ExcelServiceService } from 'src/app/core/services/excel-service.service';
+import { FormBuilder, Validators, FormGroup, FormArray } from '@angular/forms';
 import { getLocaleFirstDayOfWeek } from '@angular/common';
+import * as jsPDF from 'jspdf';
+import { ExcelServiceService } from 'src/app/core/services/excel-service/excel-service.service';
+import { DataService } from 'src/app/core/services/data-service/data.service';
+import { Taxation } from 'src/app/core/models/taxation';
+import { Extras } from 'src/app/core/models/extras';
+import { SimFieldsData } from 'src/app/core/models/simFieldsData';
+import { Margin } from 'src/app/core/models/margin';
 
 
 @Component({
@@ -12,44 +20,71 @@ import { getLocaleFirstDayOfWeek } from '@angular/common';
   styleUrls: ['./simulador.component.scss']
 })
 export class SimuladorComponent implements OnInit {
-  state = "first";
+  state = 'first';
   sim: Simulation;
   profileForm: any;
   simForm: any;
   private col: Colaborator;
+  taxation: Taxation;
+  taxationForm: any;
   submitClicked = false;
   valPhone: number;
   valVehicle: number;
+  private simExtraElements = new Array<Extras>();
+  extrasWithTa = new Array<SimFieldsData>();
+  extrasWithoutTa = new Array<SimFieldsData>();
   private irsValues = new Array<object>();
   private tempTax: number;
-  rateForWorkInsurance = 0.007;
-  varAccountedForWorkInsurance = 14;
+
+  receiveworkInsuranceVariable = new Array<WorkInsurance>();
+
+  foodSubsidy = new Array<FoodSubsidy>();
+  foodSubsidyMonth: number;
+
+  workInsuranceVariable: number;
+  varAccountedForWorkInsurance: number;
   totalPayedMonths = 15;
   monthsWithoutVacation = 11;
   monthsInAYear = 12;
   averageDaysInAMonth = 21;
-  private workerSocialSecurity = 0.11;
-  private companySocialSecurity = 0.2375;
-  private autonomousTributation = 0.1;
-  hoursWorkedInADay = 8;
+  selectExtra = "";
+  // Tributações //
+  private workerSocialSecurity: number;
+  private companySocialSecurity: number;
+  private autonomousTributation: number;
 
+  SimFieldsData:  SimFieldsData;
+  hoursWorkedInADay = 8;
+  marginPercentage;
+
+  marginValues = new Array<Margin>();
+  margin_min: number;
+  margin_max: number;
+
+  markUp;
+  usagePercentage = 100;
+  extras: FormArray;
+  extrasArray: any;
+  extrasSelected = [];
 
   constructor(
     private fb: FormBuilder,
     private excelService: ExcelServiceService,
+    private dataService: DataService,
   ) {
   }
 
   ngOnInit() {
     this.profileForm = this.fb.group({
-      name: ['Filipe Braz', Validators.required],
+      name: ['Sr. Ricas', Validators.required],
       dependents: ['2', Validators.required],
-      status: ['NÃO CASADO', Validators.required],
+      status: ['Não Casado', Validators.required],
     })
-
+    console.log(this.profileForm);
+    this.usagePercentage = 100;
     this.simForm = this.fb.group({
       baseSalary: [Number, Validators.required],
-      foodSubsidy: [160.23, Validators.required],
+      foodSubsidy: [0, Validators.required],
       phone: [0],
       vehicle: [0],
       fuel: [0],
@@ -73,11 +108,55 @@ export class SimuladorComponent implements OnInit {
       monthlyRate: [0],
       dailyRate: [0],
       hourlyRate: [0],
-      margin: [0]
-    })
-
+      extrasWithTa: this.fb.array( [] ),
+      extrasWithoutTa: this.fb.array( [] )
+    });
+    // this.simForm.reset();
+    // this.simForm.value.extras = [];
+    this.usagePercentage = 100;
+    console.log(this.simForm.value);
     this.col = new Colaborator();
     this.sim = new Simulation();
+    this.taxation = new Taxation();
+    this.addAllExtras();
+
+  }
+
+  addAllExtras() {
+    this.simForm.addControl('extrasWithTa', this.fb.group({
+      // name: [''],
+      // value: [0]
+    }));
+
+    this.simForm.addControl('extrasWithoutTa', this.fb.group({
+      name: [''],
+      value: [0]
+    }));
+
+    console.log(this.simForm.value.extrasWithTa.value);
+  }
+
+  addExtras() {//faz pedido a api
+    this.extrasWithTa.forEach(extras => {
+      this.extras = this.simForm.get('extras') as FormArray;
+      this.extras.push(this.createExtras());
+    });
+    console.log(this.extras);
+    console.log(this.extrasWithTa);
+    console.log(this.simForm.value);
+  }
+
+  createExtras(): FormGroup {
+    return this.fb.group({
+      name: '',
+      value: [0],
+    });
+  }
+
+  teste(event){
+    this.selectExtra = event.target.value;
+    console.log(this.selectExtra);
+
   }
 
   submitForm() {
@@ -88,11 +167,128 @@ export class SimuladorComponent implements OnInit {
     if (this.profileForm.status == 'VALID') {
       this.state = 'second';
       this.excelService.retrieveFromDB(this.col).subscribe((res) => {
-        res;
+        // tslint:disable-next-line: no-unused-expression
+      //  res;
         console.log(res);
         Object.assign(this.irsValues, res);
       });
+        // Get overall taxes //
+      this.dataService.retrieveDataServiceTaxes(this.taxation).subscribe((taxRes) => {
+        // tslint:disable-next-line: no-unused-expression
+        //taxRes;
+          Object.assign(this.taxation, taxRes);
+          console.log(this.taxation);
+          this.parseTaxationToIndividualValue(this.taxation);
+      });
+        // Get elements for simulation and the way they're taxed //
+      this.dataService.retrieveDataServiceExtras(this.extras).subscribe((extraRes) => {
+        // tslint:disable-next-line: no-unused-expression
+        //extraRes;
+        console.log(extraRes);
+
+        Object.assign(this.simExtraElements, extraRes);
+        this.resolveSimExtraElements();
+
+      });
+
+      this.dataService.retrieveWorkInsurance(this.workInsuranceVariable).subscribe((workInsRes) => {
+        Object.assign(this.receiveworkInsuranceVariable, workInsRes);
+        this.resolveWorkInsuranceVariables(this.receiveworkInsuranceVariable);
+      });
+
+      this.dataService.retrieveMarginValues(this.marginValues).subscribe((marginRes) => {
+        Object.assign(this.marginValues, marginRes);
+        this.resolveMarginValues(this.marginValues);
+      });
+
+      this.dataService.retrieveFoodSubsidyValue(this.foodSubsidy).subscribe((foodSubsidyRes) => {
+        Object.assign(this.foodSubsidy, foodSubsidyRes);
+        console.log(this.foodSubsidy);
+        this.resolveFoodSubsidyValue(this.foodSubsidy);
+
+      });
     }
+
+  }
+  resolveWorkInsuranceVariables(receiveworkInsuranceVariable) {
+    this.workInsuranceVariable = receiveworkInsuranceVariable.workInsuranceVariable;
+    this.varAccountedForWorkInsurance = receiveworkInsuranceVariable.varAccountedForWorkInsurance;
+    console.log(this.varAccountedForWorkInsurance);
+    console.log(this.workInsuranceVariable);
+
+  }
+
+  resolveMarginValues(marginValues) {
+
+    this.margin_max = marginValues[0].margin_max;
+    this.margin_min = marginValues[0].margin_min;
+    console.log(this.margin_max);
+    console.log(this.margin_min);
+
+  }
+
+  resolveFoodSubsidyValue(foodSubsidy) {
+    this.foodSubsidyMonth = foodSubsidy.foodSubsidyMonth;
+    console.log(this.foodSubsidyMonth);
+  }
+
+  resolveSimExtraElements() {
+    console.log(this.simExtraElements);
+    console.log(this.simExtraElements[0].name);
+
+
+    // tslint:disable-next-line: prefer-for-of
+    for ( let i = 0; i < this.simExtraElements.length; i++ ) {
+      this.SimFieldsData = new SimFieldsData();
+      this.SimFieldsData.name = this.simExtraElements[i].name;
+      this.SimFieldsData.value = 0;
+      if (this.simExtraElements[i].tA) {
+        this.extrasWithTa.push(this.SimFieldsData);
+      } else {
+        this.extrasWithoutTa.push(this.SimFieldsData);
+      }
+    }
+    this.simForm.value.extrasWithTa = this.extrasWithTa;
+    this.simForm.value.extrasWithoutTa = this.extrasWithoutTa;
+    this.extrasArray = this.extrasWithTa.concat(this.extrasWithoutTa);
+    console.log(this.extrasArray);
+    console.log(this.simForm.value.extrasWithTa);
+    console.log(this.simForm.value.extrasWithoutTa);
+  }
+
+  parseTaxationToIndividualValue(taxation: Taxation) {
+    this.autonomousTributation = taxation[0].value / 100;
+    this.workerSocialSecurity = taxation[1].value / 100;
+    this.companySocialSecurity = taxation[2].value / 100;
+
+  }
+
+  reset() {
+    this.simForm.reset();
+    this.simForm.value.foodSubsidy = 160.23;
+    this.simForm.value.usagePercentage = this.usagePercentage;
+    this.tempTax = 0;
+    this.marginPercentage = 0;
+    this.markUp = 0;
+    for (let i = 0; i < this.simForm.value.extrasWithTa.length; i++) {
+      this.simForm.value.extrasWithTa.name[i].value = 0;
+    }
+    for (let j = 0; j < this.simForm.value.extrasWithoutTa.length; j++) {
+      this.simForm.value.extrasWithoutTa.name[j].value = 0;
+    }
+  }
+  goBack() {
+
+    this.simForm.reset();
+    this.simForm.value.foodSubsidy = 160.23;
+    this.simForm.value.baseSalary = 0;
+    this.simForm.value.usagePercentage = this.usagePercentage;
+    this.tempTax = 0;
+    this.marginPercentage = 0;
+    this.markUp = 0;
+    this.state = 'first';
+    this.simForm.value.extrasWithTa.reset();
+    this.simForm.value.extrasWithoutTa.reset();
   }
 
   newSim() {
@@ -100,14 +296,13 @@ export class SimuladorComponent implements OnInit {
     console.log(this.sim);
   }
 
-  getIRS(valueForIRS) {
-    var index;
+  getIRS(valueForIRS: number) {
+    let index: number;
     for (index = 0; index < this.irsValues.length; index++) {
       if (valueForIRS <= this.irsValues[index][1]) {
         this.tempTax = parseFloat(((this.irsValues[index][2]) * 100).toFixed(2));
         break;
-      }
-      else {
+      } else {
         this.tempTax = parseFloat(((this.irsValues[this.irsValues.length - 1][2]) * 100).toFixed(2));
       }
     }
@@ -115,42 +310,64 @@ export class SimuladorComponent implements OnInit {
 
 
   getValueForIRS() {
-    var valueForIRS = this.simForm.value.baseSalary + this.simForm.value.otherBonus;
+    const valueForIRS = this.simForm.value.baseSalary + this.simForm.value.otherBonus;
     this.getIRS(valueForIRS);
     this.calculateWorkInsuranceValue();
     this.calculateTotalAnualCost();
   }
 
   calculateWorkInsuranceValue() {
-    this.simForm.value.workInsurance = Number((((this.rateForWorkInsurance * (this.varAccountedForWorkInsurance * this.simForm.value.baseSalary + this.monthsWithoutVacation * this.simForm.value.foodSubsidy)) / this.monthsInAYear)).toFixed(2));
 
+    this.simForm.value.foodSubsidy = this.foodSubsidyMonth;
+
+    // tslint:disable-next-line: max-line-length
+    this.simForm.value.workInsurance = Number((((this.workInsuranceVariable * (this.varAccountedForWorkInsurance * this.simForm.value.baseSalary + this.monthsWithoutVacation * this.simForm.value.foodSubsidy)) / this.monthsInAYear)).toFixed(2));
   }
 
   calculateTotalAnualCost() {
-    this.calculateWorkInsuranceValue()
-    console.log(this.simForm.value.workInsurance);
-    this.simForm.value.anualTotalCost = (Number(((this.simForm.value.baseSalary * this.totalPayedMonths) + (this.simForm.value.baseSalary * this.totalPayedMonths) * this.companySocialSecurity) + (this.simForm.value.foodSubsidy * this.monthsWithoutVacation) + (this.simForm.value.phone * this.monthsInAYear) + (this.simForm.value.vehicle * this.monthsInAYear) + (this.simForm.value.vehicle * this.autonomousTributation * this.monthsInAYear) + ((this.simForm.value.fuel * this.monthsInAYear) + (this.simForm.value.fuel * this.autonomousTributation * this.monthsInAYear)) + (this.simForm.value.workInsurance * this.monthsInAYear) + (this.simForm.value.healthInsurance * this.monthsInAYear) + (this.simForm.value.mobileNet * this.monthsInAYear) + (this.simForm.value.zPass * this.monthsInAYear) + ((this.simForm.value.vehicleMaintenance * this.monthsInAYear) + (this.simForm.value.vehicleMaintenance * this.autonomousTributation * this.monthsInAYear)) + (this.simForm.value.otherBonus * this.monthsInAYear) + ((this.simForm.value.otherWithTA * this.monthsInAYear) + (this.simForm.value.otherWithTA * this.autonomousTributation * this.monthsInAYear)) + (this.simForm.value.otherWithoutTA * this.monthsInAYear)).toFixed(2));
+    // var array = Object.keys(this.simForm.value);
+    // array.filter(key => this.simForm.value[key]).forEach( key => {
+    //   console.log(key, this.simForm.value[key] );
+    // });
+    // this.calculateWorkInsuranceValue();
+    console.log(this.simForm.value);
+    // tslint:disable-next-line: max-line-length
+    // this.simForm.value.anualTotalCost = Number((((this.simForm.value.baseSalary * this.totalPayedMonths) + (this.simForm.value.baseSalary * this.totalPayedMonths) * this.companySocialSecurity) + (this.simForm.value.foodSubsidy * this.monthsWithoutVacation) + (this.simForm.value.workInsurance * this.monthsInAYear) + (this.simForm.value.healthInsurance * this.monthsInAYear) + (this.simForm.value.otherBonus * this.monthsInAYear) + (this.simForm.value.phone * this.monthsInAYear) + (this.simForm.value.vehicle * this.monthsInAYear) + (this.simForm.value.vehicle * this.autonomousTributation * this.monthsInAYear) + ((this.simForm.value.fuel * this.monthsInAYear) + (this.simForm.value.fuel * this.autonomousTributation * this.monthsInAYear)) + (this.simForm.value.mobileNet * this.monthsInAYear) + (this.simForm.value.zPass * this.monthsInAYear) + ((this.simForm.value.vehicleMaintenance * this.monthsInAYear) + (this.simForm.value.vehicleMaintenance * this.autonomousTributation * this.monthsInAYear))  + ((this.simForm.value.otherWithTA * this.monthsInAYear) + (this.simForm.value.otherWithTA * this.autonomousTributation * this.monthsInAYear)) + (this.simForm.value.otherWithoutTA * this.monthsInAYear)).toFixed(2));
+
+    // tslint:disable-next-line: max-line-length
+    this.simForm.value.anualTotalCost = (((this.simForm.value.baseSalary * this.totalPayedMonths) + (this.simForm.value.baseSalary * this.totalPayedMonths) * this.companySocialSecurity) + (this.simForm.value.foodSubsidy * this.monthsWithoutVacation) + (this.simForm.value.workInsurance * this.monthsInAYear) + (this.simForm.value.healthInsurance * this.monthsInAYear) + (this.simForm.value.otherBonus * this.monthsInAYear));
+
+    // tslint:disable-next-line: prefer-for-of
+    for (let i = 0; i < this.simForm.value.extrasWithTa.length; i++) {
+      // tslint:disable-next-line: max-line-length
+      this.simForm.value.anualTotalCost += (this.simForm.value.extrasWithTa[i].name.value * this.monthsInAYear) + (this.simForm.value.extrasWithTa[i].name.value * this.autonomousTributation * this.monthsInAYear);
+    }
+    // tslint:disable-next-line: prefer-for-of
+    for (let j = 0; j < this.simForm.value.extrasWithoutTa.length; j++) {
+      // tslint:disable-next-line: max-line-length
+      this.simForm.value.anualTotalCost += (this.simForm.value.extrasWithoutTa[j].name.value * this.monthsInAYear) + (this.simForm.value.extrasWithoutTa[j].name.value * this.autonomousTributation * this.monthsInAYear);
+    }
+
+    this.simForm.value.anualTotalCost = Number(this.simForm.value.anualTotalCost).toFixed(2);
+
+
     console.log(this.simForm.value.anualTotalCost);
-    console.log(this.simForm.value.vehicle * this.monthsInAYear)
-    console.log(this.simForm.value.vehicle * this.autonomousTributation)
-    console.log((this.simForm.value.vehicle * this.monthsInAYear) + (this.simForm.value.vehicle * this.autonomousTributation * this.monthsInAYear))
-    console.log(this.simForm)
     this.calculateMonthlyTotalCost();
-    this.calculateDailyTotalCost();
-    this.calculateHourlyCost();
     this.calculateAverageGrossSalary();
     this.calculateNetSalaryWithoutDuo();
-
-
-
+    // this.calculateRate ();
   }
 
   calculateMonthlyTotalCost() {
     this.simForm.value.monthlyTotalCost = Number((this.simForm.value.anualTotalCost / this.monthsInAYear).toFixed(2));
+    this.calculateDailyTotalCost();
   }
 
   calculateDailyTotalCost() {
+    // tslint:disable-next-line: max-line-length
     this.simForm.value.dailyTotalCost = Number((this.simForm.value.anualTotalCost / this.monthsWithoutVacation / this.averageDaysInAMonth / (this.simForm.value.usagePercentage / 100)).toFixed(2));
+    console.log(this.simForm.value.dailyTotalCost);
+    this.calculateHourlyCost();
   }
 
   calculateHourlyCost() {
@@ -158,15 +375,86 @@ export class SimuladorComponent implements OnInit {
   }
 
   calculateAverageGrossSalary() {
+    // tslint:disable-next-line: max-line-length
     this.simForm.value.grossSalary = Number((this.simForm.value.baseSalary + this.simForm.value.foodSubsidy + this.simForm.value.otherBonus + this.simForm.value.otherWithoutTA + this.simForm.value.otherWithTA).toFixed(2));
   }
 
   calculateNetSalaryWithoutDuo() {
+    // tslint:disable-next-line: max-line-length
     this.simForm.value.netSalaryWithoutDuo = Number(((this.simForm.value.baseSalary - (this.simForm.value.baseSalary * this.tempTax / 100) - (this.simForm.value.baseSalary * this.workerSocialSecurity)) + (this.simForm.value.otherBonus - (this.simForm.value.otherBonus * this.tempTax / 100)) + this.simForm.value.foodSubsidy).toFixed(2));
     this.calculateNetSalaryWithDuo();
   }
 
   calculateNetSalaryWithDuo() {
-    this.simForm.value.netSalaryWithDuo = (this.simForm.value.netSalaryWithoutDuo + ((this.simForm.value.baseSalary * (1 - this.workerSocialSecurity - this.tempTax / 100) / this.monthsInAYear)));
+    // tslint:disable-next-line: max-line-length
+    this.simForm.value.netSalaryWithDuo = Number((this.simForm.value.netSalaryWithoutDuo + ((this.simForm.value.baseSalary * (1 - this.workerSocialSecurity - this.tempTax / 100) / this.monthsInAYear))).toFixed(2));
+  }
+
+  calculateMarkUp() {
+
+    console.log(this.markUp);
+    setTimeout(function() {
+      console.log(this.marginPercentage);
+      this.markUp = Number((this.simForm.value.anualTotalCost * (this.marginPercentage / 100)).toFixed(2));
+
+    }.bind(this), 500);
+    this.calculateRate();
+  }
+
+  calculateRate() {
+    this.simForm.value.anualRate = Number((this.simForm.value.anualTotalCost + this.markUp).toFixed(2));
+    this.calculateMonthlyRate ();
+  }
+  calculateMonthlyRate() {
+    if (this.markUp < 0) {
+      // tslint:disable-next-line: max-line-length
+      this.simForm.value.monthlyRate = Number((this.simForm.value.anualRate / this.monthsWithoutVacation / (this.simForm.value.usagePercentage / 100)).toFixed(2));
+    } else {
+    // tslint:disable-next-line: max-line-length
+    this.simForm.value.monthlyRate = Number((this.simForm.value.anualTotalCost / this.monthsWithoutVacation / (this.simForm.value.usagePercentage / 100)).toFixed(2));
+    }
+
+    this.calculateDailyRate ();
+  }
+  calculateDailyRate() {
+    this.simForm.value.dailyRate = Number((this.simForm.value.monthlyRate / this.averageDaysInAMonth).toFixed(2));
+    this.calculateHourlyRate ();
+  }
+  calculateHourlyRate() {
+    this.simForm.value.hourlyRate = Number((this.simForm.value.dailyRate / this.hoursWorkedInADay).toFixed(2));
+  }
+
+  exportToPDF() {
+    // let doc = new jsPDF();
+    // // tslint:disable-next-line: only-arrow-functions
+    // doc.addHTML(document.getElementById('teste'), function() {
+    //    doc.save('teste.pdf');
+    // });
+
+
+    // window.print();
+
+    // var doc =  new jsPDF();
+    // doc.setFontSize(22);
+    // doc.text(20,20, 'Este é o PDF');
+    // // doc.setFontSize()
+    // // doc.text(this.simForm.value);
+    // doc.setFontSize(16);
+    // doc.text(20,30, 'Isto é texto no fim');
+    // doc.setTextColor(0,0,255);
+    // doc.text(20,30, 'Isto é azul');
+
+    // var pdf = new jsPDF('p','pt','a4');
+    // pdf.addHTML(document.body,function(){
+    //   var string = pdf.output('datauristring')
+    //   $('.testes').attr('src', string);
+    // })
+    var x = Object.values(this.simForm.value);
+    var doc = new jsPDF();
+    doc.text('Salario Base: ', 10, 10);
+    doc.text(this.profileForm.name, 10, 10);
+    doc.save('a4.pdf');
+
+
   }
 }

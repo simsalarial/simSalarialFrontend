@@ -4,7 +4,7 @@ export class Colaborator {
 
     'id'?: number;
     'name': string;
-	'status': string;
+	  'status': string;
     'dependents': number;
     'simulations': Array<Simulation>;
     constructor(data?: any) {
