@@ -66,24 +66,24 @@ export class SimManagComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.foodSubsidy$.subscribe( foodSubsidyValue => {
+    this.foodSubsidy$.subscribe( (foodSubsidyValue: any) => {
       console.log(foodSubsidyValue);
       this.foodSubsidyMonth = foodSubsidyValue.foodSubsidyMonth;
       this.limitValueForFoodSubsidy = foodSubsidyValue.limitValueForFoodSubsidy;
       this.averageDaysInAMonth = foodSubsidyValue.averageDaysInAMonth;
     })
-    this.marginValues$.subscribe( marginValue => {
+    this.marginValues$.subscribe( (marginValue: any) => {
       console.log(marginValue);
       this.margin_min = marginValue[0].nargin_min;
       this.margin_max = marginValue[0].margin_max;
     })
-    this.taxation$.subscribe( taxationValue => {
+    this.taxation$.subscribe( (taxationValue: any) => {
       console.log(taxationValue);
       this.autonomousTributation = taxationValue[0].value;
       this.workerSocialSecurity = taxationValue[1].value;
       this.companySocialSecurity = taxationValue[2].value;
     })
-    this.receiveWorkInsurance$.subscribe( receiveWorkInsuranceValue => {
+    this.receiveWorkInsurance$.subscribe( (receiveWorkInsuranceValue: any) => {
       console.log(receiveWorkInsuranceValue);
       this.varAccountedForWorkInsurance = receiveWorkInsuranceValue.varAccountedForWorkInsurance;
       this.workInsuranceVariable = receiveWorkInsuranceValue.workInsuranceVariable;

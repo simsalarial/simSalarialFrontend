@@ -506,7 +506,7 @@ export class SimuladorComponent implements OnInit {
     console.log(this.simForm);
     console.log("AQUI");
 
-    Object.entries(this.simForm.value).forEach(element => {
+    Object.entries(this.simForm.value).forEach((element: any) => {
       console.log(element);
       if (element[1].constructor === Array) {
         console.log("array na mulher")
@@ -518,8 +518,7 @@ export class SimuladorComponent implements OnInit {
         // element[1].for((extra: SimFieldsData) => {
 
         // });
-      }
-      else {
+      } else {
         this.saveSimulator.push({name: element[0], value: Number(element[1])});
       }
     });
