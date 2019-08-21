@@ -1,15 +1,3 @@
-<div class="container-fluid mt-3">
-  <div class="col text-center">
-    <div class="row m-auto">
-      <a class="btn btn-link" style="color: #334D65;" target="blank"
-        href="http://info.portaldasfinancas.gov.pt/pt/apoio_contribuinte/tabela_ret_doclib/Pages/default.aspx">Link para download da tabela no Portal das
-        Finanças</a>
-    </div>
-
-  </div>
-  
-</div>
-
 <div class="container mt-3">
   <div *ngIf="isLoading$ | async" class="d-flex vh-50">
     <div class="spinner-border text-primary m-auto" role="status">
@@ -17,26 +5,55 @@
     </div>
   </div>
 
-  <div *ngIf="!(isLoading$ | async)">
-    <div class="input-group my-input-group mb-3">
-      <div class="input-group-prepend" (click)="importExcel()">
-        <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
-      </div>
-      <div class="custom-file">
-        <input type="file" class="custom-file-input" id="customFile" (change)="incomingfile($event)"
-          placeholder="Upload file" accept=".xlsx">
-        <label class="custom-file-label" for="customFile">{{(file != undefined)? file.name: "Choose file"}}</label>
+  <div class="container mt-3">
+    <div class="row">
+      <div class="col-md-6 offset-md-3">
+        <div class="row m-auto">
+          <a class="btn btn-link" style="color: #334D65; width: 100%;" target="blank"
+            href="http://info.portaldasfinancas.gov.pt/pt/apoio_contribuinte/tabela_ret_doclib/Pages/default.aspx">Link
+            para download da tabela no Portal das
+            Finanças</a>
+        </div>
+        <div *ngIf="!(isLoading$ | async)">
+          <div class="input-group my-input-group mt-2 mb-3">
+            <div class="input-group-prepend" (click)="importExcel()">
+              <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
+            </div>
+            <div class="custom-file">
+              <input type="file" class="custom-file-input" id="customFile" (change)="incomingfile($event)"
+                placeholder="Upload file" accept=".xlsx">
+              <label class="custom-file-label"
+                for="customFile">{{(file != undefined)? file.name: "Escolha o arquivo"}}</label>
+            </div>
+          </div>
+          <!--Gravar na BD-->
+          <button *ngIf="select =='botao'" (click)="saveInDB(template)" class="btn btn-outline-secondary w-100 mb-5"
+            style="color: #334D65; border-color: #334D65">
+            Gravar
+            <fa-icon [icon]="iconSave" size="1x"></fa-icon>
+          </button>
+          <div class="w-100 text-center" *ngIf="fileName">
+            <p style="color: #334D65;">Tabela importada: {{fileName}}</p>
+          </div>
+        </div>
       </div>
     </div>
-    <!--Gravar na BD-->
-    <button *ngIf="select =='botao'" (click)="saveInDB()" class="btn btn-outline-secondary w-100 mb-5" style="color: #334D65; border-color: #334D65">
-      Gravar
-      <fa-icon [icon]="iconSave" size="1x"></fa-icon>
-    </button>
     <!-- <input type="text" style="padding:8px;margin:15px auto;width:30%;" placeholder="Type to filter the name column..."
-        (keyup)="updateFilter($event)" /> -->
-    <ngx-datatable #table class="material" [columns]="columns" [columnMode]="'force'" [headerHeight]="50"
-      [footerHeight]="50" [rowHeight]="'auto'" [limit]="20" [rows]="rows">
-    </ngx-datatable>
+                (keyup)="updateFilter($event)" /> -->
+    <!--  <ngx-datatable #table  *ngIf="state=='import'" class="material" [columns]="columns" [columnMode]="'force'" [headerHeight]="50"
+              [footerHeight]="50" [rowHeight]="'auto'" [limit]="20" [rows]="rows">
+            </ngx-datatable> -->
   </div>
-</div>
+
+
+  <ng-template #template>
+    <div class="modal-header">
+      <h4 class="modal-title pull-left"></h4>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="onCloseModal()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <p>Tabela importada com sucesso!</p>
+    </div>
+  </ng-template>

@@ -20,7 +20,6 @@ export class TablesComponent implements OnInit {
   state: string;
   emailToDelete;
   faSearch = faSearch;
-  limitView: number;
   //temp = [];
   rows = [];
   @ViewChild(DatatableComponent, { static: false }) table: DatatableComponent;
@@ -87,6 +86,4 @@ export class TablesComponent implements OnInit {
     this.table.offset = 0;
   }
 
-  pageView() {
-  }
 }

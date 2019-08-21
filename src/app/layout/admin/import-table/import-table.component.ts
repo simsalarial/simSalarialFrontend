@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
 
 import { faSave } from '@fortawesome/free-solid-svg-icons';
 
@@ -6,6 +6,7 @@ import { BehaviorSubject } from 'rxjs';
 import { DatatableComponent } from '@swimlane/ngx-datatable';
 import { HttpClient } from '@angular/common/http';
 import { ExcelServiceService } from 'src/app/core/services/excel-service/excel-service.service';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 
 
 @Component({
@@ -14,7 +15,7 @@ import { ExcelServiceService } from 'src/app/core/services/excel-service/excel-s
   styleUrls: ['./import-table.component.scss']
 })
 export class ImportTableComponent implements OnInit {
-
+  modalRef: BsModalRef;
   isLoading$: BehaviorSubject<boolean> = new BehaviorSubject(false);
   iconSave = faSave;
   title = 'ExcelExample';
@@ -24,9 +25,12 @@ export class ImportTableComponent implements OnInit {
   @ViewChild(DatatableComponent, { static: false }) table: DatatableComponent;
   file: File;
   select: String;
+  state: string;
+  fileName: string;
 
   constructor(
     private excelService: ExcelServiceService,
+    private modalService: BsModalService,
     private http: HttpClient
   ) {
     this.columns = [
@@ -42,15 +46,25 @@ export class ImportTableComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
+    console.log('ola',localStorage);
+    
+    this.fileName = localStorage.getItem('IRStable');
   }
 
   /*exportAsXLSX(): void {
     this.excelService.exportAsExcelFile(this.rows, 'sample');
   } */
 
-  saveInDB(){
+  saveInDB(template: TemplateRef<any>){
     this.excelService.saveInDB(this.rows).subscribe( data => console.log(data));
+    this.modalRef = this.modalService.show(template);
+    this.state = 'import';
+    localStorage.setItem('IRStable', this.file.name);
+    this.fileName = this.file.name;
+  }
+
+  onCloseModal() { 
+    this.modalRef.hide();
   }
 
   incomingfile(event) {
