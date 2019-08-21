@@ -102,6 +102,13 @@
                   <div class="input-group-append">
                     <span class="input-group-text transparentBg">€</span>
                   </div>
+
+                <div class="form-group">
+                  <label for="vehicleMaintenance">Manutenção da viatura</label>
+                  <span><input formControlName="vehicleMaintenance" (change)="calculateTotalAnualCost()"
+                      oninput="validity.valid||(value='');" type="number" min="0" step="0.01" class="ml-2"
+                      style="width: 90px;" id="vehicleMaintenance"></span>
+
                 </div>
                 <div class="input-group mt-3">
                   <div class="input-group-prepend">
@@ -114,6 +121,7 @@
                     <span class="input-group-text transparentBg">€</span>
                   </div>
                 </div>
+
                 <div class="input-group mt-3">
                   <div class="input-group-prepend">
                     <span class="input-group-text transparentBg">Prémios</span>
@@ -123,6 +131,17 @@
                   <div class="input-group-append">
                     <span class="input-group-text transparentBg">€</span>
                   </div>
+
+              </div>
+              <!-- Acaba coluna da esquerda-->
+              <div class="col-sm">
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text transparentBg">Custo Mensal</span>
+                  </div>
+                  <input type="number" min="0" class="form-control inputAlignRigth" formControlName="monthlyTotalCost"
+                    type="number" value={{simForm.value.monthlyTotalCost}} id="monthlyTotalCost" disabled>
+
                 </div>
 
                 <ng-container *ngFor="let extra of t.controls">
@@ -315,7 +334,7 @@
                 </div>
               </div>
             </div>
-          </form>
+
           <div class="container">
             <div class="row">
               <div class="form-group">
@@ -341,9 +360,9 @@
           </div>
         </div>
       </div>
-    </fieldset>
+    <!-- </fieldset>
   </div>
-</div>
+</div> -->
 <div *ngIf="state == 'third'" class="row custom-row offset-md-1">
   <div class="col-sm-10 custom-container jumbotron">
 

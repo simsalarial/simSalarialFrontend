@@ -6,8 +6,8 @@
                 <div class="list-group list-group-flush vh-100">
                 <a [routerLink]="['/layout/admin/dashboard']" class="list-group-item list-group-item-action text-secondary"><fa-icon [icon]="faTable"></fa-icon>           Dashboard</a>
                 <a (click)="redirect()" class="list-group-item list-group-item-action text-secondary"><fa-icon [icon]="faCalculator"></fa-icon>           Simulador</a>
-                <a [routerLink]="['/layout/admin/gestaodecontas']" class="list-group-item list-group-item-action text-secondary"><fa-icon [icon]="faUsers"></fa-icon>           Gestão de contas</a>
-                <a [routerLink]="['/layout/admin/gestaosimulador']" class="list-group-item list-group-item-action text-secondary"><fa-icon [icon]="faTasks"></fa-icon>           Gestão do simulador</a>
+                <a [routerLink]="['/layout/admin/gestaodecontas']"  class="list-group-item list-group-item-action text-secondary"><fa-icon [icon]="faUsers"></fa-icon>           Gestão de contas</a>
+                <a [routerLink]="['/layout/admin/gestaosimulador']" (click) ="importDataBaseData()" class="list-group-item list-group-item-action text-secondary"><fa-icon [icon]="faTasks"></fa-icon>           Gestão do simulador</a>
                 <a [routerLink]="['/layout/admin/importarIRS']" class="list-group-item list-group-item-action text-secondary">Tabela IRS</a>
                 </div>
             </div>

@@ -1,7 +1,13 @@
+import { WorkInsurance } from './../../core/models/workInsurance';
+import { FoodSubsidy } from './../../core/models/foodSubsidy';
+import { DataService } from './../../core/services/data-service/data.service';
 import { Component, OnInit } from '@angular/core';
 import { AccountServiceService } from 'src/app/core/services';
 import { Router } from '@angular/router';
 import { faUsers, faCalculator, faTasks, faTable } from '@fortawesome/free-solid-svg-icons';
+import { Margin } from 'src/app/core/models/margin';
+import { Taxation } from 'src/app/core/models/taxation';
+import { SimulationService } from 'src/app/core/services/simulation-data/simulation.service';
 
 @Component({
   selector: 'app-admin',
@@ -15,9 +21,32 @@ export class AdminComponent implements OnInit {
   faTasks = faTasks;
   faTable = faTable;
 
+
+  workInsuranceVariable: number;
+  varAccountedForWorkInsurance: number;
+
+
+
+  foodSubsidyMonth: number;
+  averageDaysInAMonth: number;
+  limitValueForFoodSubsidy: number;
+
+
+
+  // tslint:disable-next-line: variable-name
+  margin_min: number;
+  // tslint:disable-next-line: variable-name
+  margin_max: number;
+
+
+  workerSocialSecurity: number;
+  companySocialSecurity: number;
+  autonomousTributation: number;
+
   constructor(
     private accountApi: AccountServiceService,
-    private readonly router: Router
+    private readonly router: Router,
+    private simulationService: SimulationService
   ) { }
 
   ngOnInit() {
@@ -25,7 +54,11 @@ export class AdminComponent implements OnInit {
   }
 
   redirect() {
-    this.router.navigateByUrl("/layout/admin/simulador");
+    this.router.navigateByUrl('/layout/admin/simulador');
   }
 
+
+  importDataBaseData() {
+    this.simulationService.importDataBaseData();
+  }
 }
