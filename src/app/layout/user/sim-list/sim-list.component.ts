@@ -3,6 +3,7 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { DatatableComponent } from '@swimlane/ngx-datatable';
 import { AccountServiceService } from 'src/app/core';
+import { Colaborator } from 'src/app/core/models/colaborator';
 
 @Component({
   selector: 'app-sim-list',
@@ -11,33 +12,51 @@ import { AccountServiceService } from 'src/app/core';
 })
 export class SimListComponent implements OnInit {
   @Input() header: any;
-  @Input() temp: any[];
+  //@Input() temp: any[];
   @Output() clickedRow = new EventEmitter();
   //@Output() onDelete = new EventEmitter();
+  //simToDelete;
+  //modalRef: BsModalRef;
+  faSearch = faSearch;
   public keys;
   dataSub = [];
-  //modalRef: BsModalRef;
   state: string;
-  //simToDelete;
-  faSearch = faSearch;
-  //temp = [];
+  simFields = ['marginPercentage', 'anualRate', 'anualTotalCost', 'netSalaryWithoutDuo', 'netSalaryWithDuo'];
   rows = [];
+  temp = [];
+  data = [];
+  colaborators: Array<Colaborator>;
+  msg: string;
   @ViewChild(DatatableComponent, { static: false }) table: DatatableComponent;
 
   constructor(private modalService: BsModalService, private accountService:AccountServiceService) { 
     this.keys = [
       {prop: 'colaborator'},
       {prop: 'simulation'},
-      {prop: 'margin'},
-      {prop: 'rate'},
+      {prop: 'marginPercentage'},
+      {prop: 'anualRate'},
       {prop: 'anualTotalCost'},
-      {prop: 'netSalary'}
+      {prop: 'netSalaryWithoutDuo'},
+      {prop: 'netSalaryWithDuo'}
     ]
     }
   
   ngOnInit() {
-    //this.temp = this.data;
     this.rows = this.temp;
+    let email = this.accountService.getCurrentEmail();
+    this.accountService.getAllSimulationsFromAccount(email).subscribe((res: any) => {
+      res.forEach( (element: any) => {
+        this.colaborators[0].name = element.name;
+
+        //this.colaborators[0].simulations[0] = element.simulations;
+        this.simFields.forEach((field: any) => {
+          const filtered = element.simulations.filter( el => el.name === field);
+          this.colaborators[0].simulations[field] = filtered[0].value;
+        });
+
+        this.data.push(this.colaborators);
+      });
+    })
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -86,5 +105,6 @@ export class SimListComponent implements OnInit {
     // Whenever the filter changes, always go back to the first page
     this.table.offset = 0;
   }
+
 
 }

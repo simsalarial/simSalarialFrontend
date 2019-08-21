@@ -13,7 +13,6 @@ export class AccountManagComponent implements OnInit {
   state: string;
   data = [];
   modalRef: BsModalRef;
-  simulations = [];
   msg: string;
 
   receivedData = false;
@@ -54,18 +53,7 @@ export class AccountManagComponent implements OnInit {
     })
   }
 
-  getAllSimulations(){
-    let email = this.accountService.getCurrentEmail();
-    this.accountService.getAllSimulationsFromAccount(email).subscribe((email: any) => {
-      console.log(email);
-
-     },
-     (error) => {
-       console.error(this.msg = error.error);
-     }
-   );
-    //this.simulations = this.accountService.getAllSimulationsFromAccount(email);
-  }
+  
   
 }
 

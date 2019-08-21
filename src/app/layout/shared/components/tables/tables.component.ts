@@ -37,12 +37,12 @@ export class TablesComponent implements OnInit {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    console.log(changes);
+    //console.log(changes);
     this.rows = changes.temp.currentValue;
   }
 
   showConfirmModal(template: TemplateRef<any>, row) {
-    console.log(row);
+    //console.log(row);
     this.emailToDelete = row.email;
     this.state = 'deleteAccount'
     this.modalRef = this.modalService.show(template);
@@ -62,7 +62,7 @@ export class TablesComponent implements OnInit {
    // this.onDelete.emit(this.emailToDelete);
    let email = this.emailToDelete;
    this.accountService.deleteAccount(this.emailToDelete).subscribe ((res:any) => {
-    console.log(res);
+    //console.log(res);
     this.temp = this.temp.filter(function( obj ) {
       return obj.email !== email;
     });

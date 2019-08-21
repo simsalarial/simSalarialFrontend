@@ -39,6 +39,7 @@
                     <span [ngClass]="{'borderedRed' : editUserForm.controls['newPass'].invalid && submitClicked}"class="input-group-text form-control transparentBg"  for="inputnewPass">Nova senha</span>
                 </div>
                 <input [ngClass]="{'is-invalid' : editUserForm.controls['newPass'].invalid && submitClicked}" id="inputnewPass" type="password" class="form-control" formControlName="newPass">
+                 
             </div>
             <div *ngIf="editUserForm.controls['newPass'].invalid && submitClicked"class="text-danger ml-2">
                  <small *ngIf="editUserForm.controls['newPass'].errors.required">Insira uma nova senha.</small>
