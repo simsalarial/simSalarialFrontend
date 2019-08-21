@@ -58,6 +58,10 @@ export class AccountServiceService {
     return this.http.put('http://localhost:8080/simuladorsalarial/api/accounts/editAccount', account, {responseType: 'text'});
   }
 
+  public getSimFromAccount(email) {
+    return this.http.get('http://localhost:8080/simuladorsalarial/api/accounts/allSimsFromAccount?email=' + email);
+  }
+
   public logout() {
     this.currentAccount = null;
   }

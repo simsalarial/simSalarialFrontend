@@ -3,6 +3,7 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { DatatableComponent } from '@swimlane/ngx-datatable';
 import { AccountServiceService } from 'src/app/core';
+import { Colaborator } from 'src/app/core/models/colaborator';
 
 @Component({
   selector: 'app-sim-list',
@@ -16,12 +17,14 @@ export class SimListComponent implements OnInit {
   //@Output() onDelete = new EventEmitter();
   public keys;
   dataSub = [];
-  modalRef: BsModalRef;
+  //modalRef: BsModalRef;
   state: string;
   //simToDelete;
   faSearch = faSearch;
   //temp = [];
   rows = [];
+  colaborator: Array<Colaborator>;
+
   @ViewChild(DatatableComponent, { static: false }) table: DatatableComponent;
 
   constructor(private modalService: BsModalService, private accountService:AccountServiceService) { 
@@ -89,4 +92,11 @@ export class SimListComponent implements OnInit {
     this.table.offset = 0;
   }
 
+  getSimFromAccount() {
+    let email = this.accountService.getCurrentEmail();
+
+    this.accountService.getSimFromAccount(email).subscribe((res:any) => {
+      
+      });
+  }
 }

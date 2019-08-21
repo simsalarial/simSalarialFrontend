@@ -457,7 +457,7 @@ export class SimuladorComponent implements OnInit {
         console.log("array na mulher")
         for (let i = 0; i < element[1].length; i++) {
           console.log(element[1]);
-          this.saveSimulator.push({name: element[1].name, value: element[1].value});
+          this.saveSimulator.push({name: element[1].name, value: element[1].value}); 
         }
         // element[1].for((extra: SimFieldsData) => {
 
