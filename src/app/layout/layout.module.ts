@@ -7,14 +7,13 @@ import { SharedModule } from './shared/shared.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UserComponent } from './user/user.component';
 import { SimListComponent } from './user/sim-list/sim-list.component';
-import { AccountManagComponent } from './user/account-manag/account-manag.component';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 
 
 @NgModule({
-  declarations: [LayoutComponent, UserComponent, SimListComponent, AccountManagComponent],
+  declarations: [LayoutComponent, UserComponent, SimListComponent],
   imports: [
     CommonModule,
     LayoutRoutingModule,
@@ -26,6 +25,5 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
     NgxDatatableModule,
     ModalModule.forRoot()
   ],
-  entryComponents: [AccountManagComponent]
 })
 export class LayoutModule { }

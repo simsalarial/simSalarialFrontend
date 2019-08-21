@@ -19,7 +19,7 @@
                 Colaborador
             </ng-template>
             <ng-template let-row="row" ngx-datatable-cell-template>
-                {{row.name}}
+                {{row.colaborator}}
             </ng-template>
         </ngx-datatable-column>
         <ngx-datatable-column>
@@ -27,7 +27,7 @@
                 Simulação
             </ng-template>
             <ng-template let-row="row" ngx-datatable-cell-template>
-                {{row.email}}
+                {{row.simulation}}
             </ng-template>
         </ngx-datatable-column>
         <ngx-datatable-column>
@@ -35,7 +35,7 @@
                 Margem
             </ng-template>
             <ng-template let-row="row" ngx-datatable-cell-template>
-                {{row.email}}
+                {{row.margin}}
             </ng-template>
         </ngx-datatable-column>
         <ngx-datatable-column>
@@ -43,7 +43,7 @@
                 Rate
             </ng-template>
             <ng-template let-row="row" ngx-datatable-cell-template>
-                {{row.email}}
+                {{row.rate}}
             </ng-template>
         </ngx-datatable-column>
         <ngx-datatable-column>
@@ -51,7 +51,7 @@
                 Custo total
             </ng-template>
             <ng-template let-row="row" ngx-datatable-cell-template>
-                {{row.email}}
+                {{row.anualTotalCost}}
             </ng-template>
         </ngx-datatable-column>
         <ngx-datatable-column>
@@ -59,12 +59,12 @@
                 Salário líquido
             </ng-template>
             <ng-template let-row="row" ngx-datatable-cell-template>
-                {{row.email}}
+                {{row.netSalary}}
             </ng-template>
         </ngx-datatable-column>
     </ngx-datatable>
 </div>
-<ng-template #template>
+<!-- <ng-template #template>
     <div class="modal-header">
         <h4 class="modal-title pull-left">Apagar conta</h4>
         <button type="button" class="close pull-right" aria-label="Close" (click)="onCloseModal()">
@@ -81,4 +81,4 @@
             </div>
         </div>
     </div>
-</ng-template>
+</ng-template> -->

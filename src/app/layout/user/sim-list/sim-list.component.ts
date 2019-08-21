@@ -16,7 +16,7 @@ export class SimListComponent implements OnInit {
   //@Output() onDelete = new EventEmitter();
   public keys;
   dataSub = [];
-  modalRef: BsModalRef;
+  //modalRef: BsModalRef;
   state: string;
   //simToDelete;
   faSearch = faSearch;
@@ -77,12 +77,10 @@ export class SimListComponent implements OnInit {
 
   search(event) {
     const val = event.target.value.toLowerCase();
-
     // filter data
     const temp = this.temp.filter(function(d) {
-      return d.name.toLowerCase().indexOf(val) !== -1 || !val;
+      return d.colaborator.toLowerCase().indexOf(val) !== -1 || !val;
     });
-
     // update the rows
     this.rows = temp;
     // Whenever the filter changes, always go back to the first page

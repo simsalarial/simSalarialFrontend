@@ -1,10 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Account, AccountServiceService } from 'src/app/core';
-import { HttpClient } from '@angular/common/http';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { NewAccountComponent } from './new-account/new-account.component';
-import { ReplaySubject, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-account-manag',
@@ -15,7 +13,9 @@ export class AccountManagComponent implements OnInit {
   state: string;
   data = [];
   modalRef: BsModalRef;
- 
+  simulations = [];
+  msg: string;
+
   receivedData = false;
   constructor( private modalService: BsModalService, private accountService:AccountServiceService) { }
 
@@ -23,7 +23,7 @@ export class AccountManagComponent implements OnInit {
     console.log('entrei');
     this.state = 'table';
     this.accountService.getAllAccounts().subscribe( (res:any) => {
-      console.log(res);
+      //console.log(res);
       res.forEach(element => {
         let account = new Account();
         account.name = element.name;
@@ -45,15 +45,27 @@ export class AccountManagComponent implements OnInit {
     this.state = 'newUser';
     this.modalRef = this.modalService.show(NewAccountComponent);
     this.modalRef.content.onClose.subscribe(result => {
-      console.log('results', result);
+      //console.log('results', result);
       this.data.push(result);
       // create shallow copy of array, since this is a new array (and new reference) ngOnChanges hook of the ng-table.component will fire
       this.data = this.data.slice(0);
-      console.log(this.data);
+      //console.log(this.data);
       
     })
   }
 
+  getAllSimulations(){
+    let email = this.accountService.getCurrentEmail();
+    this.accountService.getAllSimulationsFromAccount(email).subscribe((email: any) => {
+      console.log(email);
+
+     },
+     (error) => {
+       console.error(this.msg = error.error);
+     }
+   );
+    //this.simulations = this.accountService.getAllSimulationsFromAccount(email);
+  }
   
 }
 
