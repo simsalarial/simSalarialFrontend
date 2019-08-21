@@ -18,7 +18,7 @@ import { NewAccountComponent } from './account-manag/new-account/new-account.com
 import { ModalModule } from 'ngx-bootstrap/modal';
 
 @NgModule({
-  declarations: [AdminComponent, AdminMainComponent, AccountManagComponent,SimManagComponent, DashboardComponent, ImportTableComponent, NewAccountComponent],
+  declarations: [AdminComponent, AdminMainComponent, AccountManagComponent, SimManagComponent, DashboardComponent, ImportTableComponent, NewAccountComponent],
   imports: [
     CommonModule,
     FormsModule,
