@@ -9,6 +9,8 @@ import { UserComponent } from './user/user.component';
 import { SimListComponent } from './user/sim-list/sim-list.component';
 import { AccountManagComponent } from './user/account-manag/account-manag.component';
 import { ModalModule } from 'ngx-bootstrap/modal';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 
 
 @NgModule({
@@ -18,8 +20,10 @@ import { ModalModule } from 'ngx-bootstrap/modal';
     LayoutRoutingModule,
     //AdminModule,
     FormsModule,
+    FontAwesomeModule,
     ReactiveFormsModule,
     SharedModule,
+    NgxDatatableModule,
     ModalModule.forRoot()
   ],
   entryComponents: [AccountManagComponent]

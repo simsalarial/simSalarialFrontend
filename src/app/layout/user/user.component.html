@@ -2,10 +2,9 @@
 <div>
     <div class="container">
         <div class="row">
-            <div class="col-md-6 offset-md-8">
-                <button *ngIf="state == 'simList' || state == 'profile'" (click)="state = 'simulator'"  type="button" class="btn btn-link">Simulador</button>
-                <button *ngIf="state == 'simulator' || state == 'profile'" (click)="state = 'simList'"  type="button" class="btn btn-link">Listar simulações</button>
-                <button *ngIf="state == 'simList' || state == 'simulator'" (click)="showEditAccount()"  type="button" class="btn btn-link">Gestão da conta</button>
+            <div class="col-md-6 offset-md-10">
+                <button *ngIf="state == 'simList' || state == 'profile'" (click)="state = 'simulator'"  type="button" class="btn btn-link" style="color:#334D65">Simulador</button>
+                <button *ngIf="state == 'simulator' || state == 'profile'" (click)="state = 'simList'"  type="button" class="btn btn-link" style="color:#334D65">Listar simulações</button>
             </div>
            
         </div>

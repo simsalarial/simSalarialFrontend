@@ -1,7 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { AccountServiceService } from 'src/app/core/services/account-service/account-service.service';
-import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
-import { AccountManagComponent } from '../user/account-manag/account-manag.component';
 
 @Component({
   selector: 'app-user',
@@ -10,17 +7,12 @@ import { AccountManagComponent } from '../user/account-manag/account-manag.compo
 })
 export class UserComponent implements OnInit {
 state: string;
-modalRef: BsModalRef;
 
-  constructor(private modalService: BsModalService, private accountService:AccountServiceService, private readonly accountApi: AccountServiceService) { }
+  constructor() { }
 
   ngOnInit() {
     this.state = 'simulator';
   }
 
-  showEditAccount() {
-    this.modalRef = this.modalService.show(AccountManagComponent);
-
-  }
 
 }
