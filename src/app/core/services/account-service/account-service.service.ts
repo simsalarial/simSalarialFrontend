@@ -61,8 +61,4 @@ export class AccountServiceService {
   public logout() {
     this.currentAccount = null;
   }
-
-  public getAllSimulationsFromAccount(email) {
-    return this.http.get('http://localhost:8080/simuladorsalarial/api/accounts/allSimsFromAccount?email=' + email);
-  }
 }
