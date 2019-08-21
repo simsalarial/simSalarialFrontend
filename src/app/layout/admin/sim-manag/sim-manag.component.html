@@ -1,6 +1,42 @@
 <div class="container">
   <div class="card">
     <div class="card-body">
+      <div class="card">
+        <div class="card-header">
+          Taxas em vigor
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="input-group mt-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text transparentBg"
+                  >Segurança Social do Trabalhador</span
+                >
+              </div>
+              <input
+                type="number"
+                [(ngModel)]="workerSocialSecurity"
+                class="form-control inputAlignRigth"
+                min="0"
+                id="foodSubsidy"
+                value=""
+                disabled
+              />
+            </div>
+
+            <div class="input-group mt-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text transparentBg"
+                  >Segurança Social do Trabalhador</span>
+              </div>
+              <input type="number" [(ngModel)]="workerSocialSecurity" class="form-control inputAlignRigth" min="0" id="foodSubsidy"/>
+            </div>
+          </div>
+
+          <a href="#" class="btn btn-primary">Guardar</a>
+        </div>
+      </div>
+      <br />
       <div class="row">
         <div class="col">
           <div class="card">
@@ -25,10 +61,8 @@
             <div class="card-body">
               <h5 class="card-title">Special title treatment</h5>
               <p class="card-text">
-
-
-
-              <a href="#" class="btn btn-primary">Guardar</a>
+                <a href="#" class="btn btn-primary">Guardar</a>
+              </p>
             </div>
           </div>
         </div>
@@ -68,10 +102,6 @@
     </div>
   </div>
 </div>
-
-
-
-
 
 <div class="row custom-row">
   <div class="col-sm-8 custom-container jumbotron">
