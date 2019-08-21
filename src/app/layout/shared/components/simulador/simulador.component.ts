@@ -79,11 +79,7 @@ export class SimuladorComponent implements OnInit {
   margin_min: number;
   margin_max: number;
   markUp;
-
-
-  usagePercentage = 100;
-
-
+  usagePercentage;
   extras: FormArray;
   extrasArray: any;
   extrasSelectedWithout = new Array<SimFieldsData>();
@@ -104,11 +100,11 @@ export class SimuladorComponent implements OnInit {
   ngOnInit() {
     this.profileForm = this.fb.group({
       name: ['Sr. Ricas', Validators.required],
-      dependents: ['2', Validators.required],
-      status: ['Não Casado', Validators.required],
+      dependents: ['', Validators.required],
+      status: ['', Validators.required],
     })
     console.log(this.profileForm);
-    this.usagePercentage = 100;
+    // this.usagePercentage = 100;
     this.simForm = this.fb.group({
       baseSalary: [Number, Validators.required],
       foodSubsidy: [0, Validators.required],
@@ -122,6 +118,7 @@ export class SimuladorComponent implements OnInit {
       netSalaryWithDuo: [0],
       grossSalary: [0],
       usagePercentage: [100],
+      marginPercentage: [0],
       monthlyTotalCost: [0],
       dailyTotalCost: [0],
       hourlyTotalCost: [0],
@@ -134,12 +131,21 @@ export class SimuladorComponent implements OnInit {
     });
     // this.simForm.reset();
     // this.simForm.value.extras = [];
-    this.usagePercentage = 100;
+    //this.usagePercentage = 100;
     console.log(this.simForm.value);
     this.col = new Colaborator();
     this.sim = new Simulation();
     this.taxation = new Taxation();
     this.addAllExtras();
+
+  }
+
+  func(event) {
+    this.simForm.value.usagePercentage = event.target.value;
+  }
+
+  func2(event){
+    this.simForm.value.marginPercentage = event.target.value;
 
   }
 
@@ -510,7 +516,6 @@ export class SimuladorComponent implements OnInit {
       console.log(element);
       if (element[1].constructor === Array) {
         console.log("array na mulher")
-        // tslint:disable-next-line: prefer-for-of
         for (let i = 0; i < element[1].length; i++) {
           console.log(element[1]);
           this.saveSimulator.push({name: element[1].name, value: element[1].value});
@@ -523,7 +528,7 @@ export class SimuladorComponent implements OnInit {
         this.saveSimulator.push({name: element[0], value: Number(element[1])});
       }
     });
-    console.log(this.saveSimulator);
+    console.log(this.saveSimulator); 
   }
 
   exportToPDF() {
