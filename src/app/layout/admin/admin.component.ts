@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AccountServiceService } from 'src/app/core/services';
 import { Router } from '@angular/router';
+import { faUsers, faCalculator, faTasks, faTable } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-admin',
@@ -9,6 +10,11 @@ import { Router } from '@angular/router';
 })
 export class AdminComponent implements OnInit {
   role: string;
+  faUsers = faUsers;
+  faCalculator = faCalculator;
+  faTasks = faTasks;
+  faTable = faTable;
+
   constructor(
     private accountApi: AccountServiceService,
     private readonly router: Router

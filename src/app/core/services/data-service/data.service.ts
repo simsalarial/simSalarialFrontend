@@ -68,5 +68,12 @@ export class DataService {
   }
 
 
+  // SAVE SIMULATOR IN DATA BASE //
+
+  // postSimulation(simulation) {
+  //   this.http.post('')
+  // }
+
+
 }
 

@@ -10,6 +10,8 @@ import { AccountServiceService } from 'src/app/core/services/';
 })
 export class HeaderComponent implements OnInit {
   public userRole: string;
+  email: string;
+
   constructor(
     private router: Router,
     private accountApi: AccountServiceService
@@ -18,6 +20,7 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.email = this.accountApi.getCurrentEmail();
   }
 
   public logout() {

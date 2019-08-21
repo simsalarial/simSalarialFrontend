@@ -1,3 +1,5 @@
+import { Extras } from './../../../../core/models/extras';
+import { ColaboratorServiceService } from './../../../../core/services/colaborator-service/colaborator-service.service';
 import { FoodSubsidy } from './../../../../core/models/foodSubsidy';
 import { WorkInsurance } from './../../../../core/models/workInsurance';
 import { Component, OnInit } from '@angular/core';
@@ -9,9 +11,11 @@ import * as jsPDF from 'jspdf';
 import { ExcelServiceService } from 'src/app/core/services/excel-service/excel-service.service';
 import { DataService } from 'src/app/core/services/data-service/data.service';
 import { Taxation } from 'src/app/core/models/taxation';
-import { Extras } from 'src/app/core/models/extras';
 import { SimFieldsData } from 'src/app/core/models/simFieldsData';
+import { splitClasses } from '@angular/compiler';
+import { SliderComponent } from '../slider/slider.component';
 import { Margin } from 'src/app/core/models/margin';
+import { AccountServiceService } from 'src/app/core';
 
 
 @Component({
@@ -24,15 +28,21 @@ export class SimuladorComponent implements OnInit {
   sim: Simulation;
   profileForm: any;
   simForm: any;
+
   private col: Colaborator;
+
   taxation: Taxation;
   taxationForm: any;
+
+
   submitClicked = false;
-  valPhone: number;
-  valVehicle: number;
+
+
   private simExtraElements = new Array<Extras>();
   extrasWithTa = new Array<SimFieldsData>();
   extrasWithoutTa = new Array<SimFieldsData>();
+
+
   private irsValues = new Array<object>();
   private tempTax: number;
 
@@ -40,37 +50,52 @@ export class SimuladorComponent implements OnInit {
 
   foodSubsidy = new Array<FoodSubsidy>();
   foodSubsidyMonth: number;
+  averageDaysInAMonth: number;
+  limitValueForFoodSubsidy: number;
 
   workInsuranceVariable: number;
   varAccountedForWorkInsurance: number;
+
+
   totalPayedMonths = 15;
   monthsWithoutVacation = 11;
   monthsInAYear = 12;
-  averageDaysInAMonth = 21;
+  hoursWorkedInADay = 8;
+
   selectExtra = "";
   // Tributações //
   private workerSocialSecurity: number;
   private companySocialSecurity: number;
   private autonomousTributation: number;
 
-  SimFieldsData:  SimFieldsData;
-  hoursWorkedInADay = 8;
-  marginPercentage;
+  SimFieldsData: SimFieldsData;
+
+
+  marginPercentage = 0;
 
   marginValues = new Array<Margin>();
   margin_min: number;
   margin_max: number;
-
   markUp;
+
+
   usagePercentage = 100;
+
+
   extras: FormArray;
   extrasArray: any;
-  extrasSelected = [];
+  extrasSelectedWithout = new Array<SimFieldsData>();
+  extrasSelectedWith = new Array<SimFieldsData>();
+
+
+  saveSimulator = Array<SimFieldsData>();
 
   constructor(
     private fb: FormBuilder,
     private excelService: ExcelServiceService,
     private dataService: DataService,
+    private colaboratorservice: ColaboratorServiceService,
+    private currentAccount: AccountServiceService,
   ) {
   }
 
@@ -85,17 +110,11 @@ export class SimuladorComponent implements OnInit {
     this.simForm = this.fb.group({
       baseSalary: [Number, Validators.required],
       foodSubsidy: [0, Validators.required],
-      phone: [0],
-      vehicle: [0],
-      fuel: [0],
       healthInsurance: [0],
       workInsurance: [0],
-      mobileNet: [0],
-      zPass: [0],
-      otherWithTA: [0],
-      vehicleMaintenance: [0],
-      otherWithoutTA: [0],
       otherBonus: [0],
+      otherWithoutTA: [0],
+      otherWithTA: [0],
       anualTotalCost: [0],
       netSalaryWithoutDuo: [0],
       netSalaryWithDuo: [0],
@@ -108,8 +127,8 @@ export class SimuladorComponent implements OnInit {
       monthlyRate: [0],
       dailyRate: [0],
       hourlyRate: [0],
-      extrasWithTa: this.fb.array( [] ),
-      extrasWithoutTa: this.fb.array( [] )
+      extrasWithTa:  new FormArray([]),
+      extrasWithoutTa: new FormArray([])
     });
     // this.simForm.reset();
     // this.simForm.value.extras = [];
@@ -146,6 +165,11 @@ export class SimuladorComponent implements OnInit {
     console.log(this.simForm.value);
   }
 
+    // convenience getters for easy access to form fields
+    get f() { return this.simForm.controls; }
+    get t() { return this.f.extrasWithTa as FormArray; }
+    get g() { return this.f.extrasWithoutTa as FormArray; }
+
   createExtras(): FormGroup {
     return this.fb.group({
       name: '',
@@ -158,6 +182,31 @@ export class SimuladorComponent implements OnInit {
     this.selectExtra = event.target.value;
     console.log(this.selectExtra);
 
+    console.log(event.target.value);
+    console.log(this.extrasArray);
+    var index;
+    for (index = 0; index < this.extrasArray.length; index++) {
+      console.log(this.extrasArray[index]);
+      if(this.extrasArray[index].name == event.target.value) {
+        console.log(this.extrasArray[index].tA);
+        if(this.extrasArray[index].tA) {
+          this.t.push(this.fb.group({
+            name: [ this.extrasArray[index].name],
+            value: ['']
+          }));
+          console.log(this.t.controls);
+        } else {
+          this.g.push(this.fb.group({
+            name: [ this.extrasArray[index].name],
+            value: ['']
+          }));
+          console.log(this.g.controls);
+        }
+        this.extrasArray.splice(index, 1);
+      }
+    }
+    console.log('with', this.extrasSelectedWith);
+    console.log('without', this.extrasSelectedWithout);
   }
 
 
@@ -171,7 +220,7 @@ export class SimuladorComponent implements OnInit {
       this.state = 'second';
       this.excelService.retrieveFromDB(this.col).subscribe((res) => {
         // tslint:disable-next-line: no-unused-expression
-      //  res;
+        //  res;
         console.log(res);
         Object.assign(this.irsValues, res);
       });
@@ -180,15 +229,15 @@ export class SimuladorComponent implements OnInit {
         // Get overall taxes //
       this.dataService.retrieveDataServiceTaxes(this.taxation).subscribe((taxRes) => {
         // tslint:disable-next-line: no-unused-expression
-        //taxRes;
-          Object.assign(this.taxation, taxRes);
-          console.log(this.taxation);
-          this.parseTaxationToIndividualValue(this.taxation);
+        // taxRes;
+        Object.assign(this.taxation, taxRes);
+        console.log(this.taxation);
+        this.parseTaxationToIndividualValue(this.taxation);
       });
-        // Get elements for simulation and the way they're taxed //
+      // Get elements for simulation and the way they're taxed //
       this.dataService.retrieveDataServiceExtras(this.extras).subscribe((extraRes) => {
         // tslint:disable-next-line: no-unused-expression
-        //extraRes;
+        // extraRes;
         console.log(extraRes);
 
         Object.assign(this.simExtraElements, extraRes);
@@ -212,9 +261,23 @@ export class SimuladorComponent implements OnInit {
         this.resolveFoodSubsidyValue(this.foodSubsidy);
 
       });
+
+      this.createColaboratorWithAccountId();
+
     }
 
   }
+  createColaboratorWithAccountId() {
+    console.log(this.col);
+    this.col.dependents = this.profileForm.value.dependents;
+    this.col.account = this.currentAccount.currentAccount;
+    this.colaboratorservice.saveColaboratorInDbAndGetItsID(this.col).subscribe((colabRes) => {
+      Object.assign(this.col, colabRes);
+      console.log(this.col);
+    });
+  }
+
+
   resolveWorkInsuranceVariables(receiveworkInsuranceVariable) {
     this.workInsuranceVariable = receiveworkInsuranceVariable.workInsuranceVariable;
     this.varAccountedForWorkInsurance = receiveworkInsuranceVariable.varAccountedForWorkInsurance;
@@ -234,7 +297,15 @@ export class SimuladorComponent implements OnInit {
 
   resolveFoodSubsidyValue(foodSubsidy) {
     this.foodSubsidyMonth = foodSubsidy.foodSubsidyMonth;
-    console.log(this.foodSubsidyMonth);
+
+    this.limitValueForFoodSubsidy = foodSubsidy.limitValueForFoodSubsidy;
+    this.averageDaysInAMonth = foodSubsidy.averageDaysOfTheMonth;
+    console.log(this.averageDaysInAMonth);
+    console.log(this.limitValueForFoodSubsidy);
+
+
+    this.simForm.value.foodSubsidy = this.foodSubsidyMonth;
+
   }
 
   resolveSimExtraElements() {
@@ -243,23 +314,22 @@ export class SimuladorComponent implements OnInit {
 
 
     // tslint:disable-next-line: prefer-for-of
-    for ( let i = 0; i < this.simExtraElements.length; i++ ) {
+    for (let i = 0; i < this.simExtraElements.length; i++) {
       this.SimFieldsData = new SimFieldsData();
       this.SimFieldsData.name = this.simExtraElements[i].name;
       this.SimFieldsData.value = 0;
+      this.SimFieldsData.tA = (this.simExtraElements[i].tA);
       if (this.simExtraElements[i].tA) {
-        this.extrasWithTa.push(this.SimFieldsData);
+        this.extrasWithTa.push(  this.SimFieldsData );
       } else {
-        this.extrasWithoutTa.push(this.SimFieldsData);
+        this.extrasWithoutTa.push(  this.SimFieldsData );
       }
 
     }
-    this.simForm.value.extrasWithTa = this.extrasWithTa;
-    this.simForm.value.extrasWithoutTa = this.extrasWithoutTa;
+   /*  this.simForm.value.extrasWithTa = this.extrasWithTa;
+    this.simForm.value.extrasWithoutTa = this.extrasWithoutTa;*/
     this.extrasArray = this.extrasWithTa.concat(this.extrasWithoutTa);
     console.log(this.extrasArray);
-    console.log(this.simForm.value.extrasWithTa);
-    console.log(this.simForm.value.extrasWithoutTa);
   }
 
   parseTaxationToIndividualValue(taxation: Taxation) {
@@ -271,7 +341,6 @@ export class SimuladorComponent implements OnInit {
 
   reset() {
     this.simForm.reset();
-    this.simForm.value.foodSubsidy = 160.23;
     this.simForm.value.usagePercentage = this.usagePercentage;
     this.tempTax = 0;
     this.marginPercentage = 0;
@@ -284,17 +353,13 @@ export class SimuladorComponent implements OnInit {
     }
   }
   goBack() {
-
     this.simForm.reset();
-    this.simForm.value.foodSubsidy = 160.23;
     this.simForm.value.baseSalary = 0;
     this.simForm.value.usagePercentage = this.usagePercentage;
     this.tempTax = 0;
     this.marginPercentage = 0;
     this.markUp = 0;
     this.state = 'first';
-    this.simForm.value.extrasWithTa.reset();
-    this.simForm.value.extrasWithoutTa.reset();
   }
 
   newSim() {
@@ -323,14 +388,18 @@ export class SimuladorComponent implements OnInit {
   }
 
   calculateWorkInsuranceValue() {
-
+    console.log(this.foodSubsidyMonth);
     this.simForm.value.foodSubsidy = this.foodSubsidyMonth;
-
     // tslint:disable-next-line: max-line-length
     this.simForm.value.workInsurance = Number((((this.workInsuranceVariable * (this.varAccountedForWorkInsurance * this.simForm.value.baseSalary + this.monthsWithoutVacation * this.simForm.value.foodSubsidy)) / this.monthsInAYear)).toFixed(2));
   }
 
   calculateTotalAnualCost() {
+    var array = Object.keys(this.simForm.value);
+    array.filter(key => this.simForm.value[key]).forEach(key => {
+      console.log(key, this.simForm.value[key]);
+    });
+    this.calculateWorkInsuranceValue();
     // var array = Object.keys(this.simForm.value);
     // array.filter(key => this.simForm.value[key]).forEach( key => {
     //   console.log(key, this.simForm.value[key] );
@@ -354,10 +423,11 @@ export class SimuladorComponent implements OnInit {
       this.simForm.value.anualTotalCost += (this.simForm.value.extrasWithoutTa[j].name.value * this.monthsInAYear) + (this.simForm.value.extrasWithoutTa[j].name.value * this.autonomousTributation * this.monthsInAYear);
     }
 
-    this.simForm.value.anualTotalCost = Number(this.simForm.value.anualTotalCost).toFixed(2);
+    this.simForm.value.anualTotalCost = Number((this.simForm.value.anualTotalCost).toFixed(2));
 
 
     console.log(this.simForm.value.anualTotalCost);
+    this.calculateWorkInsuranceValue();
     this.calculateMonthlyTotalCost();
     this.calculateAverageGrossSalary();
     this.calculateNetSalaryWithoutDuo();
@@ -409,28 +479,52 @@ export class SimuladorComponent implements OnInit {
 
   calculateRate() {
     this.simForm.value.anualRate = Number((this.simForm.value.anualTotalCost + this.markUp).toFixed(2));
-    this.calculateMonthlyRate ();
+    this.calculateMonthlyRate();
   }
   calculateMonthlyRate() {
     if (this.markUp < 0) {
       // tslint:disable-next-line: max-line-length
       this.simForm.value.monthlyRate = Number((this.simForm.value.anualRate / this.monthsWithoutVacation / (this.simForm.value.usagePercentage / 100)).toFixed(2));
     } else {
-    // tslint:disable-next-line: max-line-length
-    this.simForm.value.monthlyRate = Number((this.simForm.value.anualTotalCost / this.monthsWithoutVacation / (this.simForm.value.usagePercentage / 100)).toFixed(2));
+      // tslint:disable-next-line: max-line-length
+      this.simForm.value.monthlyRate = Number((this.simForm.value.anualTotalCost / this.monthsWithoutVacation / (this.simForm.value.usagePercentage / 100)).toFixed(2));
     }
 
-    this.calculateDailyRate ();
+    this.calculateDailyRate();
   }
   calculateDailyRate() {
     this.simForm.value.dailyRate = Number((this.simForm.value.monthlyRate / this.averageDaysInAMonth).toFixed(2));
-    this.calculateHourlyRate ();
+    this.calculateHourlyRate();
   }
   calculateHourlyRate() {
     this.simForm.value.hourlyRate = Number((this.simForm.value.dailyRate / this.hoursWorkedInADay).toFixed(2));
   }
 
+  saveThisSim() {
+    console.log(this.simForm);
+    console.log("AQUI");
 
+    Object.entries(this.simForm.value).forEach(element => {
+      console.log(element);
+      if (element[1].constructor === Array) {
+        console.log("array na mulher")
+        // tslint:disable-next-line: prefer-for-of
+        for (let i = 0; i < element[1].length; i++) {
+          console.log(element[1]);
+          this.saveSimulator.push({name: element[1].name, value: element[1].value});
+        }
+        // element[1].for((extra: SimFieldsData) => {
+
+        // });
+      }
+      else {
+        this.saveSimulator.push({name: element[0], value: Number(element[1])});
+      }
+    });
+    console.log(this.saveSimulator);
+  }
+
+  exportToPDF() {
     // let doc = new jsPDF();
     // // tslint:disable-next-line: only-arrow-functions
     // doc.addHTML(document.getElementById('teste'), function() {
