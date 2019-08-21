@@ -18,10 +18,10 @@ export class SliderComponent implements OnInit {
   @Input() value: number = 30;
   @Input() options: Options = {
     floor: -100,
-    ceil: 500,
+    ceil: 250,
     showSelectionBar: true,
     getSelectionBarColor: (value: number): string => {
-      if (value <= -100) {
+      if (value <= 0) {
           return 'red';
       }
      /*  if (value <= 6) {

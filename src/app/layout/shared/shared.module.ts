@@ -12,7 +12,6 @@ import { SliderComponent } from './components/slider/slider.component';
 import { Ng5SliderModule } from 'ng5-slider';
 
 
-
 @NgModule({
   declarations: [HeaderComponent, SimuladorComponent, TablesComponent, FieldTaxComponent, SliderComponent],
   imports: [
@@ -22,14 +21,16 @@ import { Ng5SliderModule } from 'ng5-slider';
     ReactiveFormsModule,
     FontAwesomeModule,
     Ng5SliderModule,
-    NgxDatatableModule
+    NgxDatatableModule,
+
   ],
   exports: [
     HeaderComponent,
     FieldTaxComponent,
     TablesComponent,
     SliderComponent,
-    SimuladorComponent
+    SimuladorComponent,
+
   ]
 })
 export class SharedModule { }
