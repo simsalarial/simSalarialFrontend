@@ -69,13 +69,16 @@
         <div class="card-body">
           <form class="form-horizontal" [formGroup]="simForm">
             <div class="row">
-              <div class="col-sm">
+              <div class="col-sm border-right">
                 <div class="input-group">
                   <div class="input-group-prepend">
                     <span class="input-group-text transparentBg">Salário Base</span>
                   </div>
                   <input type="number" min="0" oninput="validity.valid||(value='');" (change)="getValueForIRS()"
                     class="form-control inputAlignRigth" formControlName="baseSalary" required>
+                  <div class="input-group-append">
+                    <span class="input-group-text transparentBg">€</span>
+                  </div>
                   <div class="input-group-append" style="min-width: 100px;">
                     <span class="input-group-text transparentBg" style="width: 100%">IRS: {{this.tempTax}}%</span>
                   </div>
@@ -86,6 +89,9 @@
                   </div>
                   <input type="number" class="form-control inputAlignRigth" min="0" id="foodSubsidy" value="160.23"
                     disabled>
+                  <div class="input-group-append">
+                    <span class="input-group-text transparentBg">€</span>
+                  </div>
                 </div>
                 <div class="input-group mt-3">
                   <div class="input-group-prepend">
@@ -93,13 +99,9 @@
                   </div>
                   <input formControlName="workInsurance" value="{{simForm.value.workInsurance}}" type="number" min="0"
                     class="form-control inputAlignRigth" id="workInsurance" disabled>
-
-                <div class="form-group">
-                  <label for="vehicleMaintenance">Manutenção da viatura</label>
-                  <span><input formControlName="vehicleMaintenance" (change)="calculateTotalAnualCost()"
-                      oninput="validity.valid||(value='');" type="number" min="0" step="0.01" class="ml-2"
-                      style="width: 90px;" id="vehicleMaintenance"></span>
-
+                  <div class="input-group-append">
+                    <span class="input-group-text transparentBg">€</span>
+                  </div>
                 </div>
                 <div class="input-group mt-3">
                   <div class="input-group-prepend">
@@ -108,25 +110,19 @@
                   <input class="form-control inputAlignRigth" formControlName="healthInsurance"
                     (change)="calculateTotalAnualCost()" oninput="validity.valid||(value='');" type="number" min="0"
                     id="healthInsurance">
+                  <div class="input-group-append">
+                    <span class="input-group-text transparentBg">€</span>
+                  </div>
                 </div>
-
                 <div class="input-group mt-3">
                   <div class="input-group-prepend">
                     <span class="input-group-text transparentBg">Prémios</span>
                   </div>
                   <input class="form-control inputAlignRigth" formControlName="otherBonus" type="number" id="otherBonus"
                     oninput="validity.valid||(value='');" (change)="getValueForIRS()">
-
-              </div>
-              <!-- Acaba coluna da esquerda-->
-              <div class="col-sm">
-                <div class="input-group">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text transparentBg">Custo Mensal</span>
+                  <div class="input-group-append">
+                    <span class="input-group-text transparentBg">€</span>
                   </div>
-                  <input type="number" min="0" class="form-control inputAlignRigth" formControlName="monthlyTotalCost"
-                    type="number" value={{simForm.value.monthlyTotalCost}} id="monthlyTotalCost" disabled>
-
                 </div>
 
                 <ng-container *ngFor="let extra of t.controls">
@@ -136,6 +132,9 @@
                     </div>
                     <input class="form-control inputAlignRigth" formControlName="value"
                       oninput="validity.valid||(value='');" (change)="calculateTotalAnualCost()" type="number">
+                    <div class="input-group-append">
+                      <span class="input-group-text transparentBg">€</span>
+                    </div>
                   </div>
                 </ng-container>
                 <ng-container *ngFor="let extraWithout of g.controls">
@@ -145,6 +144,9 @@
                     </div>
                     <input class="form-control inputAlignRigth" formControlName="value"
                       oninput="validity.valid||(value='');" (change)="calculateTotalAnualCost()" type="number">
+                    <div class="input-group-append">
+                      <span class="input-group-text transparentBg">€</span>
+                    </div>
                   </div>
                 </ng-container>
                 <div class="input-group mt-3" style="width: 100%" *ngIf="extrasArray.length > 0">
@@ -155,13 +157,16 @@
                 </div>
               </div>
               <!--ACABA A COLUNA DA ESQUERDA-->
-              <div class="col-sm">
+              <div class="col-sm border-left">
                 <div class="input-group">
                   <div class="input-group-prepend">
                     <span class="input-group-text transparentBg">Custo Mensal</span>
                   </div>
                   <input type="number" min="0" class="form-control inputAlignRigth" formControlName="monthlyTotalCost"
                     type="number" value={{simForm.value.monthlyTotalCost}} id="monthlyTotalCost" disabled>
+                  <div class="input-group-append">
+                    <span class="input-group-text transparentBg">€</span>
+                  </div>
                 </div>
                 <div class="input-group">
                   <div class="input-group mt-3">
@@ -171,6 +176,9 @@
                     <input class="form-control inputAlignRigth" formControlName="netSalaryWithoutDuo"
                       value="{{simForm.value.netSalaryWithoutDuo}}" type="number" min="0" id="netSalaryWithoutDuo"
                       disabled>
+                    <div class="input-group-append">
+                      <span class="input-group-text transparentBg">€</span>
+                    </div>
                   </div>
                   <div class="input-group mt-0" style="padding-left: 107px;">
                     <div class="input-group-prepend">
@@ -178,112 +186,136 @@
                     </div>
                     <input class="form-control inputAlignRigth" formControlName="netSalaryWithDuo"
                       value="{{simForm.value.netSalaryWithDuo}}" type="number" min="0" id="netSalaryWithDuo" disabled>
+                    <div class="input-group-append">
+                      <span class="input-group-text transparentBg">€</span>
+                    </div>
                   </div>
                 </div>
-                <app-slider></app-slider>
-              </div>
-              <!--ACABA A COLUNA DA DIREITA-->
-              <div class="row">
-                <div class="col">
-                  <div class="form-group mt-5">
+                <div class="input-group mt-4">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text transparentBg">Margem</span>
                   </div>
+                  <input type="number" min="0" class="form-control inputAlignRigth" formControlName="marginPercentage"
+                    (ngModelChange)="calculateMarkUp()" id="marginPercentage" value="{{simForm.value.marginPercentage}}"
+                    disabled>
+                  <div class="input-group-append">
+                    <span class="input-group-text transparentBg">%</span>
+                  </div>
+                </div>
+                <span><input class="form-control" type="range" class="custom-range" min="-100" max="250" step="1"
+                    value="0" (input)="func2($event)"></span>
+                <div class="input-group mt-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text transparentBg">Utilização</span>
+                  </div>
+                  <input type="number" min="0" class="form-control inputAlignRigth" formControlName="usagePercentage"
+                    (change)="calculateTotalAnualCost()" id="usagePercentage" value="{{simForm.value.usagePercentage}}"
+                    disabled>
+                  <div class="input-group-append">
+                    <span class="input-group-text transparentBg">%</span>
+                  </div>
+                </div>
+                <span><input class="form-control" type="range" class="custom-range" min="0" max="100" step="10"
+                    value="100" (input)="func($event)"></span>
 
-                  <div class="form-group">
-                    <label for="otherWithTA">Outras despesas com Tributação Autônoma</label>
-                    <span><input formControlName="otherWithTA" (change)="calculateTotalAnualCost()"
-                        oninput="validity.valid||(value='');" type="number" min="0" step="0.01" class="ml-2"
-                        style="width: 90px;" id="otherWithTA"></span>
+                <div class="row mt-3">
+                  <div class="col-sm">
+                    One of three columns
                   </div>
-                  <div class="form-group">
-                    <label for="otherWithoutTA">Outras despesas sem Tributação Autônoma</label>
-                    <span><input formControlName="otherWithoutTA" (change)="calculateTotalAnualCost()"
-                        oninput="validity.valid||(value='');" type="number" min="0" step="0.01" class="ml-2"
-                        style="width: 90px;" id="otherWithoutTA"></span>
+                  <div class="col-sm">
+                    One of three columns
                   </div>
                 </div>
-                <div class="col">
-                  <div class="form-group mt-5">
-                    <div class="form-group">
-                      <label for="netSalaryWithoutDuo">Salário Líquido Sem duodécimos</label>
-                      <span><input formControlName="netSalaryWithoutDuo" value="{{simForm.value.netSalaryWithoutDuo}}"
-                          type="number" min="0" step="0.01" class="ml-2" style="width: 90px;" id="netSalaryWithoutDuo"
-                          disabled></span>
-                    </div>
-                    <div class="form-group">
-                      <label for="netSalaryWithDuo">Salário Líquido Com duodécimos</label>
-                      <span><input formControlName="netSalaryWithDuo" value="{{simForm.value.netSalaryWithDuo}}"
-                          type="number" min="0" step="0.01" class="ml-2" style="width: 90px;" id="netSalaryWithDuo"
-                          disabled></span>
-                    </div>
-                    <div class="form-group">
-                      <label for="grossSalary">Salário Médio Bruto</label>
-                      <span><input formControlName="grossSalary" value="{{simForm.value.grossSalary}}" type="number"
-                          min="0" step="0.01" class="ml-2" style="width: 90px;" id="grossSalary" disabled></span>
-                    </div>
-                    <br>
-                    <div class="cotainer">
-                      <div class="row">
-                        <div class="form-group">
-                          <label for="usagePercentage">Percentagem de Utilização(%)</label>
-                          <span><input formControlName="usagePercentage" (change)="calculateTotalAnualCost()"
-                              type="number" min="0" max="100" oninput="validity.valid||(value='100');"
-                              value={{usagePercentage}} class="ml-2" style="width: 90px;" id="usagePercentage"></span>
-                        </div>
-                        <div class="form-group">
-                          <label for="anualTotalCost">Custo Total Anual</label>
-                          <span><input formControlName="anualTotalCost" type="number"
-                              value={{simForm.value.anualTotalCost}} min="0" step="0.01" class="ml-2"
-                              style="width: 90px;" id="anualTotalCost" disabled></span>
-                        </div>
-                        <div class="form-group">
-                          <label for="monthlyTotalCost">Custo Total Mês</label>
-                          <span><input formControlName="monthlyTotalCost" type="number"
-                              value={{simForm.value.monthlyTotalCost}} min="0" step="0.01" class="ml-2"
-                              style="width: 90px;" id="monthlyTotalCost" disabled></span>
-                        </div>
-                        <div class="form-group">
-                          <label for="dailyTotalCost">Custo Total Dia</label>
-                          <span><input formControlName="dailyTotalCost" type="number"
-                              value={{simForm.value.dailyTotalCost}} min="0" step="0.01" class="ml-2"
-                              style="width: 90px;" id="dailyTotalCost" disabled></span>
-                        </div>
-                        <div class="form-group">
-                          <label for="hourlyTotalCost">Custo Total Hora</label>
-                          <span><input formControlName="hourlyTotalCost" type="number"
-                              value={{simForm.value.hourlyTotalCost}} min="0" step="0.01" class="ml-2"
-                              style="width: 90px;" id="hourlyTotalCost" disabled></span>
-                        </div>
+              </div>
+            </div>
+            <!--ACABA A COLUNA DA DIREITA-->
+            <div class="row">
+              <div class="col">
+                <div class="form-group mt-5">
+                </div>
+              </div>
+              <div class="col">
+                <div class="form-group mt-5">
+                  <div class="form-group">
+                    <label for="netSalaryWithoutDuo">Salário Líquido Sem duodécimos</label>
+                    <span><input formControlName="netSalaryWithoutDuo" value="{{simForm.value.netSalaryWithoutDuo}}"
+                        type="number" min="0" step="0.01" class="ml-2" style="width: 90px;" id="netSalaryWithoutDuo"
+                        disabled></span>
+                  </div>
+                  <div class="form-group">
+                    <label for="netSalaryWithDuo">Salário Líquido Com duodécimos</label>
+                    <span><input formControlName="netSalaryWithDuo" value="{{simForm.value.netSalaryWithDuo}}"
+                        type="number" min="0" step="0.01" class="ml-2" style="width: 90px;" id="netSalaryWithDuo"
+                        disabled></span>
+                  </div>
+                  <div class="form-group">
+                    <label for="grossSalary">Salário Médio Bruto</label>
+                    <span><input formControlName="grossSalary" value="{{simForm.value.grossSalary}}" type="number"
+                        min="0" step="0.01" class="ml-2" style="width: 90px;" id="grossSalary" disabled></span>
+                  </div>
+                  <br>
+                  <div class="cotainer">
+                    <div class="row">
+                      <div class="form-group">
+                        <label for="usagePercentage">Percentagem de Utilização(%)</label>
+                        <span><input formControlName="usagePercentage" (change)="calculateTotalAnualCost()"
+                            type="number" min="0" max="100" oninput="validity.valid||(value='100');"
+                            value={{usagePercentage}} class="ml-2" style="width: 90px;" id="usagePercentage"></span>
+                      </div>
+                      <div class="form-group">
+                        <label for="anualTotalCost">Custo Total Anual</label>
+                        <span><input formControlName="anualTotalCost" type="number"
+                            value={{simForm.value.anualTotalCost}} min="0" step="0.01" class="ml-2" style="width: 90px;"
+                            id="anualTotalCost" disabled></span>
+                      </div>
+                      <div class="form-group">
+                        <label for="monthlyTotalCost">Custo Total Mês</label>
+                        <span><input formControlName="monthlyTotalCost" type="number"
+                            value={{simForm.value.monthlyTotalCost}} min="0" step="0.01" class="ml-2"
+                            style="width: 90px;" id="monthlyTotalCost" disabled></span>
+                      </div>
+                      <div class="form-group">
+                        <label for="dailyTotalCost">Custo Total Dia</label>
+                        <span><input formControlName="dailyTotalCost" type="number"
+                            value={{simForm.value.dailyTotalCost}} min="0" step="0.01" class="ml-2" style="width: 90px;"
+                            id="dailyTotalCost" disabled></span>
+                      </div>
+                      <div class="form-group">
+                        <label for="hourlyTotalCost">Custo Total Hora</label>
+                        <span><input formControlName="hourlyTotalCost" type="number"
+                            value={{simForm.value.hourlyTotalCost}} min="0" step="0.01" class="ml-2"
+                            style="width: 90px;" id="hourlyTotalCost" disabled></span>
                       </div>
                     </div>
-                    <div class="container">
-                      <div class="row">
-                        <div class="form-group">
-                          <label for="anualRate">Valor Cobrado(Rate) Anual</label>
-                          <span><input formControlName="anualRate" type="number" value="{{simForm.value.anualRate}}"
-                              min="0" step="0.01" class="ml-2" style="width: 90px;" id="anualRate" disabled></span>
-                        </div>
-                        <div class="form-group">
-                          <label for="monthlyRate">Valor Cobrado(Rate) Mês</label>
-                          <span><input formControlName="monthlyRate" type="number" value="{{simForm.value.monthlyRate}}"
-                              min="0" step="0.01" class="ml-2" style="width: 90px;" id="monthlyRate" disabled></span>
-                        </div>
-                        <div class="form-group">
-                          <label for="dailyRate">Valor Cobrado(Rate) Dia</label>
-                          <span><input formControlName="dailyRate" type="number" value="{{simForm.value.dailyRate}}"
-                              min="0" step="0.01" class="ml-2" style="width: 90px;" id="dailyRate" disabled></span>
-                        </div>
-                        <div class="form-group">
-                          <label for="hourlyRate">Valor Cobrado(Rate) Hora</label>
-                          <span><input formControlName="hourlyRate" type="number" value="{{simForm.value.hourlyRate}}"
-                              min="0" step="0.01" class="ml-2" style="width: 90px;" id="hourlyRate" disabled></span>
-                        </div>
+                  </div>
+                  <div class="container">
+                    <div class="row">
+                      <div class="form-group">
+                        <label for="anualRate">Valor Cobrado(Rate) Anual</label>
+                        <span><input formControlName="anualRate" type="number" value="{{simForm.value.anualRate}}"
+                            min="0" step="0.01" class="ml-2" style="width: 90px;" id="anualRate" disabled></span>
+                      </div>
+                      <div class="form-group">
+                        <label for="monthlyRate">Valor Cobrado(Rate) Mês</label>
+                        <span><input formControlName="monthlyRate" type="number" value="{{simForm.value.monthlyRate}}"
+                            min="0" step="0.01" class="ml-2" style="width: 90px;" id="monthlyRate" disabled></span>
+                      </div>
+                      <div class="form-group">
+                        <label for="dailyRate">Valor Cobrado(Rate) Dia</label>
+                        <span><input formControlName="dailyRate" type="number" value="{{simForm.value.dailyRate}}"
+                            min="0" step="0.01" class="ml-2" style="width: 90px;" id="dailyRate" disabled></span>
+                      </div>
+                      <div class="form-group">
+                        <label for="hourlyRate">Valor Cobrado(Rate) Hora</label>
+                        <span><input formControlName="hourlyRate" type="number" value="{{simForm.value.hourlyRate}}"
+                            min="0" step="0.01" class="ml-2" style="width: 90px;" id="hourlyRate" disabled></span>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-
+          </form>
           <div class="container">
             <div class="row">
               <div class="form-group">
@@ -299,17 +331,6 @@
             </div>
           </div>
           <div class="container">
-            <div class="row">
-              <label class="col" for="customRange1">Gastos da Empresa</label>
-              <label class="col" for="customRange1">Rate</label>
-            </div>
-            <div class="row">
-              <div class="row">
-                <label class="col">-100</label>
-                <label class="col">100</label>
-              </div>
-              <input type="range" class="custom-range" id="customRange1" min="-100" max="100">
-            </div>
           </div>
           <div class="form-group">
             <button type="button" class="btn btn-dark" (click)="goBack()">Voltar</button>
@@ -320,9 +341,9 @@
           </div>
         </div>
       </div>
-    <!-- </fieldset>
+    </fieldset>
   </div>
-</div> -->
+</div>
 <div *ngIf="state == 'third'" class="row custom-row offset-md-1">
   <div class="col-sm-10 custom-container jumbotron">
 
