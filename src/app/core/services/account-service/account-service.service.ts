@@ -1,17 +1,17 @@
 import { Injectable } from '@angular/core';
 import { Account } from '../../models';
-import { HttpClient } from '@angular/common/http';
-
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable, ReplaySubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AccountServiceService {
-  private currentAccount: Account = new Account();
+  public currentAccount: Account = new Account();
+  public accounts$: ReplaySubject<Account[]>;
+  constructor(private http: HttpClient) {
 
-  constructor(
-    private http: HttpClient
-  ) { }
+  }
 
   public isAuthenticated(): boolean {
     if (this.currentAccount.id) {
@@ -22,11 +22,7 @@ export class AccountServiceService {
   }
 
   public isAdmin(): boolean {
-    if(this.currentAccount.accountRole == "ADMIN"){
-      return true;
-    } else {
-      return false;
-    }
+    return this.currentAccount.accountRole == "ADMIN";
   }
 
   public getCurrentId(): number {
@@ -41,13 +37,32 @@ export class AccountServiceService {
     return this.currentAccount.accountRole;
   }
 
-  public login(account: Account) {
+  public getAllAccounts() {
+    return this.http.get('http://localhost:8080/simuladorsalarial/api/accounts');
+  }
+
+  public createAccount(newAccount: Account) {
+   return this.http.post('http://localhost:8080/simuladorsalarial/api/accounts', newAccount, {responseType: 'text'});
+  }
+
+  public deleteAccount(email) {
+    return this.http.delete('http://localhost:8080/simuladorsalarial/api/accounts/'+ email, {responseType: 'text'});
+  }
+
+  public login(account: Account): Observable<object> {
     // Simulate Jax-rs Api request
     return this.http.post('http://localhost:8080/simuladorsalarial/api/accounts/login', account);
+  }
+
+  public editUserPass(account: Account) {
+    return this.http.put('http://localhost:8080/simuladorsalarial/api/accounts/editAccount', account, {responseType: 'text'});
   }
 
   public logout() {
     this.currentAccount = null;
   }
 
+  public getAllSimulationsFromAccount(email) {
+    return this.http.get('http://localhost:8080/simuladorsalarial/api/accounts/allSimsFromAccount?email=' + email);
+  }
 }

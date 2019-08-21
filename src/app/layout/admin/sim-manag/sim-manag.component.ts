@@ -10,11 +10,13 @@ import { SimFieldsData } from 'src/app/core/models/simFieldsData';
   styleUrls: ['./sim-manag.component.scss']
 })
 export class SimManagComponent implements OnInit {
-  
+
   simFieldsData = new SimFieldsData();
   showForm = true;
   //public fields$: ReplaySubject<SimulationFields[]>;
   subAlim;
+
+
 
   constructor() {
     this.subAlim = {
@@ -23,12 +25,11 @@ export class SimManagComponent implements OnInit {
     }
   }
 
-  ngOnInit() { 
-   
+  ngOnInit() {
+
   }
 
   onChangeSubAlim(event) {
-    console.log(event);
     this.simFieldsData.value = this.subAlim.days * this.subAlim.valuePerDay;
   }
 

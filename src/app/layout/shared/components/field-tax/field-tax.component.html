@@ -1,62 +1,61 @@
 <div class="row custom-row">
-  <div class= "col-sm-6 custom-container jumbotron">
+  <div class="col-sm-8 custom-container jumbotron">
     <form class="form-horizontal">
-        <fieldset>
-          <legend>{{name}}</legend>
-          <div class="form-group mt-5">
-            <div class="row text-center">
-              <div class="col-3">
-                <label for="inputSS">Segurança social</label>
-                <select (change)="changeSelect($event, 'ss')" id="selectSS" class="ml-2"required>
-                  <option>Selecione</option>
-                  <option value="yesSS" >Sim</option>
-                  <option value="noSS">Não</option>
-                </select>
-                <div *ngIf="selectSS == 'yesSS'" >
-                  <input type="number" id="inputSS" class="ml-2 mt-2" placeholder="%" [(ngModel)]="simFields.SS" name="SS" style="width: 100px" required>
-                </div>
-                
-              </div>
-              <div class="col-3">
-                <label for="inputTA">Tributação autónoma</label>
-                <select (change)="changeSelect($event, 'ta')" id="selectTA" class="ml-2"required>
-                  <option>Selecione</option>
-                  <option value="yesTA" >Sim</option>
-                  <option value="noTA">Não</option>
-                </select>
-                <div *ngIf="selectTA == 'yesTA'" >
-                  <input type="number" id="inputTA" class="ml-2 mt-2" placeholder="%" [(ngModel)]="simFields.TA" name="TA" style="width: 100px" required>
-                </div>
-              </div>
-              <div class="col-3">
-                <label for="inputBE">Benefício não monetário</label>
-                <select (change)="changeSelect($event, 'be')" id="selectBE" class="ml-2"required>
-                  <option>Selecione</option>
-                  <option value="yesBE" >Sim</option>
-                  <option value="noBE">Não</option>
-                </select>
-                <div *ngIf="selectBE == 'yesBE'" >
-                  <input type="number" id="inputBE" class="ml-2 mt-2" placeholder="%" [(ngModel)]="simFields.BE" name="BE" style="width: 100px" required>
-                </div>
-              </div>
-              <div class="col-3">
-                <label for="inputVAR">Componente variável da remuneração</label>
-                <select (change)="changeSelect($event, 'var')" id="selectVAR" class="ml-2"required>
-                  <option>Selecione</option>
-                  <option value="yesVAR" >Sim</option>
-                  <option value="noVAR">Não</option>
-                </select>
-                <div *ngIf="selectVAR == 'yesVAR'" >
-                  <input type="number" id="inputVAR" class="ml-2 mt-2" placeholder="%" [(ngModel)]="simFields.VAR" name="VAR" style="width: 100px" required>
-                </div>
-              </div>
+      <fieldset>
+        <legend>{{name}}</legend>
+        <legend *ngIf="newField"><input type="text"></legend>
+        <div class="form-group mt-5">
+          <div class="row text-center align-bottom">
+            <div class="col-2">
+              <label for="inputIRS">Taxa de IRS</label>
+              <select (change)="changeSelect($event, 'irs')" id="selectIRS" class="ml-2" required>
+                <option>Selecione</option>
+                <option value="yesIRS">Sim</option>
+                <option value="noIRS">Não</option>
+              </select>
+            </div>
+            <div class="col-2">
+              <label for="inputSS">Segurança social</label>
+              <select (change)="changeSelect($event, 'ss')" id="selectSS" class="ml-2" required>
+                <option>Selecione</option>
+                <option value="yesSS">Sim</option>
+                <option value="noSS">Não</option>
+              </select>
+              
+            </div>
+            <div class="col-2">
+              <label for="inputTA">Tributação autónoma</label>
+              <select (change)="changeSelect($event, 'ta')" id="selectTA" class="ml-2" required>
+                <option>Selecione</option>
+                <option value="yesTA">Sim</option>
+                <option value="noTA">Não</option>
+              </select>
+             
+            </div>
+            <div class="col-3">
+              <label for="inputBE">Benefício não monetário</label>
+              <select (change)="changeSelect($event, 'be')" id="selectBE" class="ml-2" required>
+                <option>Selecione</option>
+                <option value="yesBE">Sim</option>
+                <option value="noBE">Não</option>
+              </select>
+            </div>
+            <div class="col-3">
+              <label for="inputVAR">Componente variável da remuneração</label>
+              <select (change)="changeSelect($event, 'var')" id="selectVAR" class="ml-2" required>
+                <option>Selecione</option>
+                <option value="yesVAR">Sim</option>
+                <option value="noVAR">Não</option>
+              </select>
+              
             </div>
           </div>
-          <div class="form-group">
-            <button type="reset" class="btn btn-dark">Cancelar</button>
-            <button type="button" class="btn btn-secondary ml-1" (click)="saveField()">Guardar</button>
-          </div>     
-        </fieldset>
+        </div>
+        <div class="form-group">
+          <button type="reset" class="btn btn-dark">Cancelar</button>
+          <button type="button" class="btn btn-secondary ml-1" (click)="saveField()">Guardar</button>
+        </div>
+      </fieldset>
     </form>
   </div>
 </div>

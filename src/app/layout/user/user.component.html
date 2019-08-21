@@ -1,1 +1,16 @@
-<p>user actually works!</p>
+<app-header></app-header>
+<div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 offset-md-9">
+                <button *ngIf="state == 'simList' || state == 'profile'" (click)="state = 'simulator'"  type="button" class="btn btn-link" style="color:#334D65">Simulador</button>
+                <button *ngIf="state == 'simulator' || state == 'profile'" (click)="state = 'simList'"  type="button" class="btn btn-link" style="color:#334D65">Listar simulações</button>
+            </div>
+           
+        </div>
+    </div>
+    <app-simulador *ngIf="state == 'simulator'"></app-simulador>
+    <app-sim-list *ngIf="state == 'simList'"></app-sim-list>
+</div>
+
+

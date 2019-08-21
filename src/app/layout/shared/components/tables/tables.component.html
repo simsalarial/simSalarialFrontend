@@ -1,18 +1,92 @@
-<div class="table-responsive">
-    <table class="table">
-        <thead>
-        <tr>
-            <th *ngFor="let col of header">
-            {{col}}
-            </th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr *ngFor="let row of data">
-            <td *ngFor="let col of header" (click)="clickRow(row)">
-            {{row[col]}}
-            </td>
-        </tr>
-        </tbody>
-    </table>
+<div class="container">
+    <div class="input-group mb-3 mt-3 col-4">
+        <div class="input-group-prepend">
+            <span class="input-group-text transparentBg" id="basic-addon1">
+                <fa-icon [icon]="faSearch"></fa-icon>
+            </span>
+        </div>
+        <input (keyup)="search($event)" type="text" class="form-control" placeholder="Filtrar por nome"
+            aria-label="Username" aria-describedby="basic-addon1">
+    </div>
 </div>
+
+<div class="container">
+    <ngx-datatable 
+        class="bootstrap"
+        [rows]="rows"
+        [loadingIndicator]="loadingIndicator"
+        [columns]="keys"
+        [columnMode]="'force'"
+        [headerHeight]="40"
+        [summaryRow]="true"
+        [summaryPosition]="'bottom'"
+        [footerHeight]="40"
+        [limit]="5"
+        [rowHeight]="'auto'"
+        [reorderable]="reorderable">
+        <ngx-datatable-column>
+            <ng-template let-column="column" ngx-datatable-header-template>
+                Nome
+            </ng-template>
+            <ng-template let-row="row" ngx-datatable-cell-template>
+                {{row.name}}
+            </ng-template>
+        </ngx-datatable-column>
+        <ngx-datatable-column>
+            <ng-template let-column="column" ngx-datatable-header-template>
+                Email
+            </ng-template>
+            <ng-template let-row="row" ngx-datatable-cell-template>
+                {{row.email}}
+            </ng-template>
+        </ngx-datatable-column>
+        <ngx-datatable-column>
+            <ng-template let-column="column" ngx-datatable-header-template>
+                Apagar
+            </ng-template>
+            <ng-template let-row="row" ngx-datatable-cell-template>
+                <button class="btn btn-outline-danger  btn-sm" (click)="showConfirmModal(template, row)">Apagar</button>
+            </ng-template>
+        </ngx-datatable-column>
+    </ngx-datatable>
+    <!-- <div class="table-responsive">
+        <table class="table">
+            <thead>
+            <tr>
+                <th *ngFor="let col of header">
+                {{col}}
+                </th>
+            </tr>
+            </thead>
+            <tbody *ngIf="data">
+            <tr *ngFor="let row of data">
+            <td>
+                {{row.name}}
+                </td>
+                <td>
+                {{row.email}}
+                </td>
+                <td><button class="btn btn-outline-danger" (click)="showConfirmModal(template, row)">Apagar</button></td>
+            </tr>
+            </tbody>
+        </table>
+    </div> -->
+</div>
+<ng-template #template>
+    <div class="modal-header">
+        <h4 class="modal-title pull-left">Apagar conta</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="onCloseModal()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <p *ngIf="state == 'confirm'">Conta apagada com sucesso!</p>
+        <p *ngIf="state == 'deleteAccount'">Tem a certeza que quer eliminar esta conta {{emailToDelete}}?</p>
+        <div class="modal-footer">
+            <div *ngIf="state == 'deleteAccount'" class="form-group">
+                <button type="button" class="btn btn-dark" (click)="cancel()">Cancelar</button>
+                <button type="button" class="btn btn-secondary ml-1" (click)="delete()">Apagar</button>
+            </div>
+        </div>
+    </div>
+</ng-template>

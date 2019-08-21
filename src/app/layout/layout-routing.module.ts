@@ -9,9 +9,12 @@ const routes: Routes = [
   {path: "", 
    component: LayoutComponent, 
    children:[
-    {path: "admin", component: AdminComponent},
-    {path: "user", component: UserComponent}
-   ]}
+    {path: "admin",  loadChildren: () => import('./admin/admin.module').then(module => module.AdminModule)},
+    /* {path: "admin",  component:AdminComponent}, */
+    {path: "user", component: UserComponent},
+   /*  {path: "", redirectTo: "/layout/admin", pathMatch: "full"} */
+   ]},
+  {path: "", redirectTo: "/admin", pathMatch: "full"}
 ];
 
 @NgModule({

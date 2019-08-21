@@ -9,33 +9,31 @@ import { SimulationFields } from 'src/app/core/models/simulationFields';
 export class FieldTaxComponent implements OnInit {
   @Input() name:string;
   @Output() onClose = new EventEmitter<any>();
-  selectSS: string;
-  selectTA: string;
-  selectBE: string;
-  selectVAR: string;
+  newField = false;
   simFields = new SimulationFields();
+  newFieldName: string;
   constructor() { }
 
   ngOnInit() {
-    console.log(this.name);
-    this.selectSS = '';
-    this.selectTA = '';
-    this.selectBE = '';
-    this.selectVAR = '';
     this.simFields.name = this.name;
   }
 
   changeSelect(event, type) {
-    if(type == "ss") this.selectSS = event.target.value;
-    else if(type == "ta") this.selectTA = event.target.value;
-    else if(type == "be") this.selectBE = event.target.value;
-    else if(type == "var") this.selectVAR = event.target.value;
+    if(type == "irs") this.simFields.IRS = event.target.value === 'yesIRS' ? true : false;
+    else if(type == "ss") this.simFields.SS = event.target.value === 'yesSS' ? true : false;
+    else if(type == "ta") this.simFields.TA = event.target.value === 'yesTA' ? true : false;
+    else if(type == "be") this.simFields.BE = event.target.value === 'yesBE' ? true : false;
+    else if(type == "var") this.simFields.varComponent = event.target.value === 'yesVAR' ? true : false;
   }
 
   saveField() {
     console.log(this.name);
     console.log(this.simFields);
-    this.onClose.emit();
+    //this.onClose.emit();
+  }
+
+  createNewField(){
+    this.simFields.name = this.newFieldName;
   }
 
   

@@ -3,6 +3,7 @@ import { Account } from '../core/models';
 import { Router } from '@angular/router';
 
 import { AccountServiceService } from '../core';
+import { FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
@@ -12,10 +13,13 @@ import { AccountServiceService } from '../core';
 export class LoginComponent implements OnInit {
   public account: Account = new Account();
   public msg: string;
+  loginForm: any;
+  submitClicked = false;
 
   constructor(
-    private router: Router,
-    private accountApi: AccountServiceService
+    private fb: FormBuilder,
+    private readonly router: Router,
+    private readonly accountApi: AccountServiceService
   ) {
     // Fill email and password
     this.account.email = '';
@@ -23,20 +27,43 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.loginForm = this.fb.group({
+      email: ['admin@admin.com', Validators.required],
+      password:  ['', Validators.required]
+    })
   }
 
   public login() {
-    console.log("entrei");
-    this.accountApi.login(this.account).subscribe(
+   /*  this.accountApi.login(this.account).subscribe(
       (account: any) => {
-        const url = '/' + (account.accountRole == "ADMIN" ) ? 'admin' : 'user';
+        const url = '/' + (account.accountRole == "ADMIN") ? 'admin' : 'user';
         this.router.navigate([url]);
       },
-      (error) => {
-        console.log(this.msg = error.msg);
-      }
-    );
+      error => console.error(this.msg = error.msg)
+    ); */
+    this.submitClicked = true;
+    Object.assign(this.account, this.loginForm.value);
+    console.log(this.account);
+    if (this.loginForm.status == 'VALID'){
+      this.accountApi.login(this.account).subscribe(
+        (account: any) => {
+          let path = '';
+          delete account.message;
+          this.accountApi.currentAccount = account;
+          if (account.accountRole === "ADMIN") {
+            path = 'layout/admin';
+          } else {
+            path = 'layout/user';
+          }
+
+          const url = '/' + path;
+          this.router.navigate([url]);
+        },
+        (error) => {
+          console.error(this.msg = error.error);
+        }
+      );
+    }
+    console.log(this.accountApi);
   }
-
 }
-
