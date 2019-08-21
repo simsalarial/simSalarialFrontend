@@ -1,5 +1,5 @@
 
   <div>
-    <button type="button" class="btn btn-outline-danger ml-1 mb-3 float-right" style="margin-right: 3pc" (click)="showCreateAccount()">Criar nova conta</button>
+    <button type="button" class="btn btn-outline-danger mt-3 ml-1 mb-3 float-right" style="margin-right: 3pc" (click)="showCreateAccount()">Criar nova conta</button>
     <app-tables *ngIf="receivedData" class="mt-3"[header]='["name","email","apagar"]' (onDelete)="onDelete($event)" [temp]='data' (clickedRow)='clickRow($event)'></app-tables>
   </div>
