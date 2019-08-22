@@ -153,7 +153,7 @@ export class SimuladorComponent implements OnInit {
   }
 
   func2(event) {
-    this.simForm.value.marginPercentage = event.target.value;
+    this.simForm.value.marginPercentage = Number(event.target.value);
     this.calculateMarkUp();
   }
 
