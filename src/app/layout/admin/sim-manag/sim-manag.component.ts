@@ -51,6 +51,10 @@ export class SimManagComponent implements OnInit {
   marginValues$ = new ReplaySubject<Margin[]>();
   // tslint:disable-next-line: variable-name
   taxation$ = new ReplaySubject<Taxation[]>();
+  extras$ = new ReplaySubject<Extras[]>();
+  extrasWithoutTa = new Array<object>();
+  extrasWithTa = new Array<object>();
+
 
   extraName: string;
   extraWithAutonomousTributation: boolean;
@@ -64,9 +68,36 @@ export class SimManagComponent implements OnInit {
     this.marginValues$ = this.simulationService.marginValues$;
     this.taxation$ = this.simulationService.taxation$;
     this.receiveWorkInsurance$ = this.simulationService.receiveworkInsurance$;
+    this.extras$ = this.simulationService.extras$;
   }
 
   ngOnInit() {
+
+    this.extras$.subscribe((newExtra: any) => {
+      console.log(newExtra);
+      // tslint:disable-next-line: prefer-for-of
+      for (let i = 0; i < newExtra.length; i++) {
+        if (newExtra[i].tA) {
+          this.extrasWithTa.push({id: newExtra[i].id, name: newExtra[i].name});
+        } else {
+          this.extrasWithoutTa.push({id: newExtra[i].id, name: newExtra[i].name});
+        }
+      }
+      console.log(this.extrasWithTa, this.extrasWithoutTa);
+      for (let j = 0; j < this.extrasWithTa.length; j++) {
+        if (this.extrasWithTa[j].name == 'Outros C/ Tributacao Autonoma') {
+          this.extrasWithTa.splice(j, 1);
+        }
+      }
+      for (let h = 0; h < this.extrasWithoutTa.length; h++) {
+        if (this.extrasWithoutTa[h].name == 'Outros S/ Tributacao Autonoma') {
+          this.extrasWithoutTa.splice(h, 1);
+        }
+      }
+      console.log(this.extrasWithTa);
+      console.log(this.extrasWithoutTa);
+    });
+
     this.foodSubsidy$.subscribe( (foodSubsidyValue: any) => {
       console.log(foodSubsidyValue);
       this.foodSubsidyMonth = foodSubsidyValue.foodSubsidyMonth;
@@ -90,6 +121,22 @@ export class SimManagComponent implements OnInit {
       this.workInsuranceVariable = receiveWorkInsuranceValue.workInsuranceVariable;
 
     })
+  }
+
+  spliceElement(extrasWithTa, extrasWithoutTa) {
+    for (let j = 0; j < extrasWithTa.length; j++) {
+      if (extrasWithTa[j].name == 'Outros C/ Tributacao Autonoma') {
+        this.extrasWithTa.splice(j, 1);
+      }
+    }
+    for (let h = 0; h < extrasWithoutTa.length; h++) {
+      if (extrasWithoutTa[h].name == 'Outros S/ Tributacao Autonoma') {
+        this.extrasWithoutTa.splice(h, 1);
+      }
+    }
+
+    console.log(this.extrasWithTa);
+    console.log(this.extrasWithoutTa);
   }
 
   resultFoodSubsidy(event) {
