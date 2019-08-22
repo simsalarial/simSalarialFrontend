@@ -1,19 +1,34 @@
-<app-header></app-header>
-<section class="row p-0">
-    <div class="col-2">
-        <div class="d-flex" id="wrapper">
-            <div class="bg-white border-right" id="sidebar-wrapper">
-                <div class="list-group list-group-flush vh-100">
-                <a [routerLink]="['/layout/admin/dashboard']" class="list-group-item list-group-item-action text-secondary"><fa-icon [icon]="faTable"></fa-icon>           Dashboard</a>
-                <a (click)="redirect()" class="list-group-item list-group-item-action text-secondary"><fa-icon [icon]="faCalculator"></fa-icon>           Simulador</a>
-                <a [routerLink]="['/layout/admin/gestaodecontas']"  class="list-group-item list-group-item-action text-secondary"><fa-icon [icon]="faUsers"></fa-icon>           Gestão de contas</a>
-                <a [routerLink]="['/layout/admin/gestaosimulador']" (click) ="importDataBaseData()" class="list-group-item list-group-item-action text-secondary"><fa-icon [icon]="faTasks"></fa-icon>           Gestão do simulador</a>
-                <a [routerLink]="['/layout/admin/importarIRS']" class="list-group-item list-group-item-action text-secondary">Tabela IRS</a>
+<div class="container-fluid">
+    <app-header></app-header>
+    <section class="row p-0">
+        <div class="col-2 p-0">
+            <div class="d-flex" id="wrapper">
+                <div class="bg-white border-right w-100" id="sidebar-wrapper">
+                    <div class="list-group list-group-flush vh-100">
+                        <a [routerLink]="['/layout/admin/dashboard']"
+                            class="list-group-item list-group-item-action text-secondary">
+                            <fa-icon [icon]="faTable"></fa-icon> Dashboard
+                        </a>
+                        <a [routerLink]="['/layout/admin/simulador']"
+                            class="list-group-item list-group-item-action text-secondary">
+                            <fa-icon [icon]="faCalculator"></fa-icon> Simulador
+                        </a>
+                        <a [routerLink]="['/layout/admin/gestaodecontas']"
+                            class="list-group-item list-group-item-action text-secondary">
+                            <fa-icon [icon]="faUsers"></fa-icon> Gestão de contas
+                        </a>
+                        <a [routerLink]="['/layout/admin/gestaosimulador']" (click)="importDataBaseData()"
+                            class="list-group-item list-group-item-action text-secondary">
+                            <fa-icon [icon]="faTasks"></fa-icon> Gestão do simulador
+                        </a>
+                        <a [routerLink]="['/layout/admin/importarIRS']"
+                            class="list-group-item list-group-item-action text-secondary">Tabela IRS</a>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="col-10">
-        <router-outlet></router-outlet>
-    </div>
-</section>
+        <div class="col-10 mr-auto ml-auto">
+            <router-outlet></router-outlet>
+        </div>
+    </section>
+</div>
