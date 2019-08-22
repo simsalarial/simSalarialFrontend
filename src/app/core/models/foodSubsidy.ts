@@ -1,7 +1,7 @@
 export class FoodSubsidy {
 
     'id'?: number;
-    'foodsubsidymonth': number;
+    'foodSubsidyMonth': number;
     'averageDaysOfTheMonth'?: number;
     'limitValueForFoodSubsidy'?: number;
 

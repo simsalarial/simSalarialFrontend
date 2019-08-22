@@ -57,7 +57,7 @@ export class SimManagComponent implements OnInit {
 
 
   extraName: string;
-  extraWithAutonomousTributation: boolean;
+  extraWithAutonomousTributation = false;
 
   constructor(
     private simulationService: SimulationService,
@@ -145,9 +145,12 @@ export class SimManagComponent implements OnInit {
 
   newTributationValues() {
     const newTributationValues = [];
-    newTributationValues.push({name: "autonomousTributation", value: this.autonomousTributation});
-    newTributationValues.push(this.workerSocialSecurity);
-    newTributationValues.push(this.companySocialSecurity);
+    newTributationValues.push({name: 'autonomousTributation', value: this.autonomousTributation});
+    newTributationValues.push({name: 'workerSocialSecurity', value: this.workerSocialSecurity});
+    newTributationValues.push({name: 'companySocialSecurity', value: this.companySocialSecurity});
+    this.dataService.postNewTaxes(newTributationValues).subscribe( res => {
+      console.log(res);
+    });
     console.log(newTributationValues);
   }
 
@@ -157,8 +160,9 @@ export class SimManagComponent implements OnInit {
     newMarginValues.margin_min = this.margin_min;
     newMarginValues.margin_max = this.margin_max;
     console.log(newMarginValues);
-    this.dataService.postNewMarginValues(newMarginValues);
-    console.log(this.dataService.postNewMarginValues(newMarginValues));
+    this.dataService.postNewMarginValues(newMarginValues).subscribe( res => {
+      console.log(res);
+    });
 
   }
 
@@ -167,9 +171,12 @@ export class SimManagComponent implements OnInit {
     const newFoodSubsidyValues = new FoodSubsidy;
     newFoodSubsidyValues.averageDaysOfTheMonth = this.averageDaysOfTheMonth;
     newFoodSubsidyValues.limitValueForFoodSubsidy = this.limitValueForFoodSubsidy;
-    newFoodSubsidyValues.foodsubsidymonth = this.foodSubsidyMonth;
+    newFoodSubsidyValues.foodSubsidyMonth = this.foodSubsidyMonth;
+    newFoodSubsidyValues.id = 1;
     console.log(newFoodSubsidyValues);
-    this.dataService.putNewFoodSubsidyValue(newFoodSubsidyValues);
+    this.dataService.putNewFoodSubsidyValue(newFoodSubsidyValues).subscribe( res => {
+      console.log(res);
+    });
   }
 
   newExtra() {
@@ -178,15 +185,19 @@ export class SimManagComponent implements OnInit {
     newExtra.name = this.extraName;
     newExtra.tA = this.extraWithAutonomousTributation;
     console.log(newExtra);
-    this.dataService.postNewExtra(newExtra);
+    this.dataService.postNewExtra(newExtra).subscribe( res => {
+      console.log(res);
+    });
   }
 
   newWorkInsuranceVariables() {
     // tslint:disable-next-line: new-parens
     const newWorkInsuranceVariables = new WorkInsurance;
     newWorkInsuranceVariables.varAccountedForWorkInsurance = this.varAccountedForWorkInsurance;
-    newWorkInsuranceVariables.workInsurancevariable = this.workInsuranceVariable;
+    newWorkInsuranceVariables.workInsuranceVariable = this.workInsuranceVariable;
     console.log(newWorkInsuranceVariables);
-    this.dataService.postNewWorkInsuranceVariables(newWorkInsuranceVariables);
+    this.dataService.postNewWorkInsuranceVariables(newWorkInsuranceVariables).subscribe( res => {
+      console.log(res);
+    });
   }
 }

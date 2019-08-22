@@ -1,7 +1,7 @@
 export class WorkInsurance {
 
     'id'?: number;
-    'workInsurancevariable': number;
+    'workInsuranceVariable': number;
     'varAccountedForWorkInsurance': number;
 
     constructor(data?: any) {
