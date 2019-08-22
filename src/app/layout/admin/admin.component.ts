@@ -56,4 +56,6 @@ export class AdminComponent implements OnInit {
   importDataBaseData() {
     this.simulationService.importDataBaseData();
   }
+
+  
 }
