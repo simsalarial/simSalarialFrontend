@@ -74,8 +74,8 @@
                   <div class="input-group-prepend">
                     <span class="input-group-text transparentBg">Salário Base</span>
                   </div>
-                  <input type="number" min="0" oninput="validity.valid||(value='');" (change)="getValueForIRS()"
-                    class="form-control inputAlignRigth" formControlName="baseSalary" required>
+                  <input type="number" min="0" (change)="getValueForIRS(simForm.value.baseSalary)"
+                    class="form-control inputAlignRigth" formControlName="baseSalary" value="{{simForm.value.baseSalary}}" required>
                   <div class="input-group-append">
                     <span class="input-group-text transparentBg">€</span>
                   </div>
@@ -125,8 +125,8 @@
                   </div>
 
                 </div>
-                <ng-container *ngFor="let extra of t.controls">
-                  <div class="input-group mt-3 son1" [formGroup]="extra">
+                <ng-container  *ngIf="showContainer">
+                  <div *ngFor="let extra of t.controls" class="input-group mt-3 son1" [formGroup]="extra">
                     <div class="input-group-prepend">
                       <span class="input-group-text transparentBg">{{extra.value.name}}</span>
                     </div>
@@ -137,8 +137,8 @@
                     </div>
                   </div>
                 </ng-container>
-                <ng-container *ngFor="let extraWithout of g.controls">
-                  <div class="input-group mt-3 son1" [formGroup]="extraWithout">
+                <ng-container  *ngIf="showContainer">
+                  <div class="input-group mt-3 son1" *ngFor="let extraWithout of g.controls" [formGroup]="extraWithout">
                     <div class="input-group-prepend">
                       <span class="input-group-text transparentBg">{{extraWithout.value.name}}</span>
                     </div>
