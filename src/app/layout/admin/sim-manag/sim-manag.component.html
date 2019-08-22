@@ -1,3 +1,4 @@
+<!-- INICIO DA PÁGINA -->
 <div class="container">
   <div class="card">
     <div class="card-body">
@@ -5,9 +6,56 @@
         <div class="card-header">
           Gestão do Simulador
         </div>
-        <div class="card-body">
+      <!-- FIM DO TITULO -->
+      <div class="card-body">
 
+       <!-- INICIO DAS TAXAS -->
+          <div class="card">
+              <div class="card-header">
+                Taxação
+              </div>
+              <div class="card-body">
+                <!-- INICIO INPUT FOR WORKER SOCIAL SECURITY -->
+                <div class="input-group" style="width: 100%">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text transparentBg">Segurança Social do Trabalhador</span>
+                  </div>
+                    <input  [(ngModel)]="workerSocialSecurity" class="inputAlignRigth" type="number">
+                  <div class="input-group-append">
+                    <span class="input-group-text transparentBg">%</span>
+                  </div>
+                </div>
+                <!-- FIM INPUT FOR WORKER SOCIAL SECURITY -->
 
+                <!-- INICIO INPUT FOR COMPANY SOCIAL SECURITY -->
+                <div class="input-group" style="width: 100%">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text transparentBg">Segurança Social da Entidade</span>
+                    </div>
+                      <input  [(ngModel)]="companySocialSecurity" class="inputAlignRigth" type="number">
+                    <div class="input-group-append">
+                      <span class="input-group-text transparentBg">%</span>
+                    </div>
+                </div>
+                <!-- FIM INPUT FOR COMPANY SOCIAL SECURITY -->
+
+                <!-- INICIO INPUT FOR TRIBUTACAO AUTONOMA -->
+                <div class="input-group" style="width: 100%">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text transparentBg">Tributação autónoma</span>
+                    </div>
+                      <input  [(ngModel)]="autonomousTributation" class="inputAlignRigth" type="number">
+                    <div class="input-group-append">
+                      <span class="input-group-text transparentBg">%</span>
+                    </div>
+                </div>
+                <a style="cursor: pointer; color: white" class="btn btn-primary" (click)="newTributationValues()">Guardar</a>
+              </div>
+          </div>
+            <br>
+      <!-- FIM DAS TAXAS -->
+
+      <!-- INICIO DA MARGEM -->
 
       <div class="row">
         <div class="col">
@@ -16,29 +64,87 @@
               Margem
             </div>
               <div class="card-body">
-                <h5 class="card-title">Special title treatment</h5>
-                <p class="card-text">
-                With supporting text below as a natural lead-in to additional
-                content.
-                </p>
-                <a href="#" class="btn btn-primary">Go somewhere</a>
+                  <!-- INICIO MARGEM MÍNIMA -->
+                  <div class="input-group" style="width: 100%">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text transparentBg">Margem mínima</span>
+                      </div>
+                        <input [(ngModel)]="margin_min" class="inputAlignRigth" type="number" >
+                      <div class="input-group-append">
+                        <span class="input-group-text transparentBg">%</span>
+                      </div>
+                  </div>
+                  <!-- FIM MARGEM MÍNIMA -->
+
+                  <!-- INICIO MARGEM MÍNIMA -->
+                  <div class="input-group" style="width: 100%">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text transparentBg">Margem máxima</span>
+                      </div>
+                        <input [(ngModel)]="margin_max" class="inputAlignRigth" type="number">
+                      <div class="input-group-append">
+                        <span class="input-group-text transparentBg">%</span>
+                      </div>
+                  </div>
+                  <!-- FIM MARGEM MÍNIMA -->
+                <a style="cursor: pointer; color: white" class="btn btn-primary" (click)="newMarginValues()">Guardar</a>
               </div>
             </div>
           </div>
+          <!-- FIM DA MARGEM -->
+
+          <!-- INICIO DO SUBSIDIO DA ALIMENTACAO -->
+
         <div class="col">
           <div class="card">
             <div class="card-header">
               Subsídio de Alimentação
             </div>
             <div class="card-body">
-              <h5 class="card-title">Special title treatment</h5>
-              <p class="card-text">
-                <a href="#" class="btn btn-primary">Guardar</a>
-              </p>
+              <!-- INICIO AVERAGE DAYS OF THE MONTH -->
+              <div class="input-group" style="width: 100%">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text transparentBg">Número médio de dias úteis do mês</span>
+                  </div>
+                    <input [(ngModel)]="averageDaysOfTheMonth" (change)="resultFoodSubsidy($event)" class="inputAlignRigth" type="number">
+                  <div class="input-group-append">
+                    <span class="input-group-text transparentBg">x̄</span>
+                  </div>
+              </div>
+              <!-- FIM AVERAGE DAYS OF THE MONTH -->
+
+              <!-- INICIO LIMIT VALUE FOR FOOD SUBSIDY -->
+              <div class="input-group" style="width: 100%">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text transparentBg">Valor límite de Subsídio de Alimentação</span>
+                  </div>
+                    <input [(ngModel)]="limitValueForFoodSubsidy" (change)="resultFoodSubsidy($event)" class="inputAlignRigth" type="number">
+                  <div class="input-group-append">
+                    <span class="input-group-text transparentBg">€</span>
+                  </div>
+              </div>
+              <!-- FIM LIMIT VALUE FOR FOOD SUBSIDY -->
+
+              <!-- INICIO FOOD SUBSIDY MONTH -->
+              <div class="input-group" style="width: 100%">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text transparentBg">Subsídio de Alimentação</span>
+                  </div>
+                    <input [(ngModel)]="foodSubsidyMonth" class="inputAlignRigth" type="number" disabled>
+                  <div class="input-group-append">
+                    <span class="input-group-text transparentBg">€</span>
+                  </div>
+              </div>
+              <!-- FIM FOOD SUBSIDY MONTH -->
+
+                <a style="cursor: pointer; color: white" class="btn btn-primary" (click)="newFoodSubsidyValues()">Guardar</a>
             </div>
           </div>
         </div>
       </div>
+      <!-- INICIO DA LINHA DE BAIXO -->
+
+      <!-- INICIO DOS EXTRAS -->
       <div class="row mt-3">
         <div class="col">
           <div class="card">
@@ -46,104 +152,71 @@
               Extras
             </div>
             <div class="card-body">
-              <h5 class="card-title">Special title treatment</h5>
-              <p class="card-text">
-                With supporting text below as a natural lead-in to additional
-                content.
-              </p>
-              <a href="#" class="btn btn-primary">Go somewhere</a>
+
+              <!-- INICIO DO CODIGO PARA OS EXTRAS -->
+                <!-- NOME DO EXTRA -->
+              <div class="input-group" style="width: 100%">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text transparentBg">Nome do Extra</span>
+                  </div>
+                    <input class="inputAlignRigth" type="text" [(ngModel)]="extraName">
+                <!-- NOME DO EXTRA -->
+                <!-- INICIO CHECKBOX -->
+                  <div class="input-group mb-3">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text transparentBg">Tem tributação autónoma?</span>
+                      </div>
+                      <div class="input-group-prepend">
+                        <div class="input-group-text">
+                          <input type="checkbox" aria-label="true" value="true" [(ngModel)]="extraWithAutonomousTributation">
+                        </div>
+                      </div>
+                  </div>
+                <!-- FIM DO CHECKBOX -->
+
+
+
+              <a style="cursor: pointer; color: white" class="btn btn-primary" (click)="newExtra()">Guardar</a>
+                </div>
             </div>
           </div>
         </div>
+        <!-- FIM DO CODIGO PARA OS EXTRAS -->
+
+        <!-- INICIO DO WORK INSURANCE -->
         <div class="col">
           <div class="card">
             <div class="card-header">
               Seguro de Trabalho
             </div>
             <div class="card-body">
-              <h5 class="card-title">Special title treatment</h5>
-              <p class="card-text">
-                With supporting text below as a natural lead-in to additional
-                content.
-              </p>
-              <a href="#" class="btn btn-primary">Go somewhere</a>
+
+              <!-- INICIO WORKINSURANCE VARIABLE -->
+              <div class="input-group" style="width: 100%">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text transparentBg">Variável de Cálculo Seguro de Trabalho</span>
+                  </div>
+                    <input [(ngModel)]="workInsuranceVariable" class="inputAlignRigth" type="number">
+              </div>
+              <!-- FIM WORKINSURANCE VARIABLE -->
+
+              <!-- INICIO VAR ACCOUNTED FOR WORK INSURANCE -->
+              <div class="input-group" style="width: 100%">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text transparentBg">Outra variável para o cálculo do Seguro de Trabalho</span>
+                  </div>
+                    <input [(ngModel)]="varAccountedForWorkInsurance" class="inputAlignRigth" type="number">
+              </div>
+              <!-- FIM VAR ACCOUNTED FOR WORK INSURANCE -->
+
+              <a style="cursor: pointer; color: white" class="btn btn-primary" (click)="newWorkInsuranceVariables()" >Guardar</a>
             </div>
           </div>
         </div>
+        <!-- FIM DO WORK INSURANCE -->
       </div>
     </div>
   </div>
 </div>
 
-<div class="row custom-row">
-  <div class="col-sm-8 custom-container jumbotron">
-    <form class="form-horizontal">
-      <fieldset>
-        <legend>Subsídio alimentação</legend>
-        <div class="form-group mt-5">
-          <label for="inputDays">Número médio de dias do mês</label>
-          <input
-            (ngModelChange)="onChangeSubAlim($event)"
-            type="number"
-            id="inputDays"
-            class="ml-2"
-            placeholder=""
-            [(ngModel)]="subAlim.days"
-            name="days"
-            required
-          />
-        </div>
-        <div class="form-group">
-          <label for="inputValue">Valor limite subsídio de alimentação</label>
-          <input
-            (ngModelChange)="onChangeSubAlim($event)"
-            type="number"
-            step="0.01"
-            id="inputValue"
-            [(ngModel)]="subAlim.valuePerDay"
-            name="valuePerDay"
-            class="ml-2"
-            placeholder=""
-            required
-          />
-        </div>
-        <div class="form-group">
-          <p>Valor médio mensal do subsídio de alimentação</p>
-          <input
-            id="valueTotal"
-            [(ngModel)]="simFieldsData.value"
-            step="0.01"
-            name="value"
-            disabled
-          />
-        </div>
-        <div class="form-group">
-          <button type="reset" class="btn btn-dark">Cancelar</button>
-          <button
-            type="button"
-            class="btn btn-secondary ml-1"
-            (click)="saveSubAlim()"
-          >
-            Guardar
-          </button>
-        </div>
-      </fieldset>
-    </form>
-  </div>
-</div>
-<app-field-tax
-  *ngIf="showForm"
-  (onClose)="showForm = false"
-  [name]="'Telemóvel'"
-></app-field-tax>
-<app-field-tax
-  *ngIf="showForm"
-  (onClose)="showForm = false"
-  [name]="'Renting Viatura'"
-></app-field-tax>
-
-<app-field-tax
-  *ngIf="showForm"
-  (onClose)="showForm = false"
-  [name]="newFieldName"
-></app-field-tax>
+<!-- FIM DA PAGINA -->
