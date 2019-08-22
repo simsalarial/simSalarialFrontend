@@ -24,6 +24,6 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
     SharedModule,
     NgxDatatableModule,
     ModalModule.forRoot()
-  ],
+  ]
 })
 export class LayoutModule { }

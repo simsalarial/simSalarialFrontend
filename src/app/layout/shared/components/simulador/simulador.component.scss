@@ -4,6 +4,12 @@ input[type=number]::-webkit-outer-spin-button {
   margin: 0;
 }
 
+.cardHead{
+  background-color: #e09134;
+  color: white;
+
+}
+
 
 .borderedRed{
   border-color: red;
@@ -15,4 +21,34 @@ input[type=number]::-webkit-outer-spin-button {
 
 .inputAlignRigth{
   text-align: right;
+}
+
+.father{
+  .son{
+    width: 100%;
+    .input-group-prepend{
+      width: 30%;
+    }
+  }
+}
+
+.father1{
+  .son1{
+    width: 100%;
+    .input-group-prepend{
+      width: 47%;
+      span {
+        width: 100%;
+      }
+    }
+/*       .input-group-append{
+        width: 15%
+        span{
+          padding: 36%;
+          padding-top: 0;
+          padding-bottom: 0;
+        }
+     
+    } */
+  }
 }

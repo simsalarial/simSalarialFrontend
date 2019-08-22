@@ -5,8 +5,7 @@
                 <fa-icon [icon]="faSearch"></fa-icon>
             </span>
         </div>
-        <input (keyup)="search($event)" type="text" class="form-control" placeholder="Filtrar por nome"
-            aria-label="Username" aria-describedby="basic-addon1">
+        <input (keyup)="search($event)" type="text" class="form-control" placeholder="Filtrar por nome" aria-label="Username" aria-describedby="basic-addon1">
     </div>
 </div>
 
@@ -35,7 +34,7 @@
                 Margem
             </ng-template>
             <ng-template let-row="row" ngx-datatable-cell-template>
-                {{row.margin}}
+                {{row.marginPercentage}}
             </ng-template>
         </ngx-datatable-column>
         <ngx-datatable-column>
@@ -43,7 +42,7 @@
                 Rate
             </ng-template>
             <ng-template let-row="row" ngx-datatable-cell-template>
-                {{row.rate}}
+                {{row.anualRate}}
             </ng-template>
         </ngx-datatable-column>
         <ngx-datatable-column>
@@ -56,10 +55,18 @@
         </ngx-datatable-column>
         <ngx-datatable-column>
             <ng-template let-column="column" ngx-datatable-header-template>
-                Salário líquido
+                Salário líquido sem duodécimos
             </ng-template>
             <ng-template let-row="row" ngx-datatable-cell-template>
-                {{row.netSalary}}
+                {{row.netSalaryWithoutDuo}}
+            </ng-template>
+        </ngx-datatable-column>
+        <ngx-datatable-column>
+            <ng-template let-column="column" ngx-datatable-header-template>
+                Salário líquido com duodécimos
+            </ng-template>
+            <ng-template let-row="row" ngx-datatable-cell-template>
+                {{row.netSalaryWithDuo}}
             </ng-template>
         </ngx-datatable-column>
     </ngx-datatable>

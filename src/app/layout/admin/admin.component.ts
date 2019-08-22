@@ -4,7 +4,7 @@ import { DataService } from './../../core/services/data-service/data.service';
 import { Component, OnInit } from '@angular/core';
 import { AccountServiceService } from 'src/app/core/services';
 import { Router } from '@angular/router';
-import { faUsers, faCalculator, faTasks, faTable } from '@fortawesome/free-solid-svg-icons';
+import { faUsers, faCalculator, faTasks, faTable, faClipboardList } from '@fortawesome/free-solid-svg-icons';
 import { Margin } from 'src/app/core/models/margin';
 import { Taxation } from 'src/app/core/models/taxation';
 import { SimulationService } from 'src/app/core/services/simulation-data/simulation.service';
@@ -20,7 +20,7 @@ export class AdminComponent implements OnInit {
   faCalculator = faCalculator;
   faTasks = faTasks;
   faTable = faTable;
-
+  faClipboardList = faClipboardList;
 
   workInsuranceVariable: number;
   varAccountedForWorkInsurance: number;
@@ -53,12 +53,9 @@ export class AdminComponent implements OnInit {
     this.role = this.accountApi.getAccountRole();
   }
 
-  redirect() {
-    this.router.navigateByUrl('/layout/admin/simulador');
-  }
-
-
   importDataBaseData() {
     this.simulationService.importDataBaseData();
   }
+
+  
 }

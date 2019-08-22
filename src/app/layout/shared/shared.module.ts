@@ -10,6 +10,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { SliderComponent } from './components/slider/slider.component';
 import { Ng5SliderModule } from 'ng5-slider';
+import { ShowHidePasswordModule } from 'ngx-show-hide-password';
 
 
 @NgModule({
@@ -22,7 +23,7 @@ import { Ng5SliderModule } from 'ng5-slider';
     FontAwesomeModule,
     Ng5SliderModule,
     NgxDatatableModule,
-
+    ShowHidePasswordModule
   ],
   exports: [
     HeaderComponent,

@@ -30,5 +30,6 @@ import { ModalModule } from 'ngx-bootstrap/modal';
     MatTableModule,
     ModalModule.forRoot()
   ],
+  entryComponents: [NewAccountComponent]
 })
 export class AdminModule { }

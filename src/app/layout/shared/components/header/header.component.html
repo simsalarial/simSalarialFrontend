@@ -1,11 +1,12 @@
-<nav class="navbar navbar-expand-lg navbar-light row" style="background-color:#334D65">
-  <img style="height: 80px;" class="ml-5" src="assets/img/aubayCopy.png"> 
-  <a class="navbar-brand mb-0 text-white h1 offset-1">SIMULADOR SALARIAL</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav"
-    aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <!-- <div class="collapse navbar-collapse" id="navbarNav">
+
+  <nav class="navbar navbar-expand-lg navbar-light row" style="background-color:#334D65">
+    <img style="height: 80px;" class="ml-5" src="assets/img/aubayCopy.png">
+    <a class="navbar-brand mb-0 text-white h1 offset-1">SIMULADOR SALARIAL</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+<!--     <div class="collapse navbar-collapse" id="navbarNav">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item">
         <a class="nav-item nav-link" [routerLinkActive]="['active']" routerLink="/product" translate>Product</a>
@@ -15,55 +16,65 @@
       </li>
     </ul>
   </div> -->
-  <div class="d-flex align-items-end ml-auto">
-    <span class="navbar-text text-white mx-3">{{email}}</span> 
-    <button class="btn btn-outline-light" style="float:right;" (click)="showEditAccount(template)" >Editar senha</button>
-    <button class="ml-2 btn btn-outline-light" style="float:right;" (click)="logout()">Logout</button>
-  </div>
- 
-</nav>
-<ng-template #template>
-  <div class="modal-header">
-    <h4 class="modal-title pull-left">Editar senha: {{email}}</h4>
-    <button type="button" class="close pull-right" aria-label="Close" (click)="onCloseModal()">
+    <div class="d-flex align-items-end ml-auto">
+      <span class="navbar-text text-white mx-3">{{email}}</span>
+      <button class="btn btn-outline-light" style="float:right;" (click)="showEditAccount(template)">Editar
+        senha</button>
+      <button class="ml-2 btn btn-outline-light" style="float:right;" (click)="logout()">Logout</button>
+    </div>
+
+  </nav>
+  <ng-template #template>
+    <div class="modal-header">
+      <h4 class="modal-title pull-left">Editar senha: {{email}}</h4>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="onCloseModal()">
         <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-  <div class="modal-body">
-    <p *ngIf="state == 'confirm'">Senha editada com sucesso!</p>
-    <p *ngIf="state == 'error'">Insira uma senha válida.</p>
-    <form *ngIf="state == 'edit'" class="form-horizontal" [formGroup]="editUserForm">
+      </button>
+    </div>
+    <div class="modal-body">
+      <p *ngIf="state == 'confirm'">Senha editada com sucesso!</p>
+      <p *ngIf="state == 'error'">Insira uma senha válida.</p>
+      <form *ngIf="state == 'edit'" class="form-horizontal" [formGroup]="editUserForm">
         <div class="form-group mt-2">
             <div class="input-group ml-2 mr-2 row">
                 <div class="input-group-prepend">
                     <span [ngClass]="{'borderedRed' : editUserForm.controls['newPass'].invalid && submitClicked}"class="input-group-text form-control transparentBg"  for="inputnewPass">Nova senha</span>
                 </div>
                 <input [ngClass]="{'is-invalid' : editUserForm.controls['newPass'].invalid && submitClicked}" id="inputnewPass" type="password" class="form-control" formControlName="newPass">
+                 
             </div>
             <div *ngIf="editUserForm.controls['newPass'].invalid && submitClicked"class="text-danger ml-2">
                  <small *ngIf="editUserForm.controls['newPass'].errors.required">Insira uma nova senha.</small>
             </div>
-        </div>
+            <input [ngClass]="{'is-invalid' : editUserForm.controls['newPass'].invalid && submitClicked}"
+              id="inputnewPass" type="password" class="form-control" formControlName="newPass">
+          </div>
+          <div *ngIf="editUserForm.controls['newPass'].invalid && submitClicked" class="text-danger ml-2">
+            <small *ngIf="editUserForm.controls['newPass'].errors.required">Insira uma nova senha.</small>
+          </div>
         <div class="form-group mt-2">
-            <div class="input-group ml-2 mr-2 row">
-                <div class="input-group-prepend">
-                    <span [ngClass]="{'borderedRed' : editUserForm.controls['confirmPass'].invalid && submitClicked}" class="input-group-text form-control transparentBg"  for="inputconfirmPass">Confirmar senha</span>
-                </div>
-                <input [ngClass]="{'is-invalid' : editUserForm.controls['confirmPass'].invalid && submitClicked}" type="password" style="width: 185px" class="form-control" formControlName="confirmPass" >
-  
+          <div class="input-group ml-2 mr-2 row">
+            <div class="input-group-prepend">
+              <span [ngClass]="{'borderedRed' : editUserForm.controls['confirmPass'].invalid && submitClicked}"
+                class="input-group-text form-control transparentBg" for="inputconfirmPass">Confirmar senha</span>
             </div>
-            <div *ngIf="editUserForm.controls['confirmPass'].invalid && submitClicked" class="text-danger ml-2">
-                <small *ngIf="editUserForm.controls['confirmPass'].errors.required">Confirme a nova senha.</small>
-            </div>
+            <input [ngClass]="{'is-invalid' : editUserForm.controls['confirmPass'].invalid && submitClicked}"
+              type="password" style="width: 185px" class="form-control" formControlName="confirmPass">
+
+          </div>
+          <div *ngIf="editUserForm.controls['confirmPass'].invalid && submitClicked" class="text-danger ml-2">
+            <small *ngIf="editUserForm.controls['confirmPass'].errors.required">Confirme a nova senha.</small>
+          </div>
         </div>
         <div class="modal-footer">
-            <div class="form-group">
-                <button type="button" class="btn btn-dark" (click)="resetForm()">Cancelar</button>
-                <button type="button" class="btn btn-secondary ml-1" (click)="editAccount()">Editar</button>
-            </div>
+          <div class="form-group">
+            <button type="button" class="btn btn-dark" (click)="resetForm()">Cancelar</button>
+            <button type="button" class="btn btn-secondary ml-1" (click)="editAccount()">Editar</button>
+          </div>
         </div>
-    </form>
-  </div>
-       
+      </form>
+    </div>
 
-</ng-template>
+
+  </ng-template>
+
