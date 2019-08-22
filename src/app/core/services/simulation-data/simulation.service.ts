@@ -8,6 +8,7 @@ import { Observable, ReplaySubject } from 'rxjs';
 import { SimulationByPerson } from '../../models/simulationByPerson';
 import { HttpClient } from '@angular/common/http';
 import { SimManagComponent } from 'src/app/layout/admin/sim-manag/sim-manag.component';
+import { Extras } from '../../models/extras';
 
 @Injectable({
   providedIn: 'root'
@@ -18,11 +19,13 @@ export class SimulationService {
   foodSubsidy = new Array<FoodSubsidy>();
   marginValues = new Array<Margin>();
   taxation = new Array<Taxation>();
+  extras = new Array<Extras>();
 
   receiveworkInsurance$ = new ReplaySubject<WorkInsurance[]>();
   foodSubsidy$ = new ReplaySubject<FoodSubsidy[]>();
   marginValues$ = new ReplaySubject<Margin[]>();
   taxation$ = new ReplaySubject<Taxation[]>();
+  extras$ = new ReplaySubject<Extras[]>();
 
 
   constructor(
@@ -36,6 +39,14 @@ export class SimulationService {
   }
 
   importDataBaseData() {
+
+    // GET EXTRAS //
+    this.dataService.retrieveDataServiceExtras(this.extras).subscribe((extrasRes) => {
+      Object.assign(this.extras, extrasRes);
+      this.divideExtrasByTributation(this.extras);
+    });
+    // GET EXTRAS //
+
     // GET OVERALL TAXES //
     this.dataService.retrieveDataServiceTaxes(this.taxation).subscribe((taxRes) => {
      // tslint:disable-next-line: no-unused-expression
@@ -68,7 +79,7 @@ export class SimulationService {
    });
    // FOODSUBSIDY VALUES //
 
-    this.teste();
+
 
   }
 
@@ -92,10 +103,9 @@ export class SimulationService {
     this.foodSubsidy$.next(foodSubsidyValues);
   }
 
-  teste() {
-  console.log("AQUI");
-
-  //console.log(this.workInsuranceVariable);
+  divideExtrasByTributation(newExtras) {
+    console.log(newExtras);
+    this.extras$.next(newExtras);
   }
 
 
