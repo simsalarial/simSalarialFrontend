@@ -22,7 +22,7 @@ export class AccountManagComponent implements OnInit {
     console.log('entrei');
     this.state = 'table';
     this.accountService.getAllAccounts().subscribe( (res:any) => {
-      //console.log(res);
+      console.log(res);
       res.forEach(element => {
         let account = new Account();
         account.name = element.name;

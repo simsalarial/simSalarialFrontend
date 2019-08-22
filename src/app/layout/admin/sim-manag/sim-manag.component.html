@@ -164,7 +164,7 @@
                 <!-- INICIO CHECKBOX -->
                   <div class="input-group mb-3">
                       <div class="input-group-prepend">
-                        <span class="input-group-text transparentBg">Tem tributação autónoma?</span>
+                        <span class="input-group-text transparentBg">Com tributação autónoma</span>
                       </div>
                       <div class="input-group-prepend">
                         <div class="input-group-text">
@@ -172,12 +172,26 @@
                         </div>
                       </div>
                   </div>
+                 
+                <!-- FIM DO CHECKBOX -->
+
+              <a style="cursor: pointer; color: white" class="btn btn-primary" (click)="newExtra(template)">Guardar</a>
+              <a style="cursor: pointer; color: white" class="btn btn-primary ml-3" (click)="viewExtra(template)">Ver extras</a>
+              
+              <ng-template #template>
+                <div class="modal-header">
+                  <h4 class="modal-title pull-left">Extras</h4>
+                  <button type="button" class="close pull-right" aria-label="Close" (click)="onCloseModal()">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
                   <div class="container mb-3">
                     <ngx-datatable 
                         class="bootstrap"
                         [rows]="rows"
                         [loadingIndicator]="loadingIndicator"
-                        [columns]="keys"
+                        [columns]="keysTA"
                         [columnMode]="'force'"
                         [headerHeight]="40"
                         [summaryRow]="true"
@@ -188,27 +202,33 @@
                         [reorderable]="reorderable">
                         <ngx-datatable-column>
                             <ng-template let-column="column" ngx-datatable-header-template>
-                                Extras com TA
+                                Extras
                             </ng-template>
                             <ng-template let-row="row" ngx-datatable-cell-template>
                                 {{row.name}}
                             </ng-template>
                         </ngx-datatable-column>
                         <ngx-datatable-column>
+                          <ng-template let-column="column" ngx-datatable-header-template>
+                              TA
+                          </ng-template>
+                          <ng-template let-row="row" ngx-datatable-cell-template>
+                              {{row.tA}}
+                          </ng-template>
+                      </ngx-datatable-column>
+                        <ngx-datatable-column>
                             <ng-template let-column="column" ngx-datatable-header-template>
                                 Apagar
                             </ng-template>
                             <ng-template let-row="row" ngx-datatable-cell-template>
-                                <button class="btn btn-outline-danger  btn-sm" (click)="deleteExtra()">X</button>
+                                <button class="btn btn-link btn-sm" style="color: red" (click)="deleteExtra(row.name)">x</button>
                             </ng-template>
                         </ngx-datatable-column>
                     </ngx-datatable>
                   </div>
-                <!-- FIM DO CHECKBOX -->
-
-
-
-              <a style="cursor: pointer; color: white" class="btn btn-primary" (click)="newExtra()">Guardar</a>
+                </div>
+              </ng-template>
+              
                 </div>
             </div>
           </div>

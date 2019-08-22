@@ -3,12 +3,13 @@ import { Taxation } from './../../../core/models/taxation';
 import { Margin } from './../../../core/models/margin';
 import { FoodSubsidy } from './../../../core/models/foodSubsidy';
 import { WorkInsurance } from 'src/app/core/models/workInsurance';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
 import { SimulationFields } from 'src/app/core/models/simulationFields';
 import { SimFieldsData } from 'src/app/core/models/simFieldsData';
 import { SimulationService } from 'src/app/core/services/simulation-data/simulation.service';
 import { ReplaySubject } from 'rxjs';
 import { DataService } from 'src/app/core/services/data-service/data.service';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 //import { ReplaySubject } from 'rxjs';
 
 
@@ -18,12 +19,15 @@ import { DataService } from 'src/app/core/services/data-service/data.service';
   styleUrls: ['./sim-manag.component.scss']
 })
 export class SimManagComponent implements OnInit {
-
+  modalRef: BsModalRef;
   simFieldsData = new SimFieldsData();
   showForm = true;
   //public fields$: ReplaySubject<SimulationFields[]>;
   subAlim;
 
+  //Extra table
+  rows = [];
+  public keysTA;
 
   workInsuranceVariable: number;
   varAccountedForWorkInsurance: number;
@@ -61,6 +65,7 @@ export class SimManagComponent implements OnInit {
 
   constructor(
     private simulationService: SimulationService,
+    private modalService: BsModalService,
     private dataService: DataService
   ) {
 
@@ -72,9 +77,14 @@ export class SimManagComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.keysTA = [
+      {prop: 'extra'},
+      {prop: 'TA'}
+    ]
 
     this.extras$.subscribe((newExtra: any) => {
       console.log(newExtra);
+      
       // tslint:disable-next-line: prefer-for-of
       for (let i = 0; i < newExtra.length; i++) {
         if (newExtra[i].tA) {
@@ -94,6 +104,12 @@ export class SimManagComponent implements OnInit {
           this.extrasWithoutTa.splice(h, 1);
         }
       }
+
+      this.rows = [];
+      this.rows.push(...newExtra);
+      this.rows =  this.rows.slice(0);
+      console.log(this.rows);
+      
       console.log(this.extrasWithTa);
       console.log(this.extrasWithoutTa);
     });
@@ -172,16 +188,44 @@ export class SimManagComponent implements OnInit {
     this.dataService.putNewFoodSubsidyValue(newFoodSubsidyValues);
   }
 
-  newExtra() {
+  newExtra(template) {
     // tslint:disable-next-line: new-parens
     const newExtra = new Extras;
     newExtra.name = this.extraName;
     newExtra.tA = this.extraWithAutonomousTributation;
     console.log(newExtra);
-    this.dataService.postNewExtra(newExtra);
+
+    this.dataService.postNewExtra(newExtra).subscribe((res:any) => {
+      console.log(res);
+    });
+    
+    this.rows.push(newExtra);
+    this.rows =  this.rows.slice(0);
+    //console.log(this.rows);
+
+    this.viewExtra(template);
+   // this.rows.push(...this.extrasWithoutTa);
+      
   }
 
-  deleteExtra() {
+  //Modal para extras
+
+  viewExtra(template: TemplateRef<any>) {
+    this.modalRef = this.modalService.show(template);
+  }
+
+  onCloseModal() { 
+    this.modalRef.hide();
+  }
+
+  deleteExtra(extraName) {
+
+    this.dataService.deleteExtra(extraName).subscribe((res:any) => {
+      console.log(res);
+      this.rows = this.rows.filter(function( obj ) {
+        return obj.name !== extraName;
+      });
+    });
     
   }
 

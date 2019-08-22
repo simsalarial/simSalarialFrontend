@@ -25,13 +25,13 @@ export class SimListComponent implements OnInit {
   rows = [];
   temp = [];
   data = [];
-  colaborators: Array<Colaborator>;
+  colaborator: any = {};
   msg: string;
   @ViewChild(DatatableComponent, { static: false }) table: DatatableComponent;
 
   constructor(private modalService: BsModalService, private accountService:AccountServiceService) { 
     this.keys = [
-      {prop: 'colaborator'},
+      {prop: 'name'},
       {prop: 'simulation'},
       {prop: 'marginPercentage'},
       {prop: 'anualRate'},
@@ -42,20 +42,32 @@ export class SimListComponent implements OnInit {
     }
   
   ngOnInit() {
-    this.rows = this.temp;
+    //this.rows = this.temp;
     let email = this.accountService.getCurrentEmail();
     this.accountService.getAllSimulationsFromAccount(email).subscribe((res: any) => {
+      console.log(res);
+      
       res.forEach( (element: any) => {
-        this.colaborators[0].name = element.name;
-
         //this.colaborators[0].simulations[0] = element.simulations;
-        this.simFields.forEach((field: any) => {
+        /* this.simFields.forEach((field: any) => {
+          console.log(element);
           const filtered = element.simulations.filter( el => el.name === field);
-          this.colaborators[0].simulations[field] = filtered[0].value;
+          console.log(filtered);
+          
+          this.colaborators.push(filtered[0].value);
+        }); */
+          element.simulations.forEach(simulation => {
+            this.colaborator.name = element.name;
+            this.colaborator.simulation = simulation.id;
+            simulation.simFieldsData.forEach(field => {
+              this.colaborator[field.name] = field.value;
+            });
+            this.data.push({...this.colaborator});
+            this.colaborator = {};
+          });
         });
-
-        this.data.push(this.colaborators);
-      });
+        console.log(this.data);
+        this.rows = this.data;
     })
   }
 
