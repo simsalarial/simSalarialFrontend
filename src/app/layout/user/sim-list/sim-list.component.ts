@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter, ViewChild, SimpleChanges, TemplateRef } from '@angular/core';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
-import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import { faSearch, faEuroSign, faPercentage, faUser, faCalculator } from '@fortawesome/free-solid-svg-icons';
 import { DatatableComponent } from '@swimlane/ngx-datatable';
 import { AccountServiceService } from 'src/app/core';
 import { Colaborator } from 'src/app/core/models/colaborator';
@@ -18,10 +18,13 @@ export class SimListComponent implements OnInit {
   //simToDelete;
   //modalRef: BsModalRef;
   faSearch = faSearch;
+  faEuroSign = faEuroSign;
+  faPercentage = faPercentage;
+  faCalculator = faCalculator;
+  faUser = faUser;
   public keys;
   dataSub = [];
   state: string;
-  simFields = ['marginPercentage', 'anualRate', 'anualTotalCost', 'netSalaryWithoutDuo', 'netSalaryWithDuo'];
   rows = [];
   temp = [];
   data = [];
@@ -110,7 +113,7 @@ export class SimListComponent implements OnInit {
     const val = event.target.value.toLowerCase();
     // filter data
     const temp = this.temp.filter(function(d) {
-      return d.colaborator.toLowerCase().indexOf(val) !== -1 || !val;
+      return d.name.toLowerCase().indexOf(val) !== -1 || !val;
     });
     // update the rows
     this.rows = temp;

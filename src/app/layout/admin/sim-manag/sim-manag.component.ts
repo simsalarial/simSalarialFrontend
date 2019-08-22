@@ -56,8 +56,8 @@ export class SimManagComponent implements OnInit {
   // tslint:disable-next-line: variable-name
   taxation$ = new ReplaySubject<Taxation[]>();
   extras$ = new ReplaySubject<Extras[]>();
-  extrasWithoutTa = new Array<object>();
-  extrasWithTa = new Array<object>();
+  extrasWithoutTa = new Array<any>();
+  extrasWithTa = new Array<any>();
 
 
   extraName: string;
