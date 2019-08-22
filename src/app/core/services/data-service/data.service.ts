@@ -14,6 +14,7 @@ export class DataService {
 
 
 
+  // TAXES //
 
   retrieveDataServiceTaxes(data) {
     return this.http.get('http://localhost:8080/simuladorsalarial/api/taxes/all', data);
@@ -22,6 +23,8 @@ export class DataService {
   postNewTaxes(data) {
     this.http.post('http://localhost:8080/simuladorsalarial/api/taxes/', data);
   }
+
+  // EXTRAS //
 
   retrieveDataServiceExtras(extras) {
     return this.http.get('http://localhost:8080/simuladorsalarial/api/simulationfields/', extras);
@@ -49,7 +52,9 @@ export class DataService {
   }
 
   postNewMarginValues(margin) {
-    this.http.post('http://localhost:8080/simuladorsalarial/api/margin/newvalue', margin);
+    console.log("entrei")
+    console.log(margin);
+    return this.http.post('http://localhost:8080/simuladorsalarial/api/margin/newvalue', margin);
   }
 
 
@@ -59,21 +64,20 @@ export class DataService {
     return this.http.get('http://localhost:8080/simuladorsalarial/api/foodsubsidy/', foodSubsidyMonth);
   }
 
-  postNewFoodSubsidyValue(foodSubsidyMonth) {
+  putNewFoodSubsidyValue(foodSubsidyMonth) {
     this.http.put('http://localhost:8080/simuladorsalarial/api/foodsubsidy/newvalue', foodSubsidyMonth);
 
   }
-    retriveWorkInsuranceVariable(workIns) {
+  retriveWorkInsuranceVariable(workIns) {
     return this.http.get('http://localhost:8080/simuladorsalarial/api/workinsurance/', workIns);
   }
 
 
   // SAVE SIMULATOR IN DATA BASE //
 
-  // postSimulation(simulation) {
-  //   this.http.post('')
-  // }
-
+  postSimulation(simulation, colaboratorId) {
+    this.http.post('http://localhost:8080/simuladorsalarial/api/simulations/' + colaboratorId, simulation);
+  }
 
 }
 

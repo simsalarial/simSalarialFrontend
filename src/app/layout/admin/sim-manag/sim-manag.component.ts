@@ -1,3 +1,4 @@
+import { Extras } from './../../../core/models/extras';
 import { Taxation } from './../../../core/models/taxation';
 import { Margin } from './../../../core/models/margin';
 import { FoodSubsidy } from './../../../core/models/foodSubsidy';
@@ -7,6 +8,7 @@ import { SimulationFields } from 'src/app/core/models/simulationFields';
 import { SimFieldsData } from 'src/app/core/models/simFieldsData';
 import { SimulationService } from 'src/app/core/services/simulation-data/simulation.service';
 import { ReplaySubject } from 'rxjs';
+import { DataService } from 'src/app/core/services/data-service/data.service';
 //import { ReplaySubject } from 'rxjs';
 
 
@@ -29,7 +31,7 @@ export class SimManagComponent implements OnInit {
 
 
   foodSubsidyMonth: number;
-  averageDaysInAMonth: number;
+  averageDaysOfTheMonth: number;
   limitValueForFoodSubsidy: number;
 
 
@@ -50,14 +52,13 @@ export class SimManagComponent implements OnInit {
   // tslint:disable-next-line: variable-name
   taxation$ = new ReplaySubject<Taxation[]>();
 
+  extraName: string;
+  extraWithAutonomousTributation: boolean;
 
   constructor(
-    private simulationService: SimulationService
+    private simulationService: SimulationService,
+    private dataService: DataService
   ) {
-    this.subAlim = {
-      days: 0,
-      valuePerDay: 0
-    }
 
     this.foodSubsidy$ = this.simulationService.foodSubsidy$;
     this.marginValues$ = this.simulationService.marginValues$;
@@ -70,11 +71,11 @@ export class SimManagComponent implements OnInit {
       console.log(foodSubsidyValue);
       this.foodSubsidyMonth = foodSubsidyValue.foodSubsidyMonth;
       this.limitValueForFoodSubsidy = foodSubsidyValue.limitValueForFoodSubsidy;
-      this.averageDaysInAMonth = foodSubsidyValue.averageDaysInAMonth;
+      this.averageDaysOfTheMonth = foodSubsidyValue.averageDaysOfTheMonth;
     })
     this.marginValues$.subscribe( (marginValue: any) => {
       console.log(marginValue);
-      this.margin_min = marginValue[0].nargin_min;
+      this.margin_min = marginValue[0].margin_min;
       this.margin_max = marginValue[0].margin_max;
     })
     this.taxation$.subscribe( (taxationValue: any) => {
@@ -91,13 +92,47 @@ export class SimManagComponent implements OnInit {
     })
   }
 
-  onChangeSubAlim(event) {
-    this.simFieldsData.value = this.subAlim.days * this.subAlim.valuePerDay;
+  resultFoodSubsidy(event) {
+    this.foodSubsidyMonth = Number((this.averageDaysOfTheMonth * this.limitValueForFoodSubsidy).toFixed(2));
   }
 
-  saveSubAlim() {
-    this.simFieldsData.name = "Subsídio alimentação";
-    console.log(this.simFieldsData);
+  newTributationValues() {
+    const newTributationValues = [];
+    newTributationValues.push({name: "autonomousTributation", value: this.autonomousTributation});
+    newTributationValues.push(this.workerSocialSecurity);
+    newTributationValues.push(this.companySocialSecurity);
+    console.log(newTributationValues);
   }
+
+  newMarginValues() {
+    // tslint:disable-next-line: new-parens
+    const newMarginValues = new Margin;
+    newMarginValues.margin_min = this.margin_min;
+    newMarginValues.margin_max = this.margin_max;
+    console.log(newMarginValues);
+    this.dataService.postNewMarginValues(newMarginValues);
+    console.log(this.dataService.postNewMarginValues(newMarginValues));
+
+  }
+
+  newFoodSubsidyValues() {
+    // tslint:disable-next-line: new-parens
+    const newFoodSubsidyValues = new FoodSubsidy;
+    newFoodSubsidyValues.averageDaysOfTheMonth = this.averageDaysOfTheMonth;
+    newFoodSubsidyValues.limitValueForFoodSubsidy = this.limitValueForFoodSubsidy;
+    newFoodSubsidyValues.foodsubsidymonth = this.foodSubsidyMonth;
+    console.log(newFoodSubsidyValues);
+    this.dataService.putNewFoodSubsidyValue(newFoodSubsidyValues);
+  }
+
+  newExtra() {
+    // tslint:disable-next-line: new-parens
+    const newExtra = new Extras;
+    newExtra.name = this.extraName;
+    newExtra.tA = this.extraWithAutonomousTributation;
+    console.log(newExtra);
+    this.dataService.postNewExtra(newExtra);
+  }
+
 
 }

@@ -29,6 +29,8 @@ export class SimuladorComponent implements OnInit {
   profileForm: any;
   simForm: any;
 
+  colaboratorId: number;
+
   private col: Colaborator;
 
   taxation: Taxation;
@@ -509,13 +511,12 @@ export class SimuladorComponent implements OnInit {
   }
 
   saveThisSim() {
-    console.log(this.simForm);
-    console.log("AQUI");
+
 
     Object.entries(this.simForm.value).forEach((element: any) => {
       console.log(element);
       if (element[1].constructor === Array) {
-        console.log("array na mulher")
+        // tslint:disable-next-line: prefer-for-of
         for (let i = 0; i < element[1].length; i++) {
           console.log(element[1]);
           this.saveSimulator.push({name: element[1].name, value: element[1].value});
@@ -527,7 +528,12 @@ export class SimuladorComponent implements OnInit {
         this.saveSimulator.push({name: element[0], value: Number(element[1])});
       }
     });
-    console.log(this.saveSimulator); 
+    console.log(this.saveSimulator);
+    console.log(this.col);
+    this.colaboratorId = this.col.id;
+    console.log(this.colaboratorId);
+    this.dataService.postSimulation(this.saveSimulator, this.colaboratorId);
+
   }
 
   exportToPDF() {
