@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter, ViewChild, SimpleChanges, TemplateRef } from '@angular/core';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
-import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import { faSearch, faEuroSign, faPercentage, faUser, faCalculator } from '@fortawesome/free-solid-svg-icons';
 import { DatatableComponent } from '@swimlane/ngx-datatable';
 import { AccountServiceService } from 'src/app/core';
 import { Colaborator } from 'src/app/core/models/colaborator';
@@ -18,20 +18,23 @@ export class SimListComponent implements OnInit {
   //simToDelete;
   //modalRef: BsModalRef;
   faSearch = faSearch;
+  faEuroSign = faEuroSign;
+  faPercentage = faPercentage;
+  faCalculator = faCalculator;
+  faUser = faUser;
   public keys;
   dataSub = [];
   state: string;
-  simFields = ['marginPercentage', 'anualRate', 'anualTotalCost', 'netSalaryWithoutDuo', 'netSalaryWithDuo'];
   rows = [];
   temp = [];
   data = [];
-  colaborators: Array<Colaborator>;
+  colaborator: any = {};
   msg: string;
   @ViewChild(DatatableComponent, { static: false }) table: DatatableComponent;
 
   constructor(private modalService: BsModalService, private accountService:AccountServiceService) { 
     this.keys = [
-      {prop: 'colaborator'},
+      {prop: 'name'},
       {prop: 'simulation'},
       {prop: 'marginPercentage'},
       {prop: 'anualRate'},
@@ -42,20 +45,32 @@ export class SimListComponent implements OnInit {
     }
   
   ngOnInit() {
-    this.rows = this.temp;
+    //this.rows = this.temp;
     let email = this.accountService.getCurrentEmail();
     this.accountService.getAllSimulationsFromAccount(email).subscribe((res: any) => {
+      console.log(res);
+      
       res.forEach( (element: any) => {
-        this.colaborators[0].name = element.name;
-
         //this.colaborators[0].simulations[0] = element.simulations;
-        this.simFields.forEach((field: any) => {
+        /* this.simFields.forEach((field: any) => {
+          console.log(element);
           const filtered = element.simulations.filter( el => el.name === field);
-          this.colaborators[0].simulations[field] = filtered[0].value;
+          console.log(filtered);
+          
+          this.colaborators.push(filtered[0].value);
+        }); */
+          element.simulations.forEach(simulation => {
+            this.colaborator.name = element.name;
+            this.colaborator.simulation = simulation.id;
+            simulation.simFieldsData.forEach(field => {
+              this.colaborator[field.name] = field.value;
+            });
+            this.data.push({...this.colaborator});
+            this.colaborator = {};
+          });
         });
-
-        this.data.push(this.colaborators);
-      });
+        console.log(this.data);
+        this.rows = this.data;
     })
   }
 
@@ -98,7 +113,7 @@ export class SimListComponent implements OnInit {
     const val = event.target.value.toLowerCase();
     // filter data
     const temp = this.temp.filter(function(d) {
-      return d.colaborator.toLowerCase().indexOf(val) !== -1 || !val;
+      return d.name.toLowerCase().indexOf(val) !== -1 || !val;
     });
     // update the rows
     this.rows = temp;

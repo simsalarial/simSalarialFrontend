@@ -3,3 +3,14 @@
 @import "../node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css";
 @import '~@swimlane/ngx-datatable/release/themes/bootstrap.css';
 @import "../node_modules/@swimlane/ngx-datatable/release/assets/icons.css";
+
+.btn-mycolor {
+    border-color: #f84f00;
+    color: #f84f00;
+    
+    
+}
+.btn-mycolor:hover {
+    color: white;
+    background-color: #f84f00;
+}

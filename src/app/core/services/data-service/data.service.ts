@@ -11,9 +11,6 @@ export class DataService {
   constructor(private http: HttpClient) { }
 
 
-
-
-
   // TAXES //
 
   retrieveDataServiceTaxes(data) {
@@ -31,7 +28,11 @@ export class DataService {
   }
 
   postNewExtra(extra) {
-    return this.http.post('http://localhost:8080/simuladorsalarial/api/extras', extra);
+    return this.http.post('http://localhost:8080/simuladorsalarial/api/simulationfields', extra,  {responseType: 'text'});
+  }
+
+  deleteExtra(extra) {
+    return this.http.delete('http://localhost:8080/simuladorsalarial/api/simulationfields/' + extra,  {responseType: 'text'});
   }
 
   // WORK INSURANCE //

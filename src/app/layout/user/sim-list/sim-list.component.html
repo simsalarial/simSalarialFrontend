@@ -15,15 +15,15 @@
         [limit]="5" [rowHeight]="'auto'" [reorderable]="reorderable">
         <ngx-datatable-column>
             <ng-template let-column="column" ngx-datatable-header-template>
-                Colaborador
+                <p><fa-icon [icon]="faUser"></fa-icon></p>Colaborador
             </ng-template>
             <ng-template let-row="row" ngx-datatable-cell-template>
-                {{row.colaborator}}
+                {{row.name}}
             </ng-template>
         </ngx-datatable-column>
         <ngx-datatable-column>
             <ng-template let-column="column" ngx-datatable-header-template>
-                Simulação
+                <p><fa-icon [icon]="faCalculator"></fa-icon></p>Simulação
             </ng-template>
             <ng-template let-row="row" ngx-datatable-cell-template>
                 {{row.simulation}}
@@ -31,7 +31,7 @@
         </ngx-datatable-column>
         <ngx-datatable-column>
             <ng-template let-column="column" ngx-datatable-header-template>
-                Margem
+                <p><fa-icon [icon]="faPercentage"></fa-icon></p> Margem  
             </ng-template>
             <ng-template let-row="row" ngx-datatable-cell-template>
                 {{row.marginPercentage}}
@@ -39,7 +39,7 @@
         </ngx-datatable-column>
         <ngx-datatable-column>
             <ng-template let-column="column" ngx-datatable-header-template>
-                Rate
+                <p><fa-icon [icon]="faEuroSign"></fa-icon></p>Rate anual
             </ng-template>
             <ng-template let-row="row" ngx-datatable-cell-template>
                 {{row.anualRate}}
@@ -47,7 +47,8 @@
         </ngx-datatable-column>
         <ngx-datatable-column>
             <ng-template let-column="column" ngx-datatable-header-template>
-                Custo total
+                <p><fa-icon [icon]="faEuroSign"></fa-icon></p>Custo total anual
+               
             </ng-template>
             <ng-template let-row="row" ngx-datatable-cell-template>
                 {{row.anualTotalCost}}
@@ -55,7 +56,8 @@
         </ngx-datatable-column>
         <ngx-datatable-column>
             <ng-template let-column="column" ngx-datatable-header-template>
-                Salário líquido sem duodécimos
+                <p><fa-icon [icon]="faEuroSign"></fa-icon></p> Salário líquido sem duodécimos
+                
             </ng-template>
             <ng-template let-row="row" ngx-datatable-cell-template>
                 {{row.netSalaryWithoutDuo}}
@@ -63,7 +65,8 @@
         </ngx-datatable-column>
         <ngx-datatable-column>
             <ng-template let-column="column" ngx-datatable-header-template>
-                Salário líquido com duodécimos
+                <p><fa-icon [icon]="faEuroSign"></fa-icon></p>Salário líquido com duodécimos
+               
             </ng-template>
             <ng-template let-row="row" ngx-datatable-cell-template>
                 {{row.netSalaryWithDuo}}
