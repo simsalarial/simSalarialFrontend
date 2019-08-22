@@ -134,6 +134,10 @@ export class SimManagComponent implements OnInit {
     this.dataService.postNewExtra(newExtra);
   }
 
+  deleteExtra() {
+    
+  }
+
   newWorkInsuranceVariables() {
     // tslint:disable-next-line: new-parens
     const newWorkInsuranceVariables = new WorkInsurance;

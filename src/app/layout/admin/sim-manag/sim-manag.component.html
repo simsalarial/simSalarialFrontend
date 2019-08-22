@@ -172,6 +172,38 @@
                         </div>
                       </div>
                   </div>
+                  <div class="container mb-3">
+                    <ngx-datatable 
+                        class="bootstrap"
+                        [rows]="rows"
+                        [loadingIndicator]="loadingIndicator"
+                        [columns]="keys"
+                        [columnMode]="'force'"
+                        [headerHeight]="40"
+                        [summaryRow]="true"
+                        [summaryPosition]="'bottom'"
+                        [footerHeight]="40"
+                        [limit]="5"
+                        [rowHeight]="'auto'"
+                        [reorderable]="reorderable">
+                        <ngx-datatable-column>
+                            <ng-template let-column="column" ngx-datatable-header-template>
+                                Extras com TA
+                            </ng-template>
+                            <ng-template let-row="row" ngx-datatable-cell-template>
+                                {{row.name}}
+                            </ng-template>
+                        </ngx-datatable-column>
+                        <ngx-datatable-column>
+                            <ng-template let-column="column" ngx-datatable-header-template>
+                                Apagar
+                            </ng-template>
+                            <ng-template let-row="row" ngx-datatable-cell-template>
+                                <button class="btn btn-outline-danger  btn-sm" (click)="deleteExtra()">X</button>
+                            </ng-template>
+                        </ngx-datatable-column>
+                    </ngx-datatable>
+                  </div>
                 <!-- FIM DO CHECKBOX -->
 
 
