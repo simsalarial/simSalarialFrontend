@@ -386,6 +386,10 @@ export class SimuladorComponent implements OnInit {
     console.log(this.profileForm.value);
     this.submitClicked = false;
     this.tempTax = null;
+    this.f.extrasWithTa = new FormArray([]);
+    this.f.extrasWithoutTa = new FormArray([]);
+    this.extrasWithTa = [];
+    this.extrasWithoutTa = [];
     this.state = 'first';
   }
 
