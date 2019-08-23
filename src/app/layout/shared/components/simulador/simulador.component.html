@@ -65,7 +65,7 @@
   <div class="col-sm-10 container">
     <fieldset>
       <div class="card mt-5">
-        <h5 class="card-header cardHead">Simulação 1 - Cálculo | Colaborador: {{col.name}}</h5>
+        <h5 class="card-header cardHead">SIMULAÇÃO 1 - CÁLCULO | COLABORADOR: {{col.name}}</h5>
         <div class="card-body">
           <form class="form-horizontal" [formGroup]="simForm">
             <div class="row">
@@ -74,8 +74,8 @@
                   <div class="input-group-prepend">
                     <span class="input-group-text transparentBg">Salário Base</span>
                   </div>
-                  <input type="number" min="0" (change)="getValueForIRS(simForm.value.baseSalary)"
-                    class="form-control inputAlignRigth" formControlName="baseSalary" value="{{simForm.value.baseSalary}}" required>
+                  <input type="number" min="0" (change)="getValueForIRS()" class="form-control inputAlignRigth"
+                    formControlName="baseSalary" value="{{simForm.value.baseSalary}}" required>
                   <div class="input-group-append">
                     <span class="input-group-text transparentBg">€</span>
                   </div>
@@ -83,6 +83,13 @@
                     <span class="input-group-text transparentBg" style="width: 100%">IRS: {{this.tempTax}}%</span>
                   </div>
                 </div>
+                <small *ngIf="simForm.value.baseSalary < 654 && simForm.value.baseSalary !== 0"
+                  style="padding-left: 0.5%">O primeiro escalão é a partir dos {{minSalary}}.</small>
+                <small *ngIf="simForm.value.baseSalary >= 654 && simForm.value.baseSalary <= 25200"
+                  style="padding-left: 0.5%">Este Salário Base encontra-se no escalão entre os {{this.salaryBelow}} e os
+                  {{this.salaryAbove}}.</small>
+                <small *ngIf="simForm.value.baseSalary > 25200" style="padding-left: 0.5%">Este Salário Base encontra-se
+                  no último escalão, acima dos {{this.maxSalary}}.</small>
                 <div class="input-group mt-3 son1">
                   <div class="input-group-prepend">
                     <span class="input-group-text transparentBg">Subsídio de Alimentação</span>
@@ -125,7 +132,7 @@
                   </div>
 
                 </div>
-                <ng-container  *ngIf="showContainer">
+                <ng-container *ngIf="showContainer">
                   <div *ngFor="let extra of t.controls" class="input-group mt-3 son1" [formGroup]="extra">
                     <div class="input-group-prepend">
                       <span class="input-group-text transparentBg">{{extra.value.name}}</span>
@@ -137,7 +144,7 @@
                     </div>
                   </div>
                 </ng-container>
-                <ng-container  *ngIf="showContainer">
+                <ng-container *ngIf="showContainer">
                   <div class="input-group mt-3 son1" *ngFor="let extraWithout of g.controls" [formGroup]="extraWithout">
                     <div class="input-group-prepend">
                       <span class="input-group-text transparentBg">{{extraWithout.value.name}}</span>
@@ -150,7 +157,8 @@
                   </div>
                 </ng-container>
                 <div class="input-group mt-3" style="width: 100%" *ngIf="extrasArray.length > 0">
-                  <select class="custom-select transparentBg" (change)="selectExtraFromSelect($event)" id="extraSelector">
+                  <select class="custom-select transparentBg" (change)="selectExtraFromSelect($event)"
+                    id="extraSelector">
                     <option value="" [selected]="true">Outros</option>
                     <option value="{{extra.name}}" *ngFor="let extra of extrasArray">{{extra.name}}</option>
                   </select>
@@ -196,8 +204,7 @@
                     <span class="input-group-text transparentBg">Margem</span>
                   </div>
                   <input type="number" min="0" class="form-control inputAlignRigth" formControlName="marginPercentage"
-                  id="marginPercentage" value="{{simForm.value.marginPercentage}}"
-                    disabled>
+                    id="marginPercentage" value="{{simForm.value.marginPercentage}}" disabled>
                   <div class="input-group-append">
                     <span class="input-group-text transparentBg">%</span>
                   </div>
@@ -338,7 +345,7 @@
             <!--ACABA A COLUNA DA DIREITA-->
             <br>
             <br>
-            <div class="container">
+            <div class="col">
               <div class="row">
                 <div class="form-group">
                   <button type="button" class="btn btn-dark" (click)="goBack()">Voltar</button>

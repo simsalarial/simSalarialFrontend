@@ -52,3 +52,9 @@ input[type=number]::-webkit-outer-spin-button {
     } */
   }
 }
+
+
+
+.custom-range::-webkit-slider-thumb {
+  background: #EA5F36;
+}

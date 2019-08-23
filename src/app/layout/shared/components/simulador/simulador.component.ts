@@ -88,6 +88,11 @@ export class SimuladorComponent implements OnInit {
 
 
   saveSimulator = Array<SimFieldsData>();
+  salaryBelow: number;
+  salaryAbove: number;
+  maxSalary: number;
+  minSalary: any;
+
 
   constructor(
     private fb: FormBuilder,
@@ -101,7 +106,7 @@ export class SimuladorComponent implements OnInit {
 
   ngOnInit() {
     this.profileForm = this.fb.group({
-      name: ['Sr. Ricas', Validators.required],
+      name: ['', Validators.required],
       dependents: ['', Validators.required],
       status: ['', Validators.required],
     })
@@ -368,36 +373,19 @@ export class SimuladorComponent implements OnInit {
     this.simForm.value.usagePercentage = this.usagePercentage;
     this.tempTax = 0;
     this.markUp = 0;
-    // this.marginPercentage = 0;
     let arr = Object.keys(this.simForm.value);
     console.log(arr);
-   /*  for (let k = 0; k < arr.length; k++) {
-      console.log("entrei");
-      let key = arr[k];
-      if (key !== "extrasWithoutTa" && key !== "extrasWithTa") {
-        console.log(key, this.simForm.value[key]);
-        this.simForm.value[key] = 0;
-        console.log(key, this.simForm.value[key]);
-      }
-    } */
-   // this.simForm.value.usagePercentage = 100;
-   this.initializeForms();
+    this.initializeForms();
     console.log(this.simForm.value);
     this.changeDetectorRef.detectChanges();
-    /*    for (let i = 0; i < this.simForm.value.extrasWithTa.length; i++) {
-         this.simForm.value.extrasWithTa.name[i].value = 0;
-       }
-       for (let j = 0; j < this.simForm.value.extrasWithoutTa.length; j++) {
-         this.simForm.value.extrasWithoutTa.name[j].value = 0;
-       } */
   }
+
   goBack() {
-    this.simForm.reset();
-    this.simForm.value.baseSalary = 0;
-    this.simForm.value.usagePercentage = this.usagePercentage;
-    this.tempTax = 0;
-    //this.marginPercentage = 0;
-    this.markUp = 0;
+    console.log(this.profileForm.value);
+    this.ngOnInit();
+    console.log(this.profileForm.value);
+    this.submitClicked = false;
+    this.tempTax = null;
     this.state = 'first';
   }
 
@@ -411,9 +399,14 @@ export class SimuladorComponent implements OnInit {
     for (index = 0; index < this.irsValues.length; index++) {
       if (valueForIRS <= this.irsValues[index][1]) {
         this.tempTax = parseFloat(((this.irsValues[index][2]) * 100).toFixed(2));
+        this.minSalary = parseFloat(((this.irsValues[0][1])).toFixed(2));
+        this.salaryBelow = parseFloat(((this.irsValues[index - 1][1])).toFixed(2));
+        this.salaryAbove = parseFloat(((this.irsValues[index + 1][1])).toFixed(2));
         break;
-      } else {
+      }
+      else {
         this.tempTax = parseFloat(((this.irsValues[this.irsValues.length - 1][2]) * 100).toFixed(2));
+        this.maxSalary = parseFloat(((this.irsValues[this.irsValues.length - 1][1])).toFixed(2));
       }
     }
   }
@@ -550,7 +543,14 @@ export class SimuladorComponent implements OnInit {
     console.log(this.col);
     this.colaboratorId = this.col.id;
     console.log(this.colaboratorId);
-    this.dataService.postSimulation(this.saveSimulator, this.colaboratorId);
+    this.dataService.postSimulation(this.saveSimulator, this.colaboratorId).subscribe(res => {
+      console.log(res);
+    })
+
+    this.initializeForms();
+    // this.ngOnInit();
+    this.state = 'first';
+
 
   }
 
@@ -584,8 +584,8 @@ export class SimuladorComponent implements OnInit {
     doc.text(100, 230, "Salário líquido com Duodécimos: " + netSalaryWithD + " €");
     doc.text(100, 240, "Salário líquido sem Duodécimos: " + netSalaryWithoutD + " €");
     doc.text(30, 120, "Extras: ");
-    outrosExtras.forEach( (element, index) => {                                     // por cada elemento do array ele adiciona 10 na posicao Y do PDF.
-    doc.text(35, 120+(10*(index+1)), element.name + ": " + element.value + " €");  
+    outrosExtras.forEach((element, index) => {                                     // por cada elemento do array ele adiciona 10 na posicao Y do PDF.
+      doc.text(35, 120 + (10 * (index + 1)), element.name + ": " + element.value + " €");
     });
 
     ///// footer /////

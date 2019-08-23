@@ -76,7 +76,7 @@ export class DataService {
 
 
 
-  // SAVE SIMULATOR IN DATA BASE //
+  // SAVE SIMULATION IN DATA BASE //
 
   postSimulation(simulation, colaboratorId) {
     return this.http.post('http://localhost:8080/simuladorsalarial/api/simulations/' + colaboratorId, simulation);
