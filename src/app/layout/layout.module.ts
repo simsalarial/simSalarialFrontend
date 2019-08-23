@@ -10,10 +10,11 @@ import { SimListComponent } from './user/sim-list/sim-list.component';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { SimDetailComponent } from './user/sim-detail/sim-detail.component';
 
 
 @NgModule({
-  declarations: [LayoutComponent, UserComponent, SimListComponent],
+  declarations: [LayoutComponent, UserComponent, SimListComponent, SimDetailComponent],
   imports: [
     CommonModule,
     LayoutRoutingModule,

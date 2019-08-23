@@ -2,11 +2,13 @@ import { FoodSubsidy } from './../../models/foodSubsidy';
 import { WorkInsurance } from './../../models/workInsurance';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { ReplaySubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DataService {
+
 
   constructor(private http: HttpClient) { }
 

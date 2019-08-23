@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter, SimpleChanges, TemplateRef, ViewChild } from '@angular/core';
 import { AccountServiceService } from 'src/app/core';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
-import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import { faSearch, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { DatatableComponent } from '@swimlane/ngx-datatable';
 
 @Component({
@@ -20,6 +20,7 @@ export class TablesComponent implements OnInit {
   state: string;
   emailToDelete;
   faSearch = faSearch;
+  faTrashAlt = faTrashAlt;
   //temp = [];
   rows = [];
   @ViewChild(DatatableComponent, { static: false }) table: DatatableComponent;

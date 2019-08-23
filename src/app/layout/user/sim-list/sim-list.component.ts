@@ -4,6 +4,7 @@ import { faSearch, faEuroSign, faPercentage, faUser, faCalculator } from '@forta
 import { DatatableComponent } from '@swimlane/ngx-datatable';
 import { AccountServiceService } from 'src/app/core';
 import { Colaborator } from 'src/app/core/models/colaborator';
+import { ReplaySubject } from 'rxjs';
 
 @Component({
   selector: 'app-sim-list',
@@ -30,6 +31,7 @@ export class SimListComponent implements OnInit {
   data = [];
   colaborator: any = {};
   msg: string;
+  public simByEmail$:  ReplaySubject<any> = new ReplaySubject();
   @ViewChild(DatatableComponent, { static: false }) table: DatatableComponent;
 
   constructor(private modalService: BsModalService, private accountService:AccountServiceService) { 
@@ -42,14 +44,8 @@ export class SimListComponent implements OnInit {
       {prop: 'netSalaryWithoutDuo'},
       {prop: 'netSalaryWithDuo'}
     ]
-    }
-  
-  ngOnInit() {
-    //this.rows = this.temp;
-    let email = this.accountService.getCurrentEmail();
-    this.accountService.getAllSimulationsFromAccount(email).subscribe((res: any) => {
-      console.log(res);
-      
+   this.simByEmail$ = this.accountService.simByEmail$;
+   this.simByEmail$.subscribe( res => {
       res.forEach( (element: any) => {
         //this.colaborators[0].simulations[0] = element.simulations;
         /* this.simFields.forEach((field: any) => {
@@ -71,7 +67,13 @@ export class SimListComponent implements OnInit {
         });
         console.log(this.data);
         this.rows = this.data;
-    })
+      })
+    }
+  
+  ngOnInit() {
+    //this.rows = this.temp;
+    let email = this.accountService.getCurrentEmail();
+    this.accountService.getAllSimulationsFromAccount(email);
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -112,11 +114,11 @@ export class SimListComponent implements OnInit {
   search(event) {
     const val = event.target.value.toLowerCase();
     // filter data
-    const temp = this.temp.filter(function(d) {
+    this.rows = this.rows.filter(function(d) {
       return d.name.toLowerCase().indexOf(val) !== -1 || !val;
     });
     // update the rows
-    this.rows = temp;
+    //this.rows = temp;
     // Whenever the filter changes, always go back to the first page
     this.table.offset = 0;
   }

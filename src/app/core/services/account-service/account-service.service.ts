@@ -9,8 +9,9 @@ import { Observable, ReplaySubject } from 'rxjs';
 export class AccountServiceService {
   public currentAccount: Account = new Account();
   public accounts$: ReplaySubject<Account[]>;
-  constructor(private http: HttpClient) {
+  public simByEmail$:  ReplaySubject<any> = new ReplaySubject();
 
+  constructor(private http: HttpClient) {
   }
 
   public isAuthenticated(): boolean {
@@ -63,6 +64,9 @@ export class AccountServiceService {
   }
 
   public getAllSimulationsFromAccount(email) {
-    return this.http.get('http://localhost:8080/simuladorsalarial/api/accounts/allSimsFromAccount?email=' + email);
+    this.http.get('http://localhost:8080/simuladorsalarial/api/accounts/allSimsFromAccount?email=' + email).subscribe((res: any) => {
+      console.log(res);
+      this.simByEmail$.next(res);
+    })
   }
 }
