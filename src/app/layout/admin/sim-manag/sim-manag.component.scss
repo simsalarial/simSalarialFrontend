@@ -19,5 +19,81 @@ input[type=number]::-webkit-outer-spin-button {
 
 .buttonColorsAndCursor{
   cursor: pointer;
-  color: white; 
+  color: white;
+}
+
+
+.fatherTaxation {
+  .son {
+    width: 100%;
+    .input-group-prepend {
+      width: 27%;
+      span {
+        width: 100%
+      }
+    }
+    .grandSon {
+      width:68%
+    }
+  }
+}
+
+.fatherMargin {
+  .son {
+    width: 100%;
+    .input-group-prepend {
+      width: 31%;
+      span {
+        width: 100%
+      }
+    }
+    .grandSon {
+      width:60%
+    }
+  }
+}
+
+.fatherFoodSubsidy {
+  .son {
+    width: 100%;
+    .input-group-prepend {
+      width: 69%;
+      span {
+        width: 100%
+      }
+    }
+    .grandSon {
+      width: 21%
+    }
+  }
+}
+
+.fatherExtras {
+  .son {
+    width: 100%;
+    .input-group-prepend {
+      width: 69%;
+      span {
+        width: 100%
+      }
+    }
+    .grandSon {
+      width: 23%
+    }
+  }
+}
+
+.fatherWorkInsurance {
+  .son {
+    width: 100%;
+    .input-group-prepend {
+      width: 50%;
+      span {
+        width: 100%
+      }
+    }
+    .grandSon {
+      width: 41%
+    }
+  }
 }
