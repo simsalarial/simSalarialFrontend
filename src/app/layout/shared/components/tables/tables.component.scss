@@ -2,7 +2,13 @@
     background-color: transparent;
   }
 
-
+  :host ::ng-deep .ngx-datatable.fixed-header .datatable-header .datatable-header-inner .datatable-header-cell:last-child {
+    width: 200px;
+  }
+  /* :host ::ng-deep .ngx-datatable.fixed-header .datatable-header .datatable-header-inner .datatable-header-cell{
+    width: 360px;
+  } */
+  
 
  // :host ::ng-deep 
   .ngx-datatable.bootstrap {

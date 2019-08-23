@@ -326,7 +326,6 @@
                             let-column="column"
                             ngx-datatable-header-template
                           >
-                            Apagar
                           </ng-template>
                           <ng-template
                             let-row="row"
@@ -337,7 +336,7 @@
                               style="color: red"
                               (click)="deleteExtra(row.name)"
                             >
-                              x
+                            <fa-icon [icon]="faTrashAlt"></fa-icon>
                             </button>
                           </ng-template>
                         </ngx-datatable-column>
