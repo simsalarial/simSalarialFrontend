@@ -62,7 +62,7 @@ export class SimListComponent implements OnInit {
           element.simulations.forEach(simulation => {
             this.colaborator.name = element.name;
             this.colaborator.simulation = simulation.id;
-            simulation.simFieldsData.forEach(field => {
+            simulation.simFieldsDataDTO.forEach(field => {
               this.colaborator[field.name] = field.value;
             });
             this.data.push({...this.colaborator});

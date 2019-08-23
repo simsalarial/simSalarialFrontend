@@ -10,6 +10,7 @@ import { SimulationService } from 'src/app/core/services/simulation-data/simulat
 import { ReplaySubject } from 'rxjs';
 import { DataService } from 'src/app/core/services/data-service/data.service';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 //import { ReplaySubject } from 'rxjs';
 
 
@@ -24,6 +25,7 @@ export class SimManagComponent implements OnInit {
   showForm = true;
   //public fields$: ReplaySubject<SimulationFields[]>;
   subAlim;
+  faTrashAlt = faTrashAlt;
 
   //Extra table
   rows = [];
