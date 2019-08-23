@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container-fluid">
     <div class="row">
         <div class="input-group mb-3 mt-3 col-4">
             <div class="input-group-prepend">
@@ -9,30 +9,18 @@
             <input (keyup)="search($event)" type="text" class="form-control" placeholder="Filtrar por nome"
                 aria-label="Username" aria-describedby="basic-addon1">
         </div>
-        <select [(ngModel)]="selectedValue" class="custom-select mb-3 mt-3 col-3">
+        <select [(ngModel)]="selectedValue" class="custom-select mb-3 mt-3 col-3 offset-md-5">
             <option value="5" selected>Visualização por página</option>
             <option value="10">10</option>
             <option value="20">20</option>
             <option value="30">30</option>
         </select>
     </div>
-</div>
 
+    <ngx-datatable class="bootstrap" [rows]="rows" [loadingIndicator]="loadingIndicator" [columns]="keys"
+        [columnMode]="'force'" [headerHeight]="40" [summaryRow]="true" [summaryPosition]="'bottom'" [footerHeight]="40"
+        [limit]="selectedValue" [rowHeight]="'auto'" [reorderable]="reorderable">
 
-<div class="container">
-    <ngx-datatable 
-        class="bootstrap"
-        [rows]="rows"
-        [loadingIndicator]="loadingIndicator"
-        [columns]="keys"
-        [columnMode]="'force'"
-        [headerHeight]="40"
-        [summaryRow]="true"
-        [summaryPosition]="'bottom'"
-        [footerHeight]="40"
-        [limit]="selectedValue"
-        [rowHeight]="'auto'"
-        [reorderable]="reorderable">
         <ngx-datatable-column>
             <ng-template let-column="column" ngx-datatable-header-template>
                 Nome
@@ -51,7 +39,6 @@
         </ngx-datatable-column>
         <ngx-datatable-column>
             <ng-template let-column="column" ngx-datatable-header-template>
-                Apagar
             </ng-template>
             <ng-template let-row="row" ngx-datatable-cell-template>
                 <button class="btn btn-outline-danger  btn-sm" (click)="showConfirmModal(template, row)">Apagar</button>

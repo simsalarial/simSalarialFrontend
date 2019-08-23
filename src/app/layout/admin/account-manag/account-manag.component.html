@@ -1,4 +1,11 @@
-<div>
-  <button type="button" class="btn btn-mycolor mt-3 ml-1 mb-3 float-right" style="margin-right: 3pc" (click)="showCreateAccount()">Criar nova conta</button>
-  <app-tables *ngIf="receivedData" class="mt-3"[header]='["name","email","apagar"]' (onDelete)="onDelete($event)" [temp]='data' (clickedRow)='clickRow($event)'></app-tables>
+<div class="card mt-5">
+  <div class="card-header cardHead">
+    <h6>GESTÃO DE CONTAS</h6>
+    <button type="button" class="btn btn-outline-light float-right" id="createAccount"
+      (click)="showCreateAccount()">Criar nova conta</button>
+  </div>
+  <div class="card-body">
+    <app-tables *ngIf="receivedData" class="mt-3" [header]='["name","email","apagar"]' (onDelete)="onDelete($event)"
+      [temp]='data' (clickedRow)='clickRow($event)'></app-tables>
+  </div>
 </div>

@@ -1,9 +1,11 @@
-<div *ngIf="state == 'first'" class="row custom-row offset-md-1">
-  <div class="col-sm-10 custom-container">
+<div *ngIf="state == 'first'" class="row custom-row">
+  <div class="col-sm-12 custom-container">
     <fieldset>
       <form class="form-horizontal" [formGroup]="profileForm">
         <div class="card mt-5">
-          <h5 class="card-header cardHead">SIMULAÇÃO 1 | DADOS FISCAIS</h5>
+          <div class="card-header cardHead">
+            <h6>SIMULAÇÃO 1 | DADOS FISCAIS</h6>
+          </div>
           <div class="card-body">
             <div class="form-group">
               <div class="input-group">
@@ -62,10 +64,12 @@
 </div>
 
 <div *ngIf="state == 'second'" class="row custom-row">
-  <div class="col-sm-10 container">
+  <div class="col-sm-12 container">
     <fieldset>
       <div class="card mt-5">
-        <h5 class="card-header cardHead">SIMULAÇÃO 1 - CÁLCULO | COLABORADOR: {{col.name}}</h5>
+        <div class="card-header cardHead">
+          <h6>SIMULAÇÃO 1 - CÁLCULO | COLABORADOR: {{col.name}}</h6>
+        </div>
         <div class="card-body">
           <form class="form-horizontal" [formGroup]="simForm">
             <div class="row">
