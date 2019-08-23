@@ -84,13 +84,13 @@ export class SimManagComponent implements OnInit {
 
     this.extras$.subscribe((newExtra: any) => {
       console.log(newExtra);
-      
+
       // tslint:disable-next-line: prefer-for-of
       for (let i = 0; i < newExtra.length; i++) {
         if (newExtra[i].tA) {
-          this.extrasWithTa.push({id: newExtra[i].id, name: newExtra[i].name});
+          this.extrasWithTa.push({id: newExtra[i].id, name: newExtra[i].name, tA: 'Sim'});
         } else {
-          this.extrasWithoutTa.push({id: newExtra[i].id, name: newExtra[i].name});
+          this.extrasWithoutTa.push({id: newExtra[i].id, name: newExtra[i].name, tA: 'Não' });
         }
       }
       console.log(this.extrasWithTa, this.extrasWithoutTa);
@@ -106,10 +106,14 @@ export class SimManagComponent implements OnInit {
       }
 
       this.rows = [];
-      this.rows.push(...newExtra);
-      this.rows =  this.rows.slice(0);
+      //this.rows.push(...newExtra);
+      this.rows.push(...this.extrasWithTa);
+      this.rows.push(...this.extrasWithoutTa);
+      // this.rows =  this.rows.slice(0);
       console.log(this.rows);
-      
+      this.extrasWithTa = new Array<any>();
+      this.extrasWithoutTa = new Array<any>();
+
       console.log(this.extrasWithTa);
       console.log(this.extrasWithoutTa);
     });
@@ -119,40 +123,24 @@ export class SimManagComponent implements OnInit {
       this.foodSubsidyMonth = foodSubsidyValue.foodSubsidyMonth;
       this.limitValueForFoodSubsidy = foodSubsidyValue.limitValueForFoodSubsidy;
       this.averageDaysOfTheMonth = foodSubsidyValue.averageDaysOfTheMonth;
-    })
+    });
     this.marginValues$.subscribe( (marginValue: any) => {
       console.log(marginValue);
       this.margin_min = marginValue[0].margin_min;
       this.margin_max = marginValue[0].margin_max;
-    })
+    });
     this.taxation$.subscribe( (taxationValue: any) => {
       console.log(taxationValue);
       this.autonomousTributation = taxationValue[0].value;
       this.workerSocialSecurity = taxationValue[1].value;
       this.companySocialSecurity = taxationValue[2].value;
-    })
+    });
     this.receiveWorkInsurance$.subscribe( (receiveWorkInsuranceValue: any) => {
       console.log(receiveWorkInsuranceValue);
       this.varAccountedForWorkInsurance = receiveWorkInsuranceValue.varAccountedForWorkInsurance;
       this.workInsuranceVariable = receiveWorkInsuranceValue.workInsuranceVariable;
 
-    })
-  }
-
-  spliceElement(extrasWithTa, extrasWithoutTa) {
-    for (let j = 0; j < extrasWithTa.length; j++) {
-      if (extrasWithTa[j].name == 'Outros C/ Tributacao Autonoma') {
-        this.extrasWithTa.splice(j, 1);
-      }
-    }
-    for (let h = 0; h < extrasWithoutTa.length; h++) {
-      if (extrasWithoutTa[h].name == 'Outros S/ Tributacao Autonoma') {
-        this.extrasWithoutTa.splice(h, 1);
-      }
-    }
-
-    console.log(this.extrasWithTa);
-    console.log(this.extrasWithoutTa);
+    });
   }
 
   resultFoodSubsidy(event) {
@@ -200,28 +188,44 @@ export class SimManagComponent implements OnInit {
     const newExtra = new Extras;
     newExtra.name = this.extraName;
     newExtra.tA = this.extraWithAutonomousTributation;
-    console.log(newExtra);
 
-    this.dataService.postNewExtra(newExtra).subscribe((res:any) => {
+    this.dataService.postNewExtra(newExtra).subscribe((res: any) => {
       console.log(res);
     });
-    
+
     this.rows.push(newExtra);
-    this.rows =  this.rows.slice(0);
-    //console.log(this.rows);
+    //this.rows =  this.rows.slice(0);
+    console.log(this.rows);
+    if(this.rows[this.rows.length - 1].tA) {
+      this.rows[this.rows.length - 1].tA = 'Sim';
+    } else {
+      this.rows[this.rows.length - 1].tA = 'Não';
+    }
+    this.rows.sort();
+    console.log(this.rows);
+    console.log(this.rows.sort());
+
+
+
+    this.extraName = '';
+    this.extraWithAutonomousTributation = false;
 
     this.viewExtra(template);
    // this.rows.push(...this.extrasWithoutTa);
-      
+
   }
 
   //Modal para extras
 
   viewExtra(template: TemplateRef<any>) {
+    console.log(this.rows);
+
+
     this.modalRef = this.modalService.show(template);
+
   }
 
-  onCloseModal() { 
+  onCloseModal() {
     this.modalRef.hide();
   }
 
@@ -233,7 +237,7 @@ export class SimManagComponent implements OnInit {
         return obj.name !== extraName;
       });
     });
-    
+
   }
 
   newWorkInsuranceVariables() {
