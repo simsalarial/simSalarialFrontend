@@ -360,11 +360,15 @@
               <div class="col md-1">
                 <button type="button" class="btn btn-blue" (click)="goBack()">Voltar</button>
               </div>
-              <div class="col md-6 offset-md-5" style="text-align: right">
-                <button type="button" class="btn btn-secondary" (click)="reset()">Reset</button>
-                <button type="button" class="btn btn-secondary ml-1" (click)="exportToPDF()">Exportar para
-                  PDF</button>
-                <button type="button" class="btn btn-secondary ml-1" (click)="saveThisSim()">Guardar</button>
+              <div class="col md-7 offset-md-4" style="text-align: right">
+                <button type="button" class="btn  btn-blue" (click)="reset()">Reset</button>
+                <button type="button" class="btn  btn-blue ml-1 dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Exportar PDF</button>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" (click)="exportToPDF()" href="">Colaborador</a>
+                    <div role="separator" class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="">Comercial</a>
+                  </div>
+                <button type="button" class="btn btn-mycolor ml-1" (click)="saveThisSim()">Guardar</button>
               </div>
             </div>
           </form>

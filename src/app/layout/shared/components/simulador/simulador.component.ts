@@ -553,7 +553,7 @@ export class SimuladorComponent implements OnInit {
 
     this.initializeForms();
     // this.ngOnInit();
-    this.state = 'first';
+    this.goBack()
 
 
   }
