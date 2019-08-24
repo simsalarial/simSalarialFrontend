@@ -5,10 +5,8 @@ import { SharedModule } from '../shared/shared.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AdminComponent } from './admin.component';
 import { AdminRoutingModule } from './admin-routing.module';
-import { AdminMainComponent } from './admin-main/admin-main.component';
 import { AccountManagComponent } from './account-manag/account-manag.component';
 import { SimManagComponent } from './sim-manag/sim-manag.component';
-import { DashboardComponent } from './dashboard/dashboard.component';
 import { ImportTableComponent } from './import-table/import-table.component';
 import { MatTableModule } from '@angular/material';
 
@@ -18,7 +16,7 @@ import { NewAccountComponent } from './account-manag/new-account/new-account.com
 import { ModalModule } from 'ngx-bootstrap/modal';
 
 @NgModule({
-  declarations: [AdminComponent, AdminMainComponent, AccountManagComponent, SimManagComponent, DashboardComponent, ImportTableComponent, NewAccountComponent],
+  declarations: [AdminComponent, AccountManagComponent, SimManagComponent, ImportTableComponent, NewAccountComponent],
   imports: [
     CommonModule,
     FormsModule,
