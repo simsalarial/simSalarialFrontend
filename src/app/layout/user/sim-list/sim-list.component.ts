@@ -1,9 +1,16 @@
+import { BsLocaleService } from 'ngx-bootstrap/datepicker';
 import { Component, OnInit, Input, Output, EventEmitter, ViewChild, SimpleChanges, TemplateRef } from '@angular/core';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { faSearch, faEuroSign, faPercentage, faUser, faCalculator, faBalanceScaleRight} from '@fortawesome/free-solid-svg-icons';
 import { DatatableComponent } from '@swimlane/ngx-datatable';
 import { AccountServiceService } from 'src/app/core';
 import { ReplaySubject } from 'rxjs';
+import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
+import { defineLocale } from 'ngx-bootstrap/chronos';
+import { ptBrLocale } from 'ngx-bootstrap/locale';
+import * as moment from 'moment';
+
+
 
 @Component({
   selector: 'app-sim-list',
@@ -17,6 +24,7 @@ export class SimListComponent implements OnInit {
   //@Output() onDelete = new EventEmitter();
   //simToDelete;
   //modalRef: BsModalRef;
+
   faSearch = faSearch;
   faEuroSign = faEuroSign;
   faPercentage = faPercentage;
@@ -33,10 +41,14 @@ export class SimListComponent implements OnInit {
   msg: string;
   public simByEmail$:  ReplaySubject<any> = new ReplaySubject();
   @ViewChild(DatatableComponent, { static: false }) table: DatatableComponent;
-  first2Date: any;
-  selectedSimulations: any;
 
-  constructor(private modalService: BsModalService, private accountService:AccountServiceService) {
+  // DATE VARIABLES //
+  bothDates: any;
+  selectedSimulations: any;
+  // DATE VARIABLES //
+
+  constructor(private modalService: BsModalService, private accountService: AccountServiceService, private localeService: BsLocaleService) {
+
     this.keys = [
       {prop: 'name'},
       {prop: 'simulation'},
@@ -49,9 +61,9 @@ export class SimListComponent implements OnInit {
    this.simByEmail$ = this.accountService.simByEmail$;
    this.simByEmail$.subscribe( res => {
     console.log(res);
-    
+
       res.forEach( (element: any) => {
-        
+
         if(element.simulations.length > 0) {
 
           element.simulations.forEach(simulation => {
@@ -64,12 +76,13 @@ export class SimListComponent implements OnInit {
             this.colaborator = {};
           });
         }
-          
+
         });
         console.log(this.data);
         this.rows = this.data;
       })
     }
+
 
   ngOnInit() {
     this.data = [];
@@ -78,6 +91,8 @@ export class SimListComponent implements OnInit {
     //this.rows = this.temp;
     let email = this.accountService.getCurrentEmail();
     this.accountService.getAllSimulationsFromAccount(email);
+    defineLocale('pt-br', ptBrLocale);
+    this.localeService.use('pt-br');
 
   }
 
@@ -86,8 +101,36 @@ export class SimListComponent implements OnInit {
     this.rows = changes.temp.currentValue;
   }
 
-  testing() {
-    console.log(this.first2Date);
+  filterByDate() {
+
+    console.log(this.bothDates);
+    console.log(this.bothDates[0]);
+    let now = moment().format('LLLL');
+    console.log(now);
+    let x = moment(this.bothDates[0]).valueOf();
+    console.log(x);
+    let y = moment(x).format('DD MM YYYY');
+    console.log(y);
+
+    const firstDate = moment(this.bothDates[0]).valueOf();
+    let secondDate = moment(this.bothDates[1]).valueOf();
+    console.log(firstDate);
+    console.log(secondDate);
+
+
+
+    if (firstDate === secondDate) {
+      secondDate = firstDate + 86400000;
+
+    }
+
+    this.accountService.getAllSimulationsByDate(firstDate, secondDate).subscribe((res => {
+      console.log(res);
+    }));
+
+
+
+
 
   }
   /* showConfirmModal(template: TemplateRef<any>, row) {
@@ -136,7 +179,7 @@ export class SimListComponent implements OnInit {
     console.log(row);
     //this.clickedRow.emit(row);
     this.selectedSimulations.push(row);
-   
+
   }
 
   compareSims() {

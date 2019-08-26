@@ -2,7 +2,7 @@
     background-color: transparent;
   }
 
- // :host ::ng-deep 
+ // :host ::ng-deep
   .ngx-datatable.bootstrap {
     box-shadow: none;
     font-size: medium;
@@ -99,3 +99,10 @@
   :host ::ng-deep  .datatable-body-cell {
     text-align: center !important;
   }
+
+
+// :host ::ng-deep .theme-green .bs-datepicker-head {
+//     background-color: orange;
+// }
+
+

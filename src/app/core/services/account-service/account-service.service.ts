@@ -67,6 +67,10 @@ export class AccountServiceService {
     this.http.get('http://localhost:8080/simuladorsalarial/api/accounts/allSimsFromAccount?email=' + email).subscribe((res: any) => {
       console.log(res);
       this.simByEmail$.next(res);
-    })
+    });
+  }
+
+  public getAllSimulationsByDate(firstDate, secondDate) {
+    return this.http.get('http://localhost:8080/simuladorsalarial/api/simulations/allSimsByDate/' + firstDate + '/' + secondDate);
   }
 }

@@ -30,7 +30,6 @@ export class SimuladorComponent implements OnInit {
   profileForm: any;
   simForm: any;
 
-  sumForIrs: number;
 
   colaboratorId: number;
 
@@ -562,7 +561,7 @@ export class SimuladorComponent implements OnInit {
     console.log(this.colaboratorId);
     this.dataService.postSimulation(this.saveSimulator, this.colaboratorId).subscribe(res => {
       console.log(res);
-    })
+    });
     this.saveSimulator = [];
     this.initializeForms();
     // this.ngOnInit();
