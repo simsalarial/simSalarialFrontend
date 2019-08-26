@@ -9,15 +9,22 @@
     </div>
 </div>
 <!-- DATA -->
-<div class="col-xs-12 col-12 col-md-4 form-group">
-    <input type="text"
-           placeholder="Daterangepicker"
-           class="form-control"
-           bsDaterangepicker
-           [bsConfig]="{ isAnimated: true }">
+<div class="container input-group">
+  <div class="col-xs-12 col-12 col-md-4 form-group">
+      <input type="text"
+            placeholder="Escolha uma data"
+            class="form-control input-group-prepend"
+            bsDaterangepicker
+            [bsConfig]="{ isAnimated: true,  containerClass: 'theme-dark-blue'}"
+            [(ngModel)]="bothDates"
+            >
   </div>
+
+  <button class="btn btn-primary input-group-append" (click)="filterByDate()">Filtar por Data</button>
+</div>
+
 <!-- DATA -->
-<button (click)="testing()">Ver Data</button>
+
 <div class="container">
     <ngx-datatable class="bootstrap" [rows]="rows" [loadingIndicator]="loadingIndicator" [columns]="keys"
         [columnMode]="'force'" [headerHeight]="40" [summaryRow]="true" [summaryPosition]="'bottom'" [footerHeight]="40"
