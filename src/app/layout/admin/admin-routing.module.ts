@@ -14,7 +14,8 @@ const routes: Routes = [
       {path: "simulador", component: SimuladorComponent },
       {path: "gestaodecontas", component: AccountManagComponent},
       {path: "gestaosimulador", component: SimManagComponent},
-      {path: "importarIRS", component: ImportTableComponent}
+      {path: "importarIRS", component: ImportTableComponent},
+      {path: "", redirectTo: "gestaodecontas", pathMatch: "full"}
     ]
   }
 ];

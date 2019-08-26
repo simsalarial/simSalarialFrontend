@@ -1,18 +1,36 @@
-$input-group-color : #f84f00;
+/* $input-group-color:#f84f00; 
 
-.my-input-group {
-  span, input, label {
-    background-color: transparent;
-    color: $input-group-color;
-    border-color: $input-group-color;
-  }
-  .custom-file-label::after {
-    background-color: $input-group-color;
-    color: white;
-    border-color: $input-group-color;
-  }
-}
+ */
+
 
 .vh-50 {
   height: 50vh;
 }
+
+.my-input-group{
+  span{
+    background-color: white; 
+    /* border-color: #f84f00 !important;
+    border-right-color: #f84f00 !important; */
+    color: #f84f00;
+    cursor: pointer;
+  }
+  span:hover{
+    background-color: #f84f00;
+    border-color: #f84f00 !important;
+    color: white
+  }
+}
+
+.custom-file-label::after{
+  background-color: white; 
+  //color: #f84f00;
+  //cursor: pointer;
+}
+
+/* .custom-file-label::after:hover{
+  background-color: #f84f00;
+  border-color: #f84f00 !important;
+  color: white
+}  */
+

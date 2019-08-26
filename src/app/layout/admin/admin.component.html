@@ -5,17 +5,13 @@
             <div class="d-flex" id="wrapper">
                 <div class="bg-white border-right w-100" id="sidebar-wrapper">
                     <div class="list-group list-group-flush vh-100">
-                        <a [routerLink]="['/layout/admin/gestaosimulador']" routerLinkActive="router-link-active"
-                            (click)="importDataBaseData()" class="list-group-item list-group-item-action">
-                            <fa-icon [icon]="faTasks"></fa-icon> Gestão do Simulador
-                        </a>
-                        <a [routerLink]="['/layout/admin/gestaodecontas']" routerLinkActive="router-link-active"
+                            <a [routerLink]="['/layout/admin/gestaodecontas']" routerLinkActive="router-link-active"
                             class="list-group-item list-group-item-action">
                             <fa-icon [icon]="faUsers"></fa-icon> Gestão de Contas
                         </a>
-                        <a [routerLink]="['/layout/admin/importarIRS']" routerLinkActive="router-link-active"
-                            class="list-group-item list-group-item-action">
-                            <fa-icon [icon]="faTable"></fa-icon> Tabela IRS
+                        <a [routerLink]="['/layout/admin/gestaosimulador']" routerLinkActive="router-link-active"
+                            (click)="importDataBaseData()" class="list-group-item list-group-item-action">
+                            <fa-icon [icon]="faTasks"></fa-icon> Gestão do Simulador
                         </a>
                         <a [routerLink]="['/layout/admin/simulador']" routerLinkActive="router-link-active"
                             class="list-group-item list-group-item-action">

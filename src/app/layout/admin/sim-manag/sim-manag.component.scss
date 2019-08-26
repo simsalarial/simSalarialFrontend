@@ -17,23 +17,24 @@ input[type=number]::-webkit-outer-spin-button {
   text-align: right;
 }
 
-.buttonColorsAndCursor{
+
+/* .buttonColorsAndCursor{
   cursor: pointer;
   color: white;
 }
-
+ */
 
 .fatherTaxation {
   .son {
     width: 100%;
     .input-group-prepend {
-      width: 27%;
+      width: 57%;
       span {
         width: 100%
       }
     }
     .grandSon {
-      width:68%
+      width:30%
     }
   }
 }

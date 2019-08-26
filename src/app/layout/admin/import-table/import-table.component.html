@@ -1,21 +1,17 @@
-<div class="container mt-3">
+<div class="container">
   <div *ngIf="isLoading$ | async" class="d-flex vh-50">
     <div class="spinner-border text-primary m-auto" role="status">
       <span class="sr-only">Loading...</span>
     </div>
   </div>
 
-  <div class="container mt-3">
     <div class="row">
-      <div class="col-md-6 offset-md-3">
         <div class="row m-auto">
           <a class="btn btn-link" style="color: #334D65; width: 100%;" target="blank"
-            href="http://info.portaldasfinancas.gov.pt/pt/apoio_contribuinte/tabela_ret_doclib/Pages/default.aspx">Link
-            para download da tabela no Portal das
-            Finanças</a>
+            href="http://info.portaldasfinancas.gov.pt/pt/apoio_contribuinte/tabela_ret_doclib/Pages/default.aspx">Faça aqui download da tabela mais recente.</a>
         </div>
         <div *ngIf="!(isLoading$ | async)">
-          <div class="input-group my-input-group mt-2 mb-3">
+          <div class="input-group my-input-group mt-2 mb-2" style="width: 113%">
             <div class="input-group-prepend" (click)="importExcel()">
               <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
             </div>
@@ -27,29 +23,19 @@
             </div>
           </div>
           <!--Gravar na BD-->
-          <button *ngIf="select =='botao'" (click)="saveInDB(template)" class="btn btn-outline-secondary w-100 mb-5"
-            style="color: #334D65; border-color: #334D65">
-            Gravar
-            <fa-icon [icon]="iconSave" size="1x"></fa-icon>
+          <button *ngIf="select =='botao'" (click)="saveInDB(template)" class="btn btn-mycolor mb-5"
+            style="width: 113%">
+            Guardar
           </button>
-          <div class="w-100 text-center" *ngIf="fileName">
-            <p style="color: #334D65;">Tabela importada: {{fileName}}</p>
+          <div class="row m-auto" *ngIf="fileName" style="width: 99%">
+            <p style="color: #334D65; text-align: right; width: 100%; position: relative; left: 4%">Tabela Importada: {{fileName}}</p>
           </div>
-        </div>
       </div>
     </div>
-    <!-- <input type="text" style="padding:8px;margin:15px auto;width:30%;" placeholder="Type to filter the name column..."
-                (keyup)="updateFilter($event)" /> -->
-    <!--  <ngx-datatable #table  *ngIf="state=='import'" class="material" [columns]="columns" [columnMode]="'force'" [headerHeight]="50"
-              [footerHeight]="50" [rowHeight]="'auto'" [limit]="20" [rows]="rows">
-            </ngx-datatable> -->
-  </div>
-
-
   <ng-template #template>
-    <div class="modal-header">
+    <div class="modal-header cardHead">
       <h4 class="modal-title pull-left"></h4>
-      <button type="button" class="close pull-right" aria-label="Close" (click)="onCloseModal()">
+      <button type="button" class="close pull-right" aria-label="Close" (click)="onCloseModal()" style="color: white">
         <span aria-hidden="true">&times;</span>
       </button>
     </div>
