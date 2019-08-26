@@ -5,14 +5,38 @@
 @import "../node_modules/@swimlane/ngx-datatable/release/assets/icons.css";
 
 .btn-mycolor {
-    border-color: #f84f00;
-    color: #f84f00;
-    
-    
+    border-color: #f84f00 !important ; 
+    color: #f84f00 !important ;
 }
 .btn-mycolor:hover {
+    color: white !important ;
+    background-color: #f84f00 !important ;
+}
+
+
+.btn-blue{
+    border-color: #334D65 !important ;
+    color: #334D65 !important ;
+}
+
+.btn-blue:hover {
+    color: white !important ;
+    background-color: #334D65 !important ;
+}
+
+.cardHead{
+    background-color:  #EA5F35;
     color: white;
     background-color: #f84f00;
 }
+
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+  
+
+
+  .secCardHeader{
+      background-color: #334D65;
+      color: white;
+  }
+  

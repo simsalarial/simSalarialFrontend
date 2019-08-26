@@ -1,156 +1,63 @@
 <!-- INICIO DA PÁGINA -->
 <div class="container">
   <div class="card mt-5">
-    <div class="card-header">
-      Gestão do Simulador
+    <div class="card-header cardHead">
+      <h6>GESTÃO DO SIMULADOR</h6>
     </div>
     <!-- FIM DO TITULO -->
     <div class="card-body">
-      <!-- INICIO DAS TAXAS -->
-      <div class="card">
-        <div class="card-header">
-          Taxação
-        </div>
-        <div class="card-body fatherTaxation">
-          <!-- INICIO INPUT FOR WORKER SOCIAL SECURITY -->
-              <div class="input-group son">
-                <div class="input-group-prepend">
-                  <span class="input-group-text transparentBg"
-                    >Segurança Social do Trabalhador</span
-                  >
-                </div>
-                <input
-                  [(ngModel)]="workerSocialSecurity"
-                  class="inputAlignRigth grandSon"
-                  type="number"
-                />
-                <div class="input-group-append">
-                  <span class="input-group-text transparentBg">%</span>
-                </div>
-              </div>
-          <!-- FIM INPUT FOR WORKER SOCIAL SECURITY -->
-
-          <!-- INICIO INPUT FOR COMPANY SOCIAL SECURITY -->
-          <div class="input-group son mt-3">
-            <div class="input-group-prepend">
-              <span class="input-group-text transparentBg"
-                >Segurança Social da Entidade</span
-              >
-            </div>
-            <input
-              [(ngModel)]="companySocialSecurity"
-              class="inputAlignRigth grandSon"
-              type="number"
-            />
-            <div class="input-group-append">
-              <span class="input-group-text transparentBg">%</span>
-            </div>
-          </div>
-          <!-- FIM INPUT FOR COMPANY SOCIAL SECURITY -->
-
-          <!-- INICIO INPUT FOR TRIBUTACAO AUTONOMA -->
-          <div class="input-group son mt-3">
-            <div class="input-group-prepend">
-              <span class="input-group-text transparentBg"
-                >Tributação autónoma</span
-              >
-            </div>
-            <input
-              [(ngModel)]="autonomousTributation"
-              class="inputAlignRigth grandSon"
-              type="number"
-            />
-            <div class="input-group-append">
-              <span class="input-group-text transparentBg">%</span>
-            </div>
-          </div>
-          <a
-            style="cursor: pointer; color: white"
-            class="btn btn-primary mt-3"
-            (click)="newTributationValues()"
-            >Guardar</a
-          >
-        </div>
-      </div>
-      <br />
-      <!-- FIM DAS TAXAS -->
-
       <!-- INICIO DA MARGEM -->
-
       <div class="row">
         <div class="col">
-          <div class="card h-100">
-            <div class="card-header">
+          <div class="card">
+            <div class="card-header secCardHeader">
               Margem
             </div>
             <div class="card-body fatherMargin">
               <!-- INICIO MARGEM MÍNIMA -->
               <div class="input-group son">
                 <div class="input-group-prepend">
-                  <span class="input-group-text transparentBg"
-                    >Margem mínima</span
-                  >
+                  <span class="input-group-text transparentBg">Margem mínima</span>
                 </div>
-                <input
-                  [(ngModel)]="margin_min"
-                  class="inputAlignRigth grandSon"
-                  type="number"
-                />
+                <input [(ngModel)]="margin_min" class="inputAlignRigth form-control grandSon" type="number" />
                 <div class="input-group-append">
                   <span class="input-group-text transparentBg">%</span>
                 </div>
               </div>
               <!-- FIM MARGEM MÍNIMA -->
-
               <!-- INICIO MARGEM MÍNIMA -->
               <div class="input-group son mt-3">
                 <div class="input-group-prepend">
-                  <span class="input-group-text transparentBg"
-                    >Margem máxima</span
-                  >
+                  <span class="input-group-text form-control transparentBg">Margem máxima</span>
                 </div>
-                <input
-                  [(ngModel)]="margin_max"
-                  class="inputAlignRigth grandSon"
-                  type="number"
-                />
+                <input [(ngModel)]="margin_max" class="inputAlignRigth form-control grandSon" type="number" />
                 <div class="input-group-append">
                   <span class="input-group-text transparentBg">%</span>
                 </div>
               </div>
               <!-- FIM MARGEM MÍNIMA -->
-              <a
-                style="cursor: pointer;color: white;position: absolute;top: 74.4%;"
-                class="btn btn-primary mt-3"
-                (click)="newMarginValues()"
-                >Guardar</a
-              >
+              <div class="col-3 offset-9 pr-0">
+                <a style="cursor: pointer; float: right; margin-top: 71%;" class="btn btn-mycolor"
+                  (click)="newMarginValues()">Guardar</a>
+              </div>
             </div>
           </div>
         </div>
         <!-- FIM DA MARGEM -->
-
         <!-- INICIO DO SUBSIDIO DA ALIMENTACAO -->
-
         <div class="col">
           <div class="card">
-            <div class="card-header">
+            <div class="card-header secCardHeader">
               Subsídio de Alimentação
             </div>
             <div class="card-body fatherFoodSubsidy">
               <!-- INICIO AVERAGE DAYS OF THE MONTH -->
               <div class="input-group son">
                 <div class="input-group-prepend">
-                  <span class="input-group-text transparentBg"
-                    >Número médio de dias úteis do mês</span
-                  >
+                  <span class="input-group-text transparentBg">Número médio de dias úteis do mês</span>
                 </div>
-                <input
-                  [(ngModel)]="averageDaysOfTheMonth"
-                  (change)="resultFoodSubsidy($event)"
-                  class="inputAlignRigth grandSon"
-                  type="number"
-                />
+                <input [(ngModel)]="averageDaysOfTheMonth" (change)="resultFoodSubsidy($event)"
+                  class="inputAlignRigth form-control grandSon" type="number" />
                 <div class="input-group-append">
                   <span class="input-group-text transparentBg" style="text-decoration: overline">x</span>
                 </div>
@@ -160,16 +67,10 @@
               <!-- INICIO LIMIT VALUE FOR FOOD SUBSIDY -->
               <div class="input-group son mt-3">
                 <div class="input-group-prepend">
-                  <span class="input-group-text transparentBg"
-                    >Valor límite de Subsídio de Alimentação</span
-                  >
+                  <span class="input-group-text transparentBg">Valor límite de Subsídio de Alimentação</span>
                 </div>
-                <input
-                  [(ngModel)]="limitValueForFoodSubsidy"
-                  (change)="resultFoodSubsidy($event)"
-                  class="inputAlignRigth grandSon"
-                  type="number"
-                />
+                <input [(ngModel)]="limitValueForFoodSubsidy" (change)="resultFoodSubsidy($event)"
+                  class="inputAlignRigth form-control grandSon" type="number" />
                 <div class="input-group-append">
                   <span class="input-group-text transparentBg">€</span>
                 </div>
@@ -179,28 +80,20 @@
               <!-- INICIO FOOD SUBSIDY MONTH -->
               <div class="input-group son mt-3">
                 <div class="input-group-prepend">
-                  <span class="input-group-text transparentBg"
-                    >Subsídio de Alimentação</span
-                  >
+                  <span class="input-group-text transparentBg">Subsídio de Alimentação</span>
                 </div>
-                <input
-                  [(ngModel)]="foodSubsidyMonth"
-                  class="inputAlignRigth grandSon"
-                  type="number"
-                  disabled
-                />
+                <input [(ngModel)]="foodSubsidyMonth" class="inputAlignRigth form-control grandSon" type="number"
+                  disabled />
                 <div class="input-group-append">
                   <span class="input-group-text transparentBg">€</span>
                 </div>
               </div>
               <!-- FIM FOOD SUBSIDY MONTH -->
+              <div class="col-3 offset-9 pr-0">
 
-              <a
-                style="cursor: pointer; color: white"
-                class="btn btn-primary mt-3"
-                (click)="newFoodSubsidyValues()"
-                >Guardar</a
-              >
+                <a style="cursor: pointer; float: right; margin-top: 15%;" class="btn btn-mycolor"
+                  (click)="newFoodSubsidyValues()">Guardar</a>
+              </div>
             </div>
           </div>
         </div>
@@ -210,8 +103,8 @@
       <!-- INICIO DOS EXTRAS -->
       <div class="row mt-3">
         <div class="col">
-          <div class="card h-100">
-            <div class="card-header">
+          <div class="card">
+            <div class="card-header secCardHeader">
               Extras
             </div>
             <div class="card-body">
@@ -219,124 +112,57 @@
               <!-- NOME DO EXTRA -->
               <div class="input-group">
                 <div class="input-group-prepend">
-                  <span class="input-group-text transparentBg"
-                    >Nome</span
-                  >
+                  <span class="input-group-text transparentBg">Nome</span>
                 </div>
-                <input
-                  class="inputAlignRigth"
-                  type="text"
-                  [(ngModel)]="extraName"
-                  style="width: 34%"
-                />
+                <input class="inputAlignRigth form-control" type="text" [(ngModel)]="extraName" style="width: 34%" />
                 <!-- NOME DO EXTRA -->
                 <!-- INICIO CHECKBOX -->
-                  <div class="input-group-append">
-                    <span class="input-group-text transparentBg"
-                      >Tributação autónoma?</span
-                    >
+                <div class="input-group-append">
+                  <span class="input-group-text transparentBg">Tributação Autónoma?</span>
+                </div>
+                <div class="input-group-append">
+                  <div class="input-group-text transparentBg">
+                    <input type="checkbox" aria-label="true" value="true"
+                      [(ngModel)]="extraWithAutonomousTributation" />
                   </div>
-                  <div class="input-group-append">
-                    <div class="input-group-text">
-                      <input
-                        type="checkbox"
-                        aria-label="true"
-                        value="true"
-                        [(ngModel)]="extraWithAutonomousTributation"
-                      />
-                    </div>
-                  </div>
-
-
+                </div>
                 <!-- FIM DO CHECKBOX -->
-
-                <a
-                  style="cursor: pointer;color: white;position: absolute;top: 243%;"
-                  class="btn btn-primary mt-3"
-                  (click)="newExtra(template)"
-                  >Guardar</a
-                >
-                <a
-                  style="cursor: pointer;color: white;position: absolute;left: 20%;top: 247%;"
-                  class="btn btn-primary ml-3 mt-3"
-                  (click)="viewExtra(template)"
-                  >Ver extras</a
-                >
-
                 <!-- MODAL -->
-
                 <ng-template #template>
-                  <div class="modal-header">
+                  <div class="modal-header cardHead">
                     <h4 class="modal-title pull-left">Extras</h4>
-                    <button
-                      type="button"
-                      class="close pull-right"
-                      aria-label="Close"
-                      (click)="onCloseModal()"
-                    >
+                    <button type="button" class="close pull-right" aria-label="Close" (click)="onCloseModal()" style="color: white">
                       <span aria-hidden="true">&times;</span>
                     </button>
                   </div>
                   <div class="modal-body">
                     <div class="container mb-3">
-                      <ngx-datatable
-                        class="bootstrap"
-                        [rows]="rows"
-                        [loadingIndicator]="loadingIndicator"
-                        [columns]="keysTA"
-                        [columnMode]="'force'"
-                        [headerHeight]="40"
-                        [summaryRow]="true"
-                        [summaryPosition]="'bottom'"
-                        [footerHeight]="40"
-                        [limit]="5"
-                        [rowHeight]="'auto'"
-                        [reorderable]="reorderable"
-                      >
+                      <ngx-datatable class="bootstrap" [rows]="rows" [loadingIndicator]="loadingIndicator"
+                        [columns]="keysTA" [columnMode]="'force'" [headerHeight]="40" [summaryRow]="true"
+                        [summaryPosition]="'bottom'" [footerHeight]="40" [limit]="5" [rowHeight]="'auto'"
+                        [reorderable]="reorderable">
                         <ngx-datatable-column>
-                          <ng-template
-                            let-column="column"
-                            ngx-datatable-header-template
-                          >
+                          <ng-template let-column="column" ngx-datatable-header-template>
                             Extras
                           </ng-template>
-                          <ng-template
-                            let-row="row"
-                            ngx-datatable-cell-template
-                          >
+                          <ng-template let-row="row" ngx-datatable-cell-template>
                             {{ row.name }}
                           </ng-template>
                         </ngx-datatable-column>
                         <ngx-datatable-column>
-                          <ng-template
-                            let-column="column"
-                            ngx-datatable-header-template
-                          >
+                          <ng-template let-column="column" ngx-datatable-header-template>
                             Tributação autónoma
                           </ng-template>
-                          <ng-template
-                            let-row="row"
-                            ngx-datatable-cell-template
-                          >
+                          <ng-template let-row="row" ngx-datatable-cell-template>
                             {{ row.tA }}
                           </ng-template>
                         </ngx-datatable-column>
                         <ngx-datatable-column>
-                          <ng-template
-                            let-column="column"
-                            ngx-datatable-header-template
-                          >
+                          <ng-template let-column="column" ngx-datatable-header-template>
                           </ng-template>
-                          <ng-template
-                            let-row="row"
-                            ngx-datatable-cell-template
-                          >
-                            <button
-                              class="btn btn-link btn-sm"
-                              style="color: red; float: right"
-                              (click)="deleteExtra(row.name)"
-                            >
-                            <fa-icon [icon]="faTrashAlt"></fa-icon>
+                          <ng-template let-row="row" ngx-datatable-cell-template>
+                            <button class="btn btn-link btn-sm" style="color: red" (click)="deleteExtra(row.name)">
+                              <fa-icon [icon]="faTrashAlt"></fa-icon>
                             </button>
                           </ng-template>
                         </ngx-datatable-column>
@@ -345,6 +171,16 @@
                   </div>
                 </ng-template>
               </div>
+              <div class="row" style="margin-top: 15%">
+                  <div class="col-9 pr-0" style="text-align: right">
+                    <a style="cursor: pointer;position: relative; left: 5%" class="btn btn-blue" (click)="viewExtra(template)">Ver
+                      Extras</a>
+                  </div>
+                  <div class="col-3 pl-0" style="text-align: right">
+                    <a style="cursor: pointer;" class="btn btn-mycolor"
+                      (click)="newExtra(template)">Guardar</a>
+                  </div>
+                </div>
             </div>
           </div>
         </div>
@@ -353,56 +189,107 @@
         <!-- INICIO DO WORK INSURANCE -->
         <div class="col">
           <div class="card">
-            <div class="card-header">
+            <div class="card-header secCardHeader">
               Seguro de Trabalho
             </div>
             <div class="card-body fatherWorkInsurance">
               <!-- INICIO WORKINSURANCE VARIABLE -->
               <div class="input-group son">
                 <div class="input-group-prepend">
-                  <span class="input-group-text transparentBg"
-                    >Variável de Cálculo</span
-                  >
+                  <span class="input-group-text transparentBg">Variável de Cálculo</span>
                 </div>
-                <input
-                  [(ngModel)]="workInsuranceVariable"
-                  class="inputAlignRigth grandSon"
-                  type="number"
-                />
-              <div class="input-group-append">
+                <input [(ngModel)]="workInsuranceVariable" class="inputAlignRigth form-control grandSon"
+                  type="number" />
+                <div class="input-group-append">
                   <span class="input-group-text transparentBg">μ</span>
+                </div>
               </div>
-            </div>
               <!-- FIM WORKINSURANCE VARIABLE -->
 
               <!-- INICIO VAR ACCOUNTED FOR WORK INSURANCE -->
               <div class="input-group son mt-3">
                 <div class="input-group-prepend">
-                  <span class="input-group-text transparentBg"
-                  >Segunda Variável de Cálculo</span
-                  >
+                  <span class="input-group-text transparentBg">Segunda Variável de Cálculo</span>
                 </div>
-                <input
-                  [(ngModel)]="varAccountedForWorkInsurance"
-                  class="inputAlignRigth grandSon"
-                  type="number"
-                />
-              <div class="input-group-append">
+                <input [(ngModel)]="varAccountedForWorkInsurance" class="inputAlignRigth form-control grandSon"
+                  type="number" />
+                <div class="input-group-append">
                   <span class="input-group-text transparentBg">μ</span>
+                </div>
               </div>
-            </div>
               <!-- FIM VAR ACCOUNTED FOR WORK INSURANCE -->
-
-              <a
-                style="cursor: pointer; color: white"
-                class="btn btn-primary mt-3"
-                (click)="newWorkInsuranceVariables()"
-                >Guardar</a
-              >
+              <div class="col-3 offset-9 pr-0">
+                <a style="cursor: pointer; float: right; margin-top: 15%" class="btn btn-mycolor"
+                  (click)="newWorkInsuranceVariables()">Guardar</a>
+              </div>
             </div>
           </div>
         </div>
         <!-- FIM DO WORK INSURANCE -->
+      </div>
+      <div class="row mt-3">
+        <div class="col">
+          <!-- INICIO DAS TAXAS -->
+          <div class="card">
+            <div class="card-header secCardHeader">
+              Taxação
+            </div>
+            <div class="card-body fatherTaxation">
+              <!-- INICIO INPUT FOR WORKER SOCIAL SECURITY -->
+              <div class="input-group son">
+                <div class="input-group-prepend">
+                  <span class="input-group-text transparentBg">Segurança Social do Trabalhador</span>
+                </div>
+                <input [(ngModel)]="workerSocialSecurity" class="inputAlignRigth form-control grandSon" type="number" />
+                <div class="input-group-append">
+                  <span class="input-group-text transparentBg">%</span>
+                </div>
+              </div>
+              <!-- FIM INPUT FOR WORKER SOCIAL SECURITY -->
+
+              <!-- INICIO INPUT FOR COMPANY SOCIAL SECURITY -->
+              <div class="input-group son mt-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text transparentBg">Segurança Social da Entidade</span>
+                </div>
+                <input [(ngModel)]="companySocialSecurity" class="inputAlignRigth form-control grandSon"
+                  type="number" />
+                <div class="input-group-append">
+                  <span class="input-group-text transparentBg">%</span>
+                </div>
+              </div>
+              <!-- FIM INPUT FOR COMPANY SOCIAL SECURITY -->
+
+              <!-- INICIO INPUT FOR TRIBUTACAO AUTONOMA -->
+              <div class="input-group son mt-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text transparentBg">Tributação autónoma</span>
+                </div>
+                <input [(ngModel)]="autonomousTributation" class="inputAlignRigth form-control grandSon"
+                  type="number" />
+                <div class="input-group-append">
+                  <span class="input-group-text transparentBg">%</span>
+                </div>
+              </div>
+              <div class="col-3 offset-9 pr-0">
+                <a style="cursor: pointer; float: right; margin-top: 35%;" class="btn btn-mycolor"
+                  (click)="newTributationValues()">Guardar</a>
+              </div>
+            </div>
+          </div>
+          <br />
+          <!-- FIM DAS TAXAS -->
+        </div>
+        <div class="col">
+          <div class="card">
+            <div class="card-header secCardHeader">
+              Importar Tabela de IRS
+            </div>
+            <div class="card-body">
+                <app-import-table></app-import-table>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>

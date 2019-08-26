@@ -47,6 +47,7 @@ export class HeaderComponent implements OnInit {
   }
 
   showEditAccount(template: TemplateRef<any>) {
+    this.state = "edit";
     this.modalRef = this.modalService.show(template);
 
   }
@@ -75,6 +76,7 @@ export class HeaderComponent implements OnInit {
       //this.onClose.next(this.newAccount);
     }
     this.modalRef.hide();
+    this.resetForm();
   }
 
   resetForm() {
