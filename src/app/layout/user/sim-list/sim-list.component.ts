@@ -34,7 +34,7 @@ export class SimListComponent implements OnInit {
   public simByEmail$:  ReplaySubject<any> = new ReplaySubject();
   @ViewChild(DatatableComponent, { static: false }) table: DatatableComponent;
 
-  constructor(private modalService: BsModalService, private accountService:AccountServiceService) { 
+  constructor(private modalService: BsModalService, private accountService:AccountServiceService) {
     this.keys = [
       {prop: 'name'},
       {prop: 'simulation'},
@@ -52,7 +52,7 @@ export class SimListComponent implements OnInit {
           console.log(element);
           const filtered = element.simulations.filter( el => el.name === field);
           console.log(filtered);
-          
+
           this.colaborators.push(filtered[0].value);
         }); */
           element.simulations.forEach(simulation => {
@@ -69,17 +69,19 @@ export class SimListComponent implements OnInit {
         this.rows = this.data;
       })
     }
-  
+
   ngOnInit() {
     //this.rows = this.temp;
     let email = this.accountService.getCurrentEmail();
     this.accountService.getAllSimulationsFromAccount(email);
+
   }
 
   ngOnChanges(changes: SimpleChanges) {
     console.log(changes);
     this.rows = changes.temp.currentValue;
   }
+
 
   /* showConfirmModal(template: TemplateRef<any>, row) {
     console.log(row);
@@ -89,7 +91,7 @@ export class SimListComponent implements OnInit {
     //this.modalRef.content.email = row.email;
   } */
 
-  /* onCloseModal() { 
+  /* onCloseModal() {
     this.modalRef.hide();
   }
 

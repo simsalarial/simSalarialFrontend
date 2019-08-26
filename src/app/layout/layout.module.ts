@@ -11,7 +11,33 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { SimDetailComponent } from './user/sim-detail/sim-detail.component';
+import { MatButtonModule, MatButtonToggleModule, MatIconModule, MatProgressSpinnerModule, MatToolbarModule, MatSidenavModule, MatMenuModule, MatListModule, MatDividerModule, MatGridListModule, MatExpansionModule, MatCardModule, MatTabsModule, MatStepperModule, MatFormFieldModule, MatInputModule, MatSelectModule, MatAutocompleteModule, MatCheckboxModule, MatRadioModule, MatDatepickerModule, MatNativeDateModule } from '@angular/material';
 
+
+const MaterialComponents = [
+  MatButtonModule,
+  MatButtonToggleModule,
+  MatIconModule,
+  MatProgressSpinnerModule,
+  MatToolbarModule,
+  MatSidenavModule,
+  MatMenuModule,
+  MatListModule,
+  MatDividerModule,
+  MatGridListModule,
+  MatExpansionModule,
+  MatCardModule,
+  MatTabsModule,
+  MatStepperModule,
+  MatFormFieldModule,
+  MatInputModule,
+  MatSelectModule,
+  MatAutocompleteModule,
+  MatCheckboxModule,
+  MatRadioModule,
+  MatDatepickerModule,
+  MatNativeDateModule,
+];
 
 @NgModule({
   declarations: [LayoutComponent, UserComponent, SimListComponent, SimDetailComponent],
@@ -24,7 +50,54 @@ import { SimDetailComponent } from './user/sim-detail/sim-detail.component';
     ReactiveFormsModule,
     SharedModule,
     NgxDatatableModule,
+    MatButtonModule,
+    MatButtonToggleModule,
+    MatIconModule,
+    MatProgressSpinnerModule,
+    MatToolbarModule,
+    MatSidenavModule,
+    MatMenuModule,
+    MatListModule,
+    MatDividerModule,
+    MatGridListModule,
+    MatExpansionModule,
+    MatCardModule,
+    MatTabsModule,
+    MatStepperModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    MatAutocompleteModule,
+    MatCheckboxModule,
+    MatRadioModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
     ModalModule.forRoot()
+  ],
+  exports: [
+    MatButtonModule,
+    MatButtonToggleModule,
+    MatIconModule,
+    MatProgressSpinnerModule,
+    MatToolbarModule,
+    MatSidenavModule,
+    MatMenuModule,
+    MatListModule,
+    MatDividerModule,
+    MatGridListModule,
+    MatExpansionModule,
+    MatCardModule,
+    MatTabsModule,
+    MatStepperModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    MatAutocompleteModule,
+    MatCheckboxModule,
+    MatRadioModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+
   ]
 })
 export class LayoutModule { }

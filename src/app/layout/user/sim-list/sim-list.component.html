@@ -8,6 +8,13 @@
         <input (keyup)="search($event)" type="text" class="form-control" placeholder="Filtrar por nome" aria-label="Username" aria-describedby="basic-addon1">
     </div>
 </div>
+<!-- DATA -->
+  <mat-form-field>
+    <input matInput [matDatepicker]="myDatePicker">
+    <mat-datepicker-toggle [for]="myDatePicker" matSuffix></mat-datepicker-toggle>
+    <mat-datepicker #myDatePicker></mat-datepicker>
+  </mat-form-field>
+<!-- DATA -->
 
 <div class="container">
     <ngx-datatable class="bootstrap" [rows]="rows" [loadingIndicator]="loadingIndicator" [columns]="keys"
@@ -31,7 +38,7 @@
         </ngx-datatable-column>
         <ngx-datatable-column>
             <ng-template let-column="column" ngx-datatable-header-template>
-                <p><fa-icon [icon]="faPercentage"></fa-icon></p> Margem  
+                <p><fa-icon [icon]="faPercentage"></fa-icon></p> Margem
             </ng-template>
             <ng-template let-row="row" ngx-datatable-cell-template>
                 {{row.marginPercentage}}
@@ -48,7 +55,7 @@
         <ngx-datatable-column>
             <ng-template let-column="column" ngx-datatable-header-template>
                 <p><fa-icon [icon]="faEuroSign"></fa-icon></p>Custo total anual
-               
+
             </ng-template>
             <ng-template let-row="row" ngx-datatable-cell-template>
                 {{row.anualTotalCost}}
@@ -57,7 +64,7 @@
         <ngx-datatable-column>
             <ng-template let-column="column" ngx-datatable-header-template>
                 <p><fa-icon [icon]="faEuroSign"></fa-icon></p> Salário líquido sem duodécimos
-                
+
             </ng-template>
             <ng-template let-row="row" ngx-datatable-cell-template>
                 {{row.netSalaryWithoutDuo}}
@@ -66,7 +73,7 @@
         <ngx-datatable-column>
             <ng-template let-column="column" ngx-datatable-header-template>
                 <p><fa-icon [icon]="faEuroSign"></fa-icon></p>Salário líquido com duodécimos
-               
+
             </ng-template>
             <ng-template let-row="row" ngx-datatable-cell-template>
                 {{row.netSalaryWithDuo}}
