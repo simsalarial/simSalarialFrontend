@@ -1,15 +1,16 @@
-<div class="row custom-row">
-    <div class="col-sm-12">
-        <form class="form-horizontal">
-            <fieldset>
-                <div class="container vh-100 mt-5">
-                    <div class="row h-50 text-center">
-                        <div class="col-sm-6" *ngFor="let simulation of simulations">
-                            <app-sim-detail [simulation]="simulation"></app-sim-detail>
+
+    <div class="row">
+        <div class="col-sm-12">
+            <form class="form-horizontal">
+                <fieldset>
+                    <div class="container vh-100 mt-2">
+                        <div class="row h-50 text-center">
+                            <div class="col-sm-6" *ngFor="let simulation of simulations">
+                                <app-sim-detail [simulation]="simulation"></app-sim-detail>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </fieldset>
-        </form>
+                </fieldset>
+            </form>
+        </div>
     </div>
-</div>

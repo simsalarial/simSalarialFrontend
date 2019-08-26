@@ -97,6 +97,8 @@
     
 </div>
 </div>
-<app-compare-sim [simulations]="selectedSimulations" *ngIf="state == 'simDetail'"></app-compare-sim>
+<div *ngIf="state == 'simDetail'">
+        <app-compare-sim [simulations]="selectedSimulations"></app-compare-sim>  
+</div>
 
 

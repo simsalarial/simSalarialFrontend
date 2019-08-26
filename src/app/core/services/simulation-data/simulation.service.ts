@@ -38,6 +38,10 @@ export class SimulationService {
 
   }
 
+  getSimulationById(id) {
+    return this.http.get('http://localhost:8080/simuladorsalarial/api/simulations/'+ id, {responseType: "text"} );
+  }
+
   importDataBaseData() {
 
     // GET EXTRAS //

@@ -47,6 +47,7 @@ export class SimListComponent implements OnInit {
     ]
    this.simByEmail$ = this.accountService.simByEmail$;
    this.simByEmail$.subscribe( res => {
+    
       res.forEach( (element: any) => {
         //this.colaborators[0].simulations[0] = element.simulations;
         /* this.simFields.forEach((field: any) => {
@@ -56,6 +57,7 @@ export class SimListComponent implements OnInit {
           
           this.colaborators.push(filtered[0].value);
         }); */
+        
           element.simulations.forEach(simulation => {
             this.colaborator.name = element.name;
             this.colaborator.simulation = simulation.id;

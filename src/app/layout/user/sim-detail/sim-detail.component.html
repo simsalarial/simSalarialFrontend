@@ -3,7 +3,7 @@
     <fieldset>
       <div class="card mt-5">
         <div class="card-header cardHead">
-          <h6>SIMULAÇÃO - CÁLCULO | COLABORADOR: {{simulation.name}}</h6>
+          <h6>SIMULAÇÃO | COLABORADOR: {{simulation.name}}</h6>
         </div>
         <div class="card-body">
           <form class="form-horizontal">
@@ -63,10 +63,10 @@
                   </div>
 
                 </div>
-                <!--   <ng-container *ngIf="showContainer">
-                        <div *ngFor="let extra of t.controls" class="input-group mt-3 son1" [formGroup]="extra">
+                <!--   <ng-container *ngIf="simulation.">
+                        <div class="input-group mt-3 son1">
                           <div class="input-group-prepend">
-                            <span class="input-group-text transparentBg">{{extra.value.name}}</span>
+                            <span class="input-group-text transparentBg">{{simulation.}}</span>
                           </div>
                           <input class="form-control inputAlignRigth" formControlName="value"
                             oninput="validity.valid||(value='');" (change)="calculateTotalAnualCost()" type="number">
@@ -86,15 +86,9 @@
                             <span class="input-group-text transparentBg">€</span>
                           </div>
                         </div>
-                      </ng-container>
-                      <div class="input-group mt-3" style="width: 100%" *ngIf="extrasArray.length > 0">
-                        <select class="custom-select transparentBg" (change)="selectExtraFromSelect($event)"
-                          id="extraSelector">
-                          <option value="" [selected]="true">Outros</option>
-                          <option value="{{extra.name}}" *ngFor="let extra of extrasArray">{{extra.name}}</option>
-                        </select>
-                      </div>
-                    </div> -->
+                      </ng-container> -->
+                      
+                    </div>
                 <!--ACABA A COLUNA DA ESQUERDA-->
                 <div class="col-sm border-left father1">
                   <div class="input-group son1">

@@ -39,9 +39,10 @@
         </ngx-datatable-column>
         <ngx-datatable-column>
             <ng-template let-column="column" ngx-datatable-header-template>
+            
             </ng-template>
             <ng-template let-row="row" ngx-datatable-cell-template>
-                <button class="btn" style="color: red" (click)="showConfirmModal(template, row)"><fa-icon [icon]="faTrashAlt"></fa-icon></button>
+                <button class="btn mr-3" style="color: red; float: right;" (click)="showConfirmModal(template, row)"><fa-icon [icon]="faTrashAlt"></fa-icon></button>
             </ng-template>
         </ngx-datatable-column>
     </ngx-datatable>

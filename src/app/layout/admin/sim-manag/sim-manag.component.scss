@@ -97,3 +97,15 @@ input[type=number]::-webkit-outer-spin-button {
     }
   }
 }
+
+:host ::ng-deep  .ngx-datatable.fixed-header .datatable-header .datatable-header-inner .datatable-header-cell {
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: normal !important;
+  text-align: center !important;
+  vertical-align: middle !important;
+
+}
+:host ::ng-deep  .datatable-body-cell {
+  text-align: center !important;
+}
