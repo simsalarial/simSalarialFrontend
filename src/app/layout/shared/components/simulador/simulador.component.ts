@@ -574,29 +574,82 @@ export class SimuladorComponent implements OnInit {
     let outrosExtras = this.simForm.value.extrasWithTa.concat(this.simForm.value.extrasWithoutTa);
 
     ///// header /////
-    doc.addImage(imgData, 'JPEG', 15, 10, 25, 25);
+    doc.addImage(imgData, 'JPEG', 25, 15, 15, 15);
     doc.setFontSize(18);
-    doc.text(65, 30, "Consultant: " + consultant);
+    doc.text(50, 25, "Simulacão: " + consultant);
 
     ///// body /////
+    doc.setDrawColor(250)
+    doc.line(20, 35, 190, 35)
+
+    doc.rect(20, 50, 170, 180)
+
+    doc.line(160, 230, 160, 50) // vertical 1
+
+    doc.setFillColor(230, 230, 255)
+    doc.rect(20, 50, 170, 20, 'FD')  // rectangulo 1
+    doc.setFillColor(230, 230, 255)
+    doc.rect(20, 130, 170, 20, 'F')  // rectangulo 2
+    doc.setFillColor(230, 230, 255)
+    doc.rect(20, 210, 170, 20, 'FD')  // rectangulo 3
+
+    doc.line(20, 80, 190, 80)
+    doc.line(20, 90, 190, 90)
+    doc.line(20, 100, 190, 100)
+    doc.line(20, 110, 190, 110)
+    doc.line(20, 120, 190, 120)
+    doc.line(20, 130, 190, 130)
+
+    doc.line(20, 150, 190, 150)
+    doc.line(20, 160, 190, 160)
+    doc.line(20, 170, 190, 170)
+    doc.line(20, 180, 190, 180)
+    doc.line(20, 190, 190, 190)
+    doc.line(20, 200, 190, 200)
+    doc.line(20, 210, 190, 210)
+
+    doc.rect(20, 50, 170, 180)
+
+    doc.line(160, 230, 160, 50) // vertical 1
+
+    doc.setFontSize(14);
+    doc.text(30, 67, "Total de Abonos: ");
     doc.setFontSize(12);
-    doc.text(30, 60, "Salário Base: " + bSalary + " €");
-    doc.text(30, 70, "Subsidio de Alimentacao: " + fSubsidy + " €");
-    doc.text(30, 80, "Seguro de Trabalho: " + wInsurance + " €");
-    doc.text(30, 90, "Seguro de Saúde: " + hInsurance + " €");
-    doc.text(30, 100, "Prémios: " + oBonus + " €");
-    doc.text(100, 230, "Salário líquido com Duodécimos: " + netSalaryWithD + " €");
-    doc.text(100, 240, "Salário líquido sem Duodécimos: " + netSalaryWithoutD + " €");
-    doc.text(30, 120, "Extras: ");
+    doc.text(30, 77, "Salário Base: ");
+    doc.text(165, 77, ""+ bSalary);
+    doc.text(180, 77, " €");
+    doc.text(30, 87, "Subsidio de Alimentacao: ");
+    doc.text(165, 87, ""+ fSubsidy);
+    doc.text(180, 87, " €");
+    doc.text(30, 97, "Seguro de Trabalho: ");
+    doc.text(165, 97, ""+ wInsurance);
+    doc.text(180, 97, " €");
+    doc.text(30, 107, "Seguro de Saúde: ");
+    doc.text(165, 107, ""+ hInsurance);
+    doc.text(180, 107, " €");
+    doc.text(30, 117, "Prémios: ");
+    doc.text(165, 117, ""+ oBonus);
+    doc.text(180, 117, " €");
+    doc.text(30, 217, "Salário líquido com Duodécimos: ");
+    doc.text(165, 217, ""+ netSalaryWithD);
+    doc.text(180, 217, " €");
+    doc.text(30, 227, "Salário líquido sem Duodécimos: ");
+    doc.text(165, 227, ""+ netSalaryWithoutD);
+    doc.text(180, 227, " €");
+    doc.setFontSize(14);
+    doc.text(30, 147, "Extras: ");
+    doc.setFontSize(12);
     outrosExtras.forEach((element, index) => {                                     // por cada elemento do array ele adiciona 10 na posicao Y do PDF.
-      doc.text(35, 120 + (10 * (index + 1)), element.name + ": " + element.value + " €");
+      doc.text(30, 147 + (10 * (index + 1)), "" + element.name);
+      doc.text(165, 147 + (10 * (index + 1)), "" + element.value);
+      doc.text(180, 147 + (10 * (index + 1)), " €");
     });
 
     ///// footer /////
     doc.setFontSize(8);
     doc.text(150, 270, "Simulation by " + salesPerson);
 
-    doc.save('simulacao.pdf');
+    doc.save('simulacão.pdf');
 
   }
 
