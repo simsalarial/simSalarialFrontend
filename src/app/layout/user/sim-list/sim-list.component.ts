@@ -1,7 +1,7 @@
 import { BsLocaleService } from 'ngx-bootstrap/datepicker';
 import { Component, OnInit, Input, Output, EventEmitter, ViewChild, SimpleChanges, TemplateRef } from '@angular/core';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
-import { faSearch, faEuroSign, faPercentage, faUser, faCalculator, faBalanceScaleRight} from '@fortawesome/free-solid-svg-icons';
+import { faSearch, faEuroSign, faPercentage, faUser, faCalculator, faBalanceScaleRight, faCalendarAlt} from '@fortawesome/free-solid-svg-icons';
 import { DatatableComponent } from '@swimlane/ngx-datatable';
 import { AccountServiceService } from 'src/app/core';
 import { ReplaySubject } from 'rxjs';
@@ -29,6 +29,7 @@ export class SimListComponent implements OnInit {
   faEuroSign = faEuroSign;
   faPercentage = faPercentage;
   faCalculator = faCalculator;
+  faCalendarAlt = faCalendarAlt;
   faBalanceScaleRight = faBalanceScaleRight;
   faUser = faUser;
   public keys;
