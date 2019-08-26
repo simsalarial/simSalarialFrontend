@@ -1,4 +1,4 @@
-<div class="row custom-row">
+<div class="row custom-row" >
   <div class="col-sm-12 container">
     <fieldset>
       <div class="card mt-5">
@@ -19,7 +19,8 @@
                     <span class="input-group-text transparentBg">€</span>
                   </div>
                   <div class="input-group-append" style="min-width: 100px;">
-                    <span class="input-group-text transparentBg" style="width: 100%">IRS: {{simulation.IRSValue}}%</span>
+                    <span class="input-group-text transparentBg" style="width: 100%">IRS:
+                      {{simulation.IRSValue}}%</span>
                   </div>
                 </div>
                 <div class="input-group mt-3 son1">
@@ -56,195 +57,195 @@
                   <div class="input-group-prepend">
                     <span class="input-group-text transparentBg">Prémios</span>
                   </div>
-                  <input value="{{simulation.otherBonus}}" class="form-control inputAlignRigth" type="number" id="otherBonus"
-                    disabled>
+                  <input value="{{simulation.otherBonus}}" class="form-control inputAlignRigth" type="number"
+                    id="otherBonus" disabled>
                   <div class="input-group-append">
                     <span class="input-group-text transparentBg">€</span>
                   </div>
                 </div>
-                <div  *ngFor="let extra of extras$">
-                    <ng-container>
-                        <div class="input-group mt-3 son1">
-                          <div class="input-group-prepend">
-                            <span class="input-group-text transparentBg">{{extra.name}}</span>
-                          </div>
-                          <input value="{{extra.value}}" class="form-control inputAlignRigth" type="number" disabled>
-                          <div class="input-group-append">
-                            <span class="input-group-text transparentBg">€</span>
-                          </div>
-                        </div>
-                      </ng-container>
+                <div *ngFor="let extra of extras$">
+                  <ng-container>
+                    <div class="input-group mt-3 son1">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text transparentBg">{{extra.name}}</span>
+                      </div>
+                      <input value="{{extra.value}}" class="form-control inputAlignRigth" type="number" disabled>
+                      <div class="input-group-append">
+                        <span class="input-group-text transparentBg">€</span>
+                      </div>
+                    </div>
+                  </ng-container>
                 </div>
-                  
-                    </div>
-                <!--ACABA A COLUNA DA ESQUERDA-->
-                <div class="col-sm border-left father1">
-                  <div class="input-group son1">
+
+              </div>
+              <!--ACABA A COLUNA DA ESQUERDA-->
+              <div class="col-sm border-left father1">
+                <div class="input-group son1">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text transparentBg">Custo Mensal</span>
+                  </div>
+                  <input type="number" min="0" class="form-control inputAlignRigth" type="number"
+                    value={{simulation.monthlyTotalCost}} id="monthlyTotalCost" disabled>
+                  <div class="input-group-append">
+                    <span class="input-group-text transparentBg">€</span>
+                  </div>
+                </div>
+                <div class="input-group son1">
+                  <div class="input-group mt-3">
                     <div class="input-group-prepend">
-                      <span class="input-group-text transparentBg">Custo Mensal</span>
+                      <span class="input-group-text transparentBg">Salário Líquido S/ Duodécimos</span>
                     </div>
-                    <input type="number" min="0" class="form-control inputAlignRigth" type="number"
-                      value={{simulation.monthlyTotalCost}} id="monthlyTotalCost" disabled>
+                    <input class="form-control inputAlignRigth" value="{{simulation.netSalaryWithoutDuo}}" type="number"
+                      min="0" id="netSalaryWithoutDuo" disabled>
                     <div class="input-group-append">
                       <span class="input-group-text transparentBg">€</span>
                     </div>
                   </div>
-                  <div class="input-group son1">
-                    <div class="input-group mt-3">
-                      <div class="input-group-prepend">
-                        <span class="input-group-text transparentBg">Salário Líquido S/ Duodécimos</span>
-                      </div>
-                      <input class="form-control inputAlignRigth" value="{{simulation.netSalaryWithoutDuo}}" type="number"
-                        min="0" id="netSalaryWithoutDuo" disabled>
-                      <div class="input-group-append">
-                        <span class="input-group-text transparentBg">€</span>
-                      </div>
+                  <div class="input-group mt-0">
+                    <div class="input-group-prepend" style="padding-left: 20%;">
+                      <span class="input-group-text transparentBg">C/ Duodécimos</span>
                     </div>
-                    <div class="input-group mt-0">
-                      <div class="input-group-prepend" style="padding-left: 20%;">
-                        <span class="input-group-text transparentBg">C/ Duodécimos</span>
-                      </div>
-                      <input class="form-control inputAlignRigth" value="{{simulation.netSalaryWithDuo}}" type="number"
-                        min="0" id="netSalaryWithDuo" disabled>
-                      <div class="input-group-append">
-                        <span class="input-group-text transparentBg">€</span>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="input-group mt-4 son1">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text transparentBg">Margem</span>
-                    </div>
-                    <input type="number" min="0" class="form-control inputAlignRigth" id="marginPercentage"
-                      value="{{simulation.marginPercentage}}" disabled>
+                    <input class="form-control inputAlignRigth" value="{{simulation.netSalaryWithDuo}}" type="number"
+                      min="0" id="netSalaryWithDuo" disabled>
                     <div class="input-group-append">
-                      <span class="input-group-text transparentBg">%</span>
+                      <span class="input-group-text transparentBg">€</span>
                     </div>
                   </div>
+                </div>
+                <div class="input-group mt-4 son1">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text transparentBg">Margem</span>
+                  </div>
+                  <input type="number" min="0" class="form-control inputAlignRigth" id="marginPercentage"
+                    value="{{simulation.marginPercentage}}" disabled>
+                  <div class="input-group-append">
+                    <span class="input-group-text transparentBg">%</span>
+                  </div>
+                </div>
 
-                  <div class="input-group mt-3 son1">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text transparentBg">Utilização</span>
-                    </div>
-                    <input type="number" min="0" class="form-control inputAlignRigth" id="usagePercentage"
-                      value="{{simulation.usagePercentage}}" disabled>
-                    <div class="input-group-append">
-                      <span class="input-group-text transparentBg">%</span>
+                <div class="input-group mt-3 son1">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text transparentBg">Utilização</span>
+                  </div>
+                  <input type="number" min="0" class="form-control inputAlignRigth" id="usagePercentage"
+                    value="{{simulation.usagePercentage}}" disabled>
+                  <div class="input-group-append">
+                    <span class="input-group-text transparentBg">%</span>
+                  </div>
+                </div>
+
+                <div class="row mt-3">
+                  <div class="col-sm">
+                    <div class="card">
+                      <ul class="list-group father list-group-flush">
+                        <li class="list-group-item text-center">Custo Total</li>
+                        <li class="list-group-item son p-0">
+                          <div class="input-group border-0">
+                            <div class="input-group-prepend border-0">
+                              <span class="input-group-text transparentBg border-0">Anual</span>
+                            </div>
+                            <input type="number" value={{simulation.anualTotalCost}} id="anualTotalCost"
+                              class="form-control inputAlignRigth border-top-0 border-bottom-0" disabled>
+                            <div class="input-group-append border-0">
+                              <span class="input-group-text transparentBg border-0">€</span>
+                            </div>
+                          </div>
+                        </li>
+                        <li class="list-group-item son p-0">
+                          <div class="input-group border-0">
+                            <div class="input-group-prepend border-0">
+                              <span class="input-group-text transparentBg border-0">Mensal</span>
+                            </div>
+                            <input type="number" value={{simulation.monthlyTotalCost}}
+                              class="form-control inputAlignRigth border-top-0 border-bottom-0" disabled>
+                            <div class="input-group-append border-0">
+                              <span class="input-group-text transparentBg border-0">€</span>
+                            </div>
+                          </div>
+                        </li>
+                        <li class="list-group-item son p-0">
+                          <div class="input-group border-0">
+                            <div class="input-group-prepend border-0">
+                              <span class="input-group-text transparentBg border-0">Diário</span>
+                            </div>
+                            <input type="number" value={{simulation.dailyTotalCost}}
+                              class="form-control inputAlignRigth border-top-0 border-bottom-0" disabled>
+                            <div class="input-group-append border-0">
+                              <span class="input-group-text transparentBg border-0">€</span>
+                            </div>
+                          </div>
+                        </li>
+                        <li class="list-group-item son p-0">
+                          <div class="input-group border-0">
+                            <div class="input-group-prepend border-0">
+                              <span class="input-group-text transparentBg border-0">Hora</span>
+                            </div>
+                            <input type="number" value={{simulation.hourlyTotalCost}}
+                              class="form-control inputAlignRigth border-top-0 border-bottom-0" disabled>
+                            <div class="input-group-append border-0">
+                              <span class="input-group-text transparentBg border-0">€</span>
+                            </div>
+                          </div>
+                        </li>
+                      </ul>
                     </div>
                   </div>
-
-                  <div class="row mt-3">
-                    <div class="col-sm">
-                      <div class="card">
-                        <ul class="list-group father list-group-flush">
-                          <li class="list-group-item text-center">Custo Total</li>
-                          <li class="list-group-item son p-0">
-                            <div class="input-group border-0">
-                              <div class="input-group-prepend border-0">
-                                <span class="input-group-text transparentBg border-0">Anual</span>
-                              </div>
-                              <input type="number" value={{simulation.anualTotalCost}} id="anualTotalCost"
-                                class="form-control inputAlignRigth border-top-0 border-bottom-0" disabled>
-                              <div class="input-group-append border-0">
-                                <span class="input-group-text transparentBg border-0">€</span>
-                              </div>
+                  <div class="col-sm">
+                    <div class="card">
+                      <ul class="list-group list-group-flush father">
+                        <li class="list-group-item text-center">Valor a Cobrar (Rate)</li>
+                        <li class="list-group-item son p-0">
+                          <div class="input-group border-0">
+                            <div class="input-group-prepend border-0">
+                              <span class="input-group-text transparentBg border-0">Anual</span>
                             </div>
-                          </li>
-                          <li class="list-group-item son p-0">
-                            <div class="input-group border-0">
-                              <div class="input-group-prepend border-0">
-                                <span class="input-group-text transparentBg border-0">Mensal</span>
-                              </div>
-                              <input type="number" value={{simulation.monthlyTotalCost}}
-                                class="form-control inputAlignRigth border-top-0 border-bottom-0" disabled>
-                              <div class="input-group-append border-0">
-                                <span class="input-group-text transparentBg border-0">€</span>
-                              </div>
+                            <input type="number" value="{{simulation.anualRate}}"
+                              class="form-control inputAlignRigth border-top-0 border-bottom-0" disabled>
+                            <div class="input-group-append border-0">
+                              <span class="input-group-text transparentBg border-0">€</span>
                             </div>
-                          </li>
-                          <li class="list-group-item son p-0">
-                            <div class="input-group border-0">
-                              <div class="input-group-prepend border-0">
-                                <span class="input-group-text transparentBg border-0">Diário</span>
-                              </div>
-                              <input type="number" value={{simulation.dailyTotalCost}}
-                                class="form-control inputAlignRigth border-top-0 border-bottom-0" disabled>
-                              <div class="input-group-append border-0">
-                                <span class="input-group-text transparentBg border-0">€</span>
-                              </div>
+                          </div>
+                        </li>
+                        <li class="list-group-item son p-0">
+                          <div class="input-group border-0">
+                            <div class="input-group-prepend border-0">
+                              <span class="input-group-text transparentBg border-0">Mensal</span>
                             </div>
-                          </li>
-                          <li class="list-group-item son p-0">
-                            <div class="input-group border-0">
-                              <div class="input-group-prepend border-0">
-                                <span class="input-group-text transparentBg border-0">Hora</span>
-                              </div>
-                              <input type="number" value={{simulation.hourlyTotalCost}}
-                                class="form-control inputAlignRigth border-top-0 border-bottom-0" disabled>
-                              <div class="input-group-append border-0">
-                                <span class="input-group-text transparentBg border-0">€</span>
-                              </div>
+                            <input type="number" value="{{simulation.monthlyRate}}"
+                              class="form-control inputAlignRigth border-top-0 border-bottom-0" disabled>
+                            <div class="input-group-append border-0">
+                              <span class="input-group-text transparentBg border-0">€</span>
                             </div>
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-                    <div class="col-sm">
-                      <div class="card">
-                        <ul class="list-group list-group-flush father">
-                          <li class="list-group-item text-center">Valor a Cobrar (Rate)</li>
-                          <li class="list-group-item son p-0">
-                            <div class="input-group border-0">
-                              <div class="input-group-prepend border-0">
-                                <span class="input-group-text transparentBg border-0">Anual</span>
-                              </div>
-                              <input type="number" value="{{simulation.anualRate}}"
-                                class="form-control inputAlignRigth border-top-0 border-bottom-0" disabled>
-                              <div class="input-group-append border-0">
-                                <span class="input-group-text transparentBg border-0">€</span>
-                              </div>
+                          </div>
+                        </li>
+                        <li class="list-group-item son p-0">
+                          <div class="input-group border-0">
+                            <div class="input-group-prepend border-0">
+                              <span class="input-group-text transparentBg border-0">Diário</span>
                             </div>
-                          </li>
-                          <li class="list-group-item son p-0">
-                            <div class="input-group border-0">
-                              <div class="input-group-prepend border-0">
-                                <span class="input-group-text transparentBg border-0">Mensal</span>
-                              </div>
-                              <input type="number" value="{{simulation.monthlyRate}}"
-                                class="form-control inputAlignRigth border-top-0 border-bottom-0" disabled>
-                              <div class="input-group-append border-0">
-                                <span class="input-group-text transparentBg border-0">€</span>
-                              </div>
+                            <input type="number" value="{{simulation.dailyRate}}"
+                              class="form-control inputAlignRigth border-top-0 border-bottom-0" disabled>
+                            <div class="input-group-append border-0">
+                              <span class="input-group-text transparentBg border-0">€</span>
                             </div>
-                          </li>
-                          <li class="list-group-item son p-0">
-                            <div class="input-group border-0">
-                              <div class="input-group-prepend border-0">
-                                <span class="input-group-text transparentBg border-0">Diário</span>
-                              </div>
-                              <input type="number" value="{{simulation.dailyRate}}"
-                                class="form-control inputAlignRigth border-top-0 border-bottom-0" disabled>
-                              <div class="input-group-append border-0">
-                                <span class="input-group-text transparentBg border-0">€</span>
-                              </div>
+                          </div>
+                        </li>
+                        <li class="list-group-item son p-0">
+                          <div class="input-group border-0">
+                            <div class="input-group-prepend border-0">
+                              <span class="input-group-text transparentBg border-0">Hora</span>
                             </div>
-                          </li>
-                          <li class="list-group-item son p-0">
-                            <div class="input-group border-0">
-                              <div class="input-group-prepend border-0">
-                                <span class="input-group-text transparentBg border-0">Hora</span>
-                              </div>
-                              <input type="number" value="{{simulation.hourlyRate}}"
-                                class="form-control inputAlignRigth border-top-0 border-bottom-0" disabled>
-                              <div class="input-group-append border-0">
-                                <span class="input-group-text transparentBg border-0">€</span>
-                              </div>
+                            <input type="number" value="{{simulation.hourlyRate}}"
+                              class="form-control inputAlignRigth border-top-0 border-bottom-0" disabled>
+                            <div class="input-group-append border-0">
+                              <span class="input-group-text transparentBg border-0">€</span>
                             </div>
-                          </li>
-                        </ul>
-                      </div>
+                          </div>
+                        </li>
+                      </ul>
                     </div>
                   </div>
                 </div>
               </div>
-              <!--ACABA A COLUNA DA DIREITA-->
+            </div>
+            <!--ACABA A COLUNA DA DIREITA-->

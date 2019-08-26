@@ -1,7 +1,7 @@
 <div class="container-fluid">
     <app-header></app-header>
     <div>
-        <div class="container mt-3">
+        <div class="mt-3">
             <div class="row">
                 <div class="col-md-2  offset-md-10">
                     <button *ngIf="state == 'simList' || state == 'profile'" (click)="state = 'simulator'" type="button"
@@ -12,7 +12,10 @@
             </div>
             <div class="row mt-2" style="align-content: center">
                 <div class="col-md-12" style="width: 100%">
-                    <app-simulador *ngIf="state == 'simulator'"></app-simulador>
+                    <div class="container">
+                        <app-simulador *ngIf="state == 'simulator'"></app-simulador>
+                    </div>
+                    
                     <app-sim-list *ngIf="state == 'simList'"></app-sim-list>
                 </div>
             </div>
