@@ -14,6 +14,7 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { SimDetailComponent } from './user/sim-detail/sim-detail.component';
 import { MatButtonModule, MatButtonToggleModule, MatIconModule, MatProgressSpinnerModule, MatToolbarModule, MatSidenavModule, MatMenuModule, MatListModule, MatDividerModule, MatGridListModule, MatExpansionModule, MatCardModule, MatTabsModule, MatStepperModule, MatFormFieldModule, MatInputModule, MatSelectModule, MatAutocompleteModule, MatCheckboxModule, MatRadioModule, MatDatepickerModule, MatNativeDateModule } from '@angular/material';
 
+import { CompareSimComponent } from './user/compare-sim/compare-sim.component';
 
 const MaterialComponents = [
   MatButtonModule,
@@ -41,7 +42,7 @@ const MaterialComponents = [
 ];
 
 @NgModule({
-  declarations: [LayoutComponent, UserComponent, SimListComponent, SimDetailComponent],
+  declarations: [LayoutComponent, UserComponent, SimListComponent, SimDetailComponent, CompareSimComponent],
   imports: [
     CommonModule,
     LayoutRoutingModule,

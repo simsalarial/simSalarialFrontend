@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { ReplaySubject } from 'rxjs';
 import { AccountServiceService } from 'src/app/core/services/account-service/account-service.service';
+import { SimulationService } from 'src/app/core/services/simulation-data/simulation.service';
 
 @Component({
   selector: 'app-sim-detail',
@@ -10,17 +11,22 @@ import { AccountServiceService } from 'src/app/core/services/account-service/acc
 export class SimDetailComponent implements OnInit {
 public simByEmail$:  ReplaySubject<any> = new ReplaySubject();
 data: any;
+colaborator: any = {};
+@Input() simulation: any;
 
-  constructor(private accountService:AccountServiceService) {
-    this.simByEmail$ = this.accountService.simByEmail$;
-    this.simByEmail$.subscribe( res => {
-      this.data = res;
-    })
+
+  constructor(private accountService:AccountServiceService, private simulationService: SimulationService) {
+    
+    
    }
 
   ngOnInit() {
-    let email = this.accountService.getCurrentEmail();
-    this.accountService.getAllSimulationsFromAccount(email);
+    console.log(this.simulation);
+    this.simulationService.getSimulationById(this.simulation.simulation).subscribe( res => {
+      this.simulation = res;
+      console.log(res);
+      
+    })
   }
 
 }
