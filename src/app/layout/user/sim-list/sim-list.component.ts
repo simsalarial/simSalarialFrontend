@@ -33,6 +33,7 @@ export class SimListComponent implements OnInit {
   msg: string;
   public simByEmail$:  ReplaySubject<any> = new ReplaySubject();
   @ViewChild(DatatableComponent, { static: false }) table: DatatableComponent;
+  first2Date: any;
 
   constructor(private modalService: BsModalService, private accountService:AccountServiceService) {
     this.keys = [
@@ -82,7 +83,10 @@ export class SimListComponent implements OnInit {
     this.rows = changes.temp.currentValue;
   }
 
+  testing() {
+    console.log(this.first2Date);
 
+  }
   /* showConfirmModal(template: TemplateRef<any>, row) {
     console.log(row);
     this.simToDelete = row.email;

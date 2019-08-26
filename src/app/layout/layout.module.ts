@@ -1,6 +1,7 @@
+import { TimepickerModule } from 'ngx-bootstrap/timepicker';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { LayoutRoutingModule } from './layout-routing.module';
 import { LayoutComponent } from './layout.component';
 import { SharedModule } from './shared/shared.module';
@@ -72,6 +73,7 @@ const MaterialComponents = [
     MatRadioModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    BsDatepickerModule.forRoot(),
     ModalModule.forRoot()
   ],
   exports: [

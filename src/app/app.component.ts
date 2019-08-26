@@ -2,6 +2,7 @@ import { Observable } from 'rxjs';
 import { Component, OnInit  } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { map, startWith } from 'rxjs/operators';
+import { setTheme } from 'ngx-bootstrap/utils';
 
 @Component({
   selector: 'app-root',

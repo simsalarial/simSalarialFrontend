@@ -146,6 +146,7 @@ export class SimuladorComponent implements OnInit {
       monthlyRate: [0],
       dailyRate: [0],
       hourlyRate: [0],
+      IRSValue: [0],
       extrasWithTa: new FormArray([]),
       extrasWithoutTa: new FormArray([])
     });
@@ -413,6 +414,8 @@ export class SimuladorComponent implements OnInit {
         this.maxSalary = parseFloat(((this.irsValues[this.irsValues.length - 1][1])).toFixed(2));
       }
     }
+    this.simForm.value.IRSValue = this.tempTax;
+    console.log(this.simForm.value);
   }
 
 
@@ -512,7 +515,7 @@ export class SimuladorComponent implements OnInit {
       console.log("entrei");
       this.simForm.value.monthlyRate = Number((this.simForm.value.anualRate / this.monthsWithoutVacation / (this.simForm.value.usagePercentage / 100)).toFixed(2));
     } else {
-      this.simForm.value.monthlyRate = Number((this.simForm.value.anualTotalCost + this.markUp) / (this.simForm.value.usagePercentage / 100) / this.monthsWithoutVacation).toFixed(2);
+      this.simForm.value.monthlyRate = Number(((this.simForm.value.anualTotalCost + this.markUp) / (this.simForm.value.usagePercentage / 100) / this.monthsWithoutVacation).toFixed(2));
     }
 
     this.calculateDailyRate();

@@ -9,13 +9,15 @@
     </div>
 </div>
 <!-- DATA -->
-  <mat-form-field>
-    <input matInput [matDatepicker]="myDatePicker">
-    <mat-datepicker-toggle [for]="myDatePicker" matSuffix></mat-datepicker-toggle>
-    <mat-datepicker #myDatePicker></mat-datepicker>
-  </mat-form-field>
+<div class="col-xs-12 col-12 col-md-4 form-group">
+    <input type="text"
+           placeholder="Daterangepicker"
+           class="form-control"
+           bsDaterangepicker
+           [bsConfig]="{ isAnimated: true }">
+  </div>
 <!-- DATA -->
-
+<button (click)="testing()">Ver Data</button>
 <div class="container">
     <ngx-datatable class="bootstrap" [rows]="rows" [loadingIndicator]="loadingIndicator" [columns]="keys"
         [columnMode]="'force'" [headerHeight]="40" [summaryRow]="true" [summaryPosition]="'bottom'" [footerHeight]="40"
