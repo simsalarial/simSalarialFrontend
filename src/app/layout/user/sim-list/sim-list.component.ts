@@ -48,26 +48,23 @@ export class SimListComponent implements OnInit {
     ]
    this.simByEmail$ = this.accountService.simByEmail$;
    this.simByEmail$.subscribe( res => {
+    console.log(res);
     
       res.forEach( (element: any) => {
-        //this.colaborators[0].simulations[0] = element.simulations;
-        /* this.simFields.forEach((field: any) => {
-          console.log(element);
-          const filtered = element.simulations.filter( el => el.name === field);
-          console.log(filtered);
-
-          this.colaborators.push(filtered[0].value);
-        }); */
         
+        if(element.simulations.length > 0) {
+
           element.simulations.forEach(simulation => {
             this.colaborator.name = element.name;
             this.colaborator.simulation = simulation.id;
-            simulation.simFieldsDataDTO.forEach(field => {
+            simulation.simFieldsData.forEach(field => {
               this.colaborator[field.name] = field.value;
             });
             this.data.push({...this.colaborator});
             this.colaborator = {};
           });
+        }
+          
         });
         console.log(this.data);
         this.rows = this.data;

@@ -61,33 +61,21 @@
                   <div class="input-group-append">
                     <span class="input-group-text transparentBg">€</span>
                   </div>
-
                 </div>
-                <!--   <ng-container *ngIf="simulation.">
+                <div  *ngFor="let extra of extras$">
+                    <ng-container>
                         <div class="input-group mt-3 son1">
                           <div class="input-group-prepend">
-                            <span class="input-group-text transparentBg">{{simulation.}}</span>
+                            <span class="input-group-text transparentBg">{{extra.name}}</span>
                           </div>
-                          <input class="form-control inputAlignRigth" formControlName="value"
-                            oninput="validity.valid||(value='');" (change)="calculateTotalAnualCost()" type="number">
+                          <input value="{{extra.value}}" class="form-control inputAlignRigth" type="number" disabled>
                           <div class="input-group-append">
                             <span class="input-group-text transparentBg">€</span>
                           </div>
                         </div>
                       </ng-container>
-                      <ng-container *ngIf="showContainer">
-                        <div class="input-group mt-3 son1" *ngFor="let extraWithout of g.controls" [formGroup]="extraWithout">
-                          <div class="input-group-prepend">
-                            <span class="input-group-text transparentBg">{{extraWithout.value.name}}</span>
-                          </div>
-                          <input class="form-control inputAlignRigth" formControlName="value"
-                            oninput="validity.valid||(value='');" (change)="calculateTotalAnualCost()" type="number">
-                          <div class="input-group-append">
-                            <span class="input-group-text transparentBg">€</span>
-                          </div>
-                        </div>
-                      </ng-container> -->
-                      
+                </div>
+                  
                     </div>
                 <!--ACABA A COLUNA DA ESQUERDA-->
                 <div class="col-sm border-left father1">

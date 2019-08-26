@@ -25,6 +25,10 @@ export class DataService {
 
   // EXTRAS //
 
+  getAllExtras() {
+    return this.http.get('http://localhost:8080/simuladorsalarial/api/simulationfields/', {responseType: 'json'});
+  }
+
   retrieveDataServiceExtras(extras) {
     return this.http.get('http://localhost:8080/simuladorsalarial/api/simulationfields/', extras);
   }
