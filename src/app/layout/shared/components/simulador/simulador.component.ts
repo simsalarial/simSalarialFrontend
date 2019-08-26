@@ -30,6 +30,8 @@ export class SimuladorComponent implements OnInit {
   profileForm: any;
   simForm: any;
 
+  sumForIrs: number;
+
   colaboratorId: number;
 
   private col: Colaborator;
@@ -298,7 +300,7 @@ export class SimuladorComponent implements OnInit {
     console.log(this.col);
     this.col.dependents = this.profileForm.value.dependents;
     this.col.account = this.currentAccount.currentAccount;
-    this.colaboratorservice.saveColaboratorInDbAndGetItsID(this.col).subscribe((colabRes) => {
+    this.colaboratorservice.saveColaboratorInDbAndGetItsID(this.col).subscribe((colabRes: any) => {
       Object.assign(this.col, colabRes);
       console.log(this.col);
     });
@@ -415,6 +417,7 @@ export class SimuladorComponent implements OnInit {
       }
     }
     this.simForm.value.IRSValue = this.tempTax;
+    this.changeDetectorRef.detectChanges();
     console.log(this.simForm.value);
   }
 
@@ -451,7 +454,6 @@ export class SimuladorComponent implements OnInit {
     }
 
     this.simForm.value.anualTotalCost = Number((this.simForm.value.anualTotalCost).toFixed(2));
-
 
     console.log(this.simForm.value.anualTotalCost);
     this.calculateWorkInsuranceValue();
@@ -531,14 +533,15 @@ export class SimuladorComponent implements OnInit {
   saveThisSim() {
 
 
-    Object.entries(this.simForm.value).forEach((element: any) => {
+    Object.entries(this.simForm.value).forEach(( element: any) => {
       console.log(element);
-      if (element[1].constructor === Array) {
+      if (Array.isArray(element[1])) {
         // tslint:disable-next-line: prefer-for-of
-        for (let i = 0; i < element[1].length; i++) {
-          console.log(element[1]);
-          this.saveSimulator.push({ name: element[1].name, value: element[1].value });
-        }
+        element[1].forEach(elemento => {
+          console.log(elemento);
+
+          this.saveSimulator.push({ name: elemento.name, value: elemento.value });
+        });
         // element[1].for((extra: SimFieldsData) => {
 
         // });
@@ -549,11 +552,18 @@ export class SimuladorComponent implements OnInit {
     console.log(this.saveSimulator);
     console.log(this.col);
     this.colaboratorId = this.col.id;
+
+    //Find index of specific object using findIndex method.
+    const objIndex = this.saveSimulator.findIndex((obj => obj.name === 'IRSValue'));
+
+    //Update object's name property.
+    this.saveSimulator[objIndex].value = this.tempTax;
+
     console.log(this.colaboratorId);
     this.dataService.postSimulation(this.saveSimulator, this.colaboratorId).subscribe(res => {
       console.log(res);
     })
-
+    this.saveSimulator = [];
     this.initializeForms();
     // this.ngOnInit();
     this.state = 'first';
