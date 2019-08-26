@@ -1,9 +1,8 @@
 import { Component, OnInit, Input, Output, EventEmitter, ViewChild, SimpleChanges, TemplateRef } from '@angular/core';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
-import { faSearch, faEuroSign, faPercentage, faUser, faCalculator } from '@fortawesome/free-solid-svg-icons';
+import { faSearch, faEuroSign, faPercentage, faUser, faCalculator, faBalanceScaleRight} from '@fortawesome/free-solid-svg-icons';
 import { DatatableComponent } from '@swimlane/ngx-datatable';
 import { AccountServiceService } from 'src/app/core';
-import { Colaborator } from 'src/app/core/models/colaborator';
 import { ReplaySubject } from 'rxjs';
 
 @Component({
@@ -22,6 +21,7 @@ export class SimListComponent implements OnInit {
   faEuroSign = faEuroSign;
   faPercentage = faPercentage;
   faCalculator = faCalculator;
+  faBalanceScaleRight = faBalanceScaleRight;
   faUser = faUser;
   public keys;
   dataSub = [];
@@ -33,6 +33,8 @@ export class SimListComponent implements OnInit {
   msg: string;
   public simByEmail$:  ReplaySubject<any> = new ReplaySubject();
   @ViewChild(DatatableComponent, { static: false }) table: DatatableComponent;
+  first2Date: any;
+  selectedSimulations: any;
 
   constructor(private modalService: BsModalService, private accountService:AccountServiceService) {
     this.keys = [
@@ -46,6 +48,7 @@ export class SimListComponent implements OnInit {
     ]
    this.simByEmail$ = this.accountService.simByEmail$;
    this.simByEmail$.subscribe( res => {
+    
       res.forEach( (element: any) => {
         //this.colaborators[0].simulations[0] = element.simulations;
         /* this.simFields.forEach((field: any) => {
@@ -55,6 +58,7 @@ export class SimListComponent implements OnInit {
 
           this.colaborators.push(filtered[0].value);
         }); */
+        
           element.simulations.forEach(simulation => {
             this.colaborator.name = element.name;
             this.colaborator.simulation = simulation.id;
@@ -71,6 +75,9 @@ export class SimListComponent implements OnInit {
     }
 
   ngOnInit() {
+    this.data = [];
+    this.selectedSimulations = [];
+    this.state = 'simList';
     //this.rows = this.temp;
     let email = this.accountService.getCurrentEmail();
     this.accountService.getAllSimulationsFromAccount(email);
@@ -82,7 +89,10 @@ export class SimListComponent implements OnInit {
     this.rows = changes.temp.currentValue;
   }
 
+  testing() {
+    console.log(this.first2Date);
 
+  }
   /* showConfirmModal(template: TemplateRef<any>, row) {
     console.log(row);
     this.simToDelete = row.email;
@@ -123,6 +133,18 @@ export class SimListComponent implements OnInit {
     //this.rows = temp;
     // Whenever the filter changes, always go back to the first page
     this.table.offset = 0;
+  }
+
+  clickRow(row) {
+    console.log(row);
+    //this.clickedRow.emit(row);
+    this.selectedSimulations.push(row);
+   
+  }
+
+  compareSims() {
+    console.log(this.selectedSimulations);
+    this.state = 'simDetail';
   }
 
 

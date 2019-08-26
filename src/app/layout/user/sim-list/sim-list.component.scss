@@ -31,7 +31,7 @@
           color: #FFF;
         }
         .datatable-body-cell {
-          text-align: center;
+          text-align: center !important;
           vertical-align: top;
         }
       }
@@ -94,4 +94,8 @@
     white-space: normal !important;
     text-align: center !important;
     vertical-align: middle !important;
+
+  }
+  :host ::ng-deep  .datatable-body-cell {
+    text-align: center !important;
   }

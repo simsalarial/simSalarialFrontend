@@ -10,10 +10,10 @@
                 aria-label="Username" aria-describedby="basic-addon1">
         </div>
         <select [(ngModel)]="selectedValue" class="custom-select mb-3 mt-3 col-3 offset-md-5">
-            <option value="5" selected>Visualização por página</option>
-            <option value="10">10</option>
-            <option value="20">20</option>
-            <option value="30">30</option>
+            <option value="6" selected>Visualização por página</option>
+            <option value="12">12</option>
+            <option value="24">24</option>
+            <option value="36">36</option>
         </select>
     </div>
 
@@ -39,34 +39,14 @@
         </ngx-datatable-column>
         <ngx-datatable-column>
             <ng-template let-column="column" ngx-datatable-header-template>
+            
             </ng-template>
             <ng-template let-row="row" ngx-datatable-cell-template>
-                <button class="btn" style="color: red" (click)="showConfirmModal(template, row)"><fa-icon [icon]="faTrashAlt"></fa-icon></button>
+                <button class="btn mr-3" style="color: red; float: right;" (click)="showConfirmModal(template, row)"><fa-icon [icon]="faTrashAlt"></fa-icon></button>
             </ng-template>
         </ngx-datatable-column>
     </ngx-datatable>
-    <!-- <div class="table-responsive">
-        <table class="table">
-            <thead>
-            <tr>
-                <th *ngFor="let col of header">
-                {{col}}
-                </th>
-            </tr>
-            </thead>
-            <tbody *ngIf="data">
-            <tr *ngFor="let row of data">
-            <td>
-                {{row.name}}
-                </td>
-                <td>
-                {{row.email}}
-                </td>
-                <td><button class="btn btn-outline-danger" (click)="showConfirmModal(template, row)">Apagar</button></td>
-            </tr>
-            </tbody>
-        </table>
-    </div> -->
+    
 </div>
 <ng-template #template>
     <div class="modal-header">

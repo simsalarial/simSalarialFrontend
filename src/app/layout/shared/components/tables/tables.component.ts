@@ -28,8 +28,9 @@ export class TablesComponent implements OnInit {
 
   constructor(private modalService: BsModalService, private accountService:AccountServiceService) { 
     this.keys = [
-      {prop: 'name'},
-      {prop: 'email'}
+      {prop: 'name', width: +100},
+      {prop: 'email', width: +100},
+      {prop: '', width: -200}
     ]
     }
   
