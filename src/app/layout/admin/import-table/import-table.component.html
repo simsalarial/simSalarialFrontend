@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container father">
   <div *ngIf="isLoading$ | async" class="d-flex vh-50">
     <div class="spinner-border text-primary m-auto" role="status">
       <span class="sr-only">Loading...</span>
@@ -11,7 +11,7 @@
             href="http://info.portaldasfinancas.gov.pt/pt/apoio_contribuinte/tabela_ret_doclib/Pages/default.aspx">Faça aqui download da tabela mais recente.</a>
         </div>
         <div *ngIf="!(isLoading$ | async)">
-          <div class="input-group my-input-group mt-2 mb-2" style="width: 131%">
+          <div class="input-group my-input-group mt-2 mb-2 son" style="width: 131%">
             <div class="input-group-prepend" (click)="importExcel()">
               <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
             </div>
