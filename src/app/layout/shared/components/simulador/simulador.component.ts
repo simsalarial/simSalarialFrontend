@@ -2,12 +2,14 @@ import { Extras } from './../../../../core/models/extras';
 import { ColaboratorServiceService } from './../../../../core/services/colaborator-service/colaborator-service.service';
 import { FoodSubsidy } from './../../../../core/models/foodSubsidy';
 import { WorkInsurance } from './../../../../core/models/workInsurance';
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, ViewChild, ElementRef, ViewChildren } from '@angular/core';
 import { Colaborator } from 'src/app/core/models/colaborator';
 import { Simulation } from 'src/app/core/models/simulation';
 import { FormBuilder, Validators, FormGroup, FormArray } from '@angular/forms';
 import { getLocaleFirstDayOfWeek } from '@angular/common';
 import * as jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
+import * as rasterizeHTML from 'rasterizehtml';
 import { ExcelServiceService } from 'src/app/core/services/excel-service/excel-service.service';
 import { DataService } from 'src/app/core/services/data-service/data.service';
 import { Taxation } from 'src/app/core/models/taxation';
@@ -17,6 +19,7 @@ import { SliderComponent } from '../slider/slider.component';
 import { Margin } from 'src/app/core/models/margin';
 import { AccountServiceService } from 'src/app/core';
 import { element } from 'protractor';
+import { Content } from '@angular/compiler/src/render3/r3_ast';
 
 
 @Component({
@@ -29,7 +32,6 @@ export class SimuladorComponent implements OnInit {
   sim: Simulation;
   profileForm: any;
   simForm: any;
-
 
   colaboratorId: number;
 
@@ -101,7 +103,7 @@ export class SimuladorComponent implements OnInit {
     private dataService: DataService,
     private colaboratorservice: ColaboratorServiceService,
     private currentAccount: AccountServiceService,
-    protected changeDetectorRef: ChangeDetectorRef
+    protected changeDetectorRef: ChangeDetectorRef,
   ) {
   }
 
@@ -532,7 +534,7 @@ export class SimuladorComponent implements OnInit {
   saveThisSim() {
 
 
-    Object.entries(this.simForm.value).forEach(( element: any) => {
+    Object.entries(this.simForm.value).forEach((element: any) => {
       console.log(element);
       if (Array.isArray(element[1])) {
         // tslint:disable-next-line: prefer-for-of
@@ -628,25 +630,25 @@ export class SimuladorComponent implements OnInit {
     doc.text(30, 67, "Total de Abonos: ");
     doc.setFontSize(12);
     doc.text(30, 77, "Salário Base: ");
-    doc.text(165, 77, ""+ bSalary);
+    doc.text(165, 77, "" + bSalary);
     doc.text(180, 77, " €");
     doc.text(30, 87, "Subsidio de Alimentacao: ");
-    doc.text(165, 87, ""+ fSubsidy);
+    doc.text(165, 87, "" + fSubsidy);
     doc.text(180, 87, " €");
     doc.text(30, 97, "Seguro de Trabalho: ");
-    doc.text(165, 97, ""+ wInsurance);
+    doc.text(165, 97, "" + wInsurance);
     doc.text(180, 97, " €");
     doc.text(30, 107, "Seguro de Saúde: ");
-    doc.text(165, 107, ""+ hInsurance);
+    doc.text(165, 107, "" + hInsurance);
     doc.text(180, 107, " €");
     doc.text(30, 117, "Prémios: ");
-    doc.text(165, 117, ""+ oBonus);
+    doc.text(165, 117, "" + oBonus);
     doc.text(180, 117, " €");
     doc.text(30, 217, "Salário líquido com Duodécimos: ");
-    doc.text(165, 217, ""+ netSalaryWithD);
+    doc.text(165, 217, "" + netSalaryWithD);
     doc.text(180, 217, " €");
     doc.text(30, 227, "Salário líquido sem Duodécimos: ");
-    doc.text(165, 227, ""+ netSalaryWithoutD);
+    doc.text(165, 227, "" + netSalaryWithoutD);
     doc.text(180, 227, " €");
     doc.setFontSize(14);
     doc.text(30, 147, "Extras: ");
@@ -661,8 +663,24 @@ export class SimuladorComponent implements OnInit {
     doc.setFontSize(8);
     doc.text(150, 270, "Simulation by " + salesPerson);
 
-    doc.save('simulacão.pdf');
+    console.log(consultant);
+    console.log(salesPerson);
+
+    doc.save('Simulacão ' + consultant + '.pdf');
 
   }
+
+  exportPDFforComercial() {
+
+
+  }
+
+
+  /*  var pdf = new jsPDF('p', 'pt', 'a4');
+    pdf.addHTML(document.body, function(){
+      var string = pdf.output('datauristring')
+      $('#simtopdf').attr('src', string);
+    }) */
+
 
 }

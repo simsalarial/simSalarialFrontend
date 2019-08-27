@@ -69,7 +69,7 @@
 <div *ngIf="state == 'second'" class="row custom-row">
   <div class="col-sm-12 container">
     <fieldset>
-      <div class="card mt-5">
+      <div class="card mt-5" id="simtopdf">
         <div class="card-header cardHead">
           <h6>SIMULAÇÃO | CÁLCULO | COLABORADOR: {{col.name}}</h6>
         </div>
@@ -364,9 +364,9 @@
                 <button type="button" class="btn  btn-blue" (click)="reset()">Reset</button>
                 <button type="button" class="btn  btn-blue ml-1 dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Exportar PDF</button>
                 <div class="dropdown-menu">
-                    <a class="dropdown-item" (click)="exportToPDF()" href="">Colaborador</a>
+                    <a class="dropdown-item" (click)="exportToPDF()" style="cursor: pointer">Colaborador</a>
                     <div role="separator" class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="">Comercial</a>
+                    <a class="dropdown-item" style="cursor: pointer" (click)="exportPDFforComercial()">Comercial</a>
                   </div>
                 <button type="button" class="btn btn-mycolor ml-1" (click)="saveThisSim()">Guardar</button>
               </div>
