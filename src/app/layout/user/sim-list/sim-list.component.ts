@@ -196,6 +196,7 @@ export class SimListComponent implements OnInit {
   compareSims() {
     console.log(this.selectedSimulations);
     this.state = 'simDetail';
+    
   }
 
   goBack() {
