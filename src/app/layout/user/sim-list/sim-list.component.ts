@@ -5,7 +5,6 @@ import { faSearch, faEuroSign, faPercentage, faUser, faCalculator, faBalanceScal
 import { DatatableComponent } from '@swimlane/ngx-datatable';
 import { AccountServiceService } from 'src/app/core';
 import { ReplaySubject } from 'rxjs';
-import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 import { defineLocale } from 'ngx-bootstrap/chronos';
 import { ptBrLocale } from 'ngx-bootstrap/locale';
 import * as moment from 'moment';
@@ -19,7 +18,6 @@ import * as moment from 'moment';
 })
 export class SimListComponent implements OnInit {
   @Input() header: any;
-  //@Input() temp: any[];
   @Output() clickedRow = new EventEmitter();
   //@Output() onDelete = new EventEmitter();
   //simToDelete;
@@ -176,11 +174,11 @@ export class SimListComponent implements OnInit {
     const val = event.target.value.toLowerCase();
     // filter data
     // tslint:disable-next-line: only-arrow-functions
-    this.rows = this.rows.filter( function(d) {
+    this.temp = this.data.filter( function(d) {
       return d.name.toLowerCase().indexOf(val) !== -1 || !val;
     });
     // update the rows
-    //this.rows = temp;
+    this.rows = this.temp;
     // Whenever the filter changes, always go back to the first page
     this.table.offset = 0;
   }

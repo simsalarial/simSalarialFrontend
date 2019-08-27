@@ -14,9 +14,10 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { NewAccountComponent } from './account-manag/new-account/new-account.component';
 import { ModalModule } from 'ngx-bootstrap/modal';
+import { SimListComponent } from './sim-list/sim-list.component';
 
 @NgModule({
-  declarations: [AdminComponent, AccountManagComponent, SimManagComponent, ImportTableComponent, NewAccountComponent],
+  declarations: [AdminComponent, AccountManagComponent, SimManagComponent, ImportTableComponent, NewAccountComponent, SimListComponent],
   imports: [
     CommonModule,
     FormsModule,
