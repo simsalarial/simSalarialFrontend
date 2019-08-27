@@ -45,8 +45,9 @@ export class SimListComponent implements OnInit {
 
   // DATE VARIABLES //
   bothDates: any;
-  selectedSimulations: any;
   // DATE VARIABLES //
+  selectedSimulations: any;
+
 
   constructor(private modalService: BsModalService, private accountService: AccountServiceService, private localeService: BsLocaleService) {
 
@@ -59,13 +60,13 @@ export class SimListComponent implements OnInit {
       {prop: 'netSalaryWithoutDuo'},
       {prop: 'netSalaryWithDuo'}
     ]
-   this.simByEmail$ = this.accountService.simByEmail$;
-   this.simByEmail$.subscribe( res => {
+    this.simByEmail$ = this.accountService.simByEmail$;
+    this.simByEmail$.subscribe( res => {
     console.log(res);
 
-      res.forEach( (element: any) => {
+    res.forEach( (element: any) => {
 
-        if(element.simulations.length > 0) {
+        if (element.simulations.length > 0) {
 
           element.simulations.forEach(simulation => {
             this.colaborator.name = element.name;
@@ -79,9 +80,9 @@ export class SimListComponent implements OnInit {
         }
 
         });
-        console.log(this.data);
-        this.rows = this.data;
-      })
+    console.log(this.data);
+    this.rows = this.data;
+      });
     }
 
 
@@ -89,7 +90,7 @@ export class SimListComponent implements OnInit {
     this.data = [];
     this.selectedSimulations = [];
     this.state = 'simList';
-    //this.rows = this.temp;
+    // this.rows = this.temp;
     let email = this.accountService.getCurrentEmail();
     this.accountService.getAllSimulationsFromAccount(email);
     defineLocale('pt-br', ptBrLocale);
@@ -167,7 +168,8 @@ export class SimListComponent implements OnInit {
   search(event) {
     const val = event.target.value.toLowerCase();
     // filter data
-    this.rows = this.rows.filter(function(d) {
+    // tslint:disable-next-line: only-arrow-functions
+    this.rows = this.rows.filter( function(d) {
       return d.name.toLowerCase().indexOf(val) !== -1 || !val;
     });
     // update the rows
