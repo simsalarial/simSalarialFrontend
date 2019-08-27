@@ -48,8 +48,11 @@ export class SimListComponent implements OnInit {
   // DATE VARIABLES //
   selectedSimulations: any;
 
+  tempMail = this.accountService.getCurrentEmail();
+
 
   constructor(private modalService: BsModalService, private accountService: AccountServiceService, private localeService: BsLocaleService) {
+
 
     this.keys = [
       {prop: 'name'},
@@ -114,7 +117,7 @@ export class SimListComponent implements OnInit {
     let y = moment(x).format('DD MM YYYY');
     console.log(y);
 
-    const firstDate = moment(this.bothDates[0]).valueOf();
+    let firstDate = moment(this.bothDates[0]).valueOf();
     let secondDate = moment(this.bothDates[1]).valueOf();
     console.log(firstDate);
     console.log(secondDate);
@@ -122,11 +125,15 @@ export class SimListComponent implements OnInit {
 
 
     if (firstDate === secondDate) {
-      secondDate = firstDate + 86400000;
+      secondDate = firstDate  + 86400000;
+      firstDate = firstDate - 2000000;
 
     }
 
-    this.accountService.getAllSimulationsByDate(firstDate, secondDate).subscribe((res => {
+    this.accountService.getAllSimulationsByDate(firstDate, secondDate, this.tempMail).subscribe((res => {
+      console.log(this.tempMail);
+      console.log(firstDate);
+      console.log(secondDate);
       console.log(res);
     }));
 

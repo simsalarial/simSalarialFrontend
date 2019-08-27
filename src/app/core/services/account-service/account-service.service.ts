@@ -47,7 +47,7 @@ export class AccountServiceService {
   }
 
   public deleteAccount(email) {
-    return this.http.delete('http://localhost:8080/simuladorsalarial/api/accounts/'+ email, {responseType: 'text'});
+    return this.http.delete('http://localhost:8080/simuladorsalarial/api/accounts/' + email, {responseType: 'text'});
   }
 
   public login(account: Account): Observable<object> {
@@ -70,7 +70,7 @@ export class AccountServiceService {
     });
   }
 
-  public getAllSimulationsByDate(firstDate, secondDate) {
-    return this.http.get('http://localhost:8080/simuladorsalarial/api/simulations/allSimsByDate/' + firstDate + '/' + secondDate);
+  public getAllSimulationsByDate(firstDate, secondDate, email) {
+    return this.http.get('http://localhost:8080/simuladorsalarial/api/accounts/accWithFilterSimsBetweenDates?email=' + email + '&startDate=' + firstDate + '&endDate=' + secondDate);
   }
 }
