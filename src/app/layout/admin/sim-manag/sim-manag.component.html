@@ -1,6 +1,6 @@
 <!-- INICIO DA PÁGINA -->
-<div class="container">
-  <div class="card mt-5">
+<div class="container-fluid pr-0 pl-0">
+  <div class="card mt-5 mb-3">
     <div class="card-header cardHead">
       <h6>GESTÃO DO SIMULADOR</h6>
     </div>
@@ -37,7 +37,7 @@
               </div>
               <!-- FIM MARGEM MÍNIMA -->
               <div class="col-3 offset-9 pr-0">
-                <a style="cursor: pointer; float: right; margin-top: 71%;" class="btn btn-mycolor"
+                <a style="cursor: pointer; float: right; margin-top: 59%;" class="btn btn-mycolor"
                   (click)="newMarginValues()">Guardar</a>
               </div>
             </div>
@@ -171,9 +171,9 @@
                   </div>
                 </ng-template>
               </div>
-              <div class="row" style="margin-top: 15%">
+              <div class="row" style="margin-top: 13%">
                   <div class="col-9 pr-0" style="text-align: right">
-                    <a style="cursor: pointer;position: relative; left: 5%" class="btn btn-blue" (click)="viewExtra(template)">Ver
+                    <a style="cursor: pointer;position: relative; left: 10%" class="btn btn-blue" (click)="viewExtra(template)">Ver
                       Extras</a>
                   </div>
                   <div class="col-3 pl-0" style="text-align: right">
@@ -263,7 +263,7 @@
               <!-- INICIO INPUT FOR TRIBUTACAO AUTONOMA -->
               <div class="input-group son mt-3">
                 <div class="input-group-prepend">
-                  <span class="input-group-text transparentBg">Tributação autónoma</span>
+                  <span class="input-group-text transparentBg">Tributação Autónoma</span>
                 </div>
                 <input [(ngModel)]="autonomousTributation" class="inputAlignRigth form-control grandSon"
                   type="number" />
@@ -272,7 +272,7 @@
                 </div>
               </div>
               <div class="col-3 offset-9 pr-0">
-                <a style="cursor: pointer; float: right; margin-top: 35%;" class="btn btn-mycolor"
+                <a style="cursor: pointer; float: right; margin-top: 28%;" class="btn btn-mycolor"
                   (click)="newTributationValues()">Guardar</a>
               </div>
             </div>

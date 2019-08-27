@@ -39,29 +39,31 @@
         </ngx-datatable-column>
         <ngx-datatable-column>
             <ng-template let-column="column" ngx-datatable-header-template>
-            
+
             </ng-template>
             <ng-template let-row="row" ngx-datatable-cell-template>
-                <button class="btn mr-3" style="color: red; float: right;" (click)="showConfirmModal(template, row)"><fa-icon [icon]="faTrashAlt"></fa-icon></button>
+                <button class="btn mr-3" style="color: red; float: right;" (click)="showConfirmModal(template, row)">
+                    <fa-icon [icon]="faTrashAlt"></fa-icon>
+                </button>
             </ng-template>
         </ngx-datatable-column>
     </ngx-datatable>
-    
+
 </div>
 <ng-template #template>
-    <div class="modal-header">
+    <div class="modal-header cardHead">
         <h4 class="modal-title pull-left">Apagar conta</h4>
-        <button type="button" class="close pull-right" aria-label="Close" (click)="onCloseModal()">
+        <button type="button" style="color: white" class="close pull-right" aria-label="Close" (click)="onCloseModal()">
             <span aria-hidden="true">&times;</span>
         </button>
     </div>
     <div class="modal-body">
         <p *ngIf="state == 'confirm'">Conta apagada com sucesso!</p>
-        <p *ngIf="state == 'deleteAccount'">Tem a certeza que quer eliminar esta conta {{emailToDelete}}?</p>
-        <div class="modal-footer">
-            <div *ngIf="state == 'deleteAccount'" class="form-group">
-                <button type="button" class="btn btn-dark" (click)="cancel()">Cancelar</button>
-                <button type="button" class="btn btn-secondary ml-1" (click)="delete()">Apagar</button>
+        <p *ngIf="state == 'deleteAccount'">Tem a certeza que quer eliminar a conta: {{emailToDelete}}?</p>
+        <div class="modal-footer p-0 pt-3">
+            <div *ngIf="state == 'deleteAccount'">
+                <button type="button" class="btn btn-blue" (click)="cancel()">Cancelar</button>
+                <button type="button" class="btn btn-mycolor ml-1" (click)="delete()">Apagar</button>
             </div>
         </div>
     </div>
