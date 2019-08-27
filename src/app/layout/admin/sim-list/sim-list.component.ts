@@ -28,7 +28,7 @@ faUser = faUser;
 
 state: string;
 selectedSimulations: any;
-
+selectedValue = 6;
 public keys;
 rows = [];
 temp = [];
@@ -46,14 +46,13 @@ data = [];
 
   constructor( private accountService: AccountServiceService, private localeService: BsLocaleService, private simulationService: SimulationService) {
     this.keys = [
+      {prop: 'data'},
       {prop: 'user'},
       {prop: 'name'},
       {prop: 'simulation'},
       {prop: 'marginPercentage'},
       {prop: 'anualRate'},
-      {prop: 'anualTotalCost'},
-      {prop: 'netSalaryWithoutDuo'},
-      {prop: 'netSalaryWithDuo'}
+      {prop: 'anualTotalCost'}
     ]
     this.allSims$ = this.simulationService.allSims$;
     this.allSims$.subscribe( res => {
@@ -66,9 +65,10 @@ data = [];
             
               if (col.simulations.length > 0) {
                 col.simulations.forEach(simulation => {
-                  this.account.user = element.email;
+                  this.account.user = element.name;
                   this.account.name = col.name;
                   this.account.simulation = simulation.id;
+                  this.account.date = moment(simulation.date).format('DD-MM-YYYY');
                     simulation.simFieldsData.forEach(field => {
                       this.account[field.name] = field.value;
                     });
@@ -91,9 +91,6 @@ data = [];
     this.selectedSimulations = [];
     this.simulationService.getAllSimulations();
 
-    /* let email = this.accountService.getCurrentEmail();
-    this.accountService.getAllSimulationsFromAccount(email); */
-
     defineLocale('pt-br', ptBrLocale);
     this.localeService.use('pt-br');
   }
@@ -103,7 +100,7 @@ data = [];
     // filter data
     // tslint:disable-next-line: only-arrow-functions
     this.temp = this.data.filter( function(d) {
-      return d.name.toLowerCase().indexOf(val) !== -1 || !val;
+      return d.user.toLowerCase().indexOf(val) !== -1 || !val;
     });
     // update the rows
     this.rows = this.temp;
@@ -134,6 +131,13 @@ data = [];
       firstDate = firstDate - 2000000;
 
     }
+
+    this.accountService.getAllSimulationsByDate(firstDate, secondDate, this.tempMail).subscribe((res => {
+      console.log(this.tempMail);
+      console.log(firstDate);
+      console.log(secondDate);
+      console.log(res);
+    }))
   }
 
 
@@ -147,5 +151,10 @@ data = [];
   compareSims() {
     console.log(this.selectedSimulations);
     this.state = 'simDetail';
+  }
+  
+  goBack() {
+    this.selectedSimulations = [];
+    this.state = 'simList';
   }
 }

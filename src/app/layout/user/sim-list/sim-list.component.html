@@ -7,7 +7,7 @@
                         <fa-icon [icon]="faSearch"></fa-icon>
                     </span>
                 </div>
-                <input (keyup)="search($event)" type="text" class="form-control" placeholder="Filtrar por nome" >
+                <input (keyup)="search($event)" type="text" class="form-control" placeholder="Filtrar por nome">
             </div>
             <!-- DATA -->
             <div class="col-4 input-group mb-3 mt-3 pl-0">
@@ -17,22 +17,23 @@
                     </span>
                 </div>
                 <input type="text" placeholder="Escolha uma data" class="form-control" bsDaterangepicker
-                    [bsConfig]="{ isAnimated: true,  containerClass: 'theme-dark-blue', adaptivePosition: true }" [(ngModel)]="bothDates">
+                    [bsConfig]="{ isAnimated: true,  containerClass: 'theme-dark-blue', adaptivePosition: true }"
+                    [(ngModel)]="bothDates">
                 <div class="input-group-append  transparentBg">
                     <button class="btn btn-mycolor" (click)="filterByDate()">Filtrar</button>
                 </div>
             </div>
             <!-- DATA -->
             <select [(ngModel)]="selectedValue" class="custom-select mb-3 mt-3 col-4">
-                <option value="6" selected>Visualização por página</option>
-                <option value="12">12</option>
-                <option value="24">24</option>
-                <option value="36">36</option>
+                <option value="6">6 visualizações por página</option>
+                <option value="12">12 visualizações por página</option>
+                <option value="24">24 visualizações por página</option>
+                <option value="36">36 visualizações por página</option>
             </select>
         </div>
     </div>
     <!-- DATA -->
-  <!--   <div class="container-fluid p-2">
+    <!--   <div class="container-fluid p-2">
         <div class="col-4 input-group p-0">
             <div class="input-group-prepend">
                 <span class="input-group-text transparentBg" id="basic-addon1">
@@ -52,6 +53,16 @@
         <ngx-datatable class="bootstrap" [rows]="rows" [loadingIndicator]="loadingIndicator" [columns]="keys"
             [columnMode]="'force'" [headerHeight]="40" [summaryRow]="true" [summaryPosition]="'bottom'"
             [footerHeight]="40" [limit]="selectedValue" [rowHeight]="'auto'" [reorderable]="reorderable">
+            <ngx-datatable-column>
+                <ng-template let-column="column" ngx-datatable-header-template>
+                    <p>
+                        <fa-icon [icon]="faCalendarAlt"></fa-icon>
+                    </p>Data
+                </ng-template>
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                    {{row.date}}
+                </ng-template>
+            </ngx-datatable-column>
             <ngx-datatable-column>
                 <ng-template let-column="column" ngx-datatable-header-template>
                     <p>
@@ -141,6 +152,12 @@
 
     </div>
 </div>
-<div *ngIf="state == 'simDetail'">
+<div class="container-fluid mt-3" *ngIf="state == 'simDetail'">
+    <div class="row" style="float: right">
+        <button (click)="goBack()" type="button" class="btn btn-mycolor" style="width: 303px">Listar Simulações</button>
+    </div>
+    <div class="row" style="width: 100%">
         <app-compare-sim [simulations]="selectedSimulations"></app-compare-sim>
+    </div>
+
 </div>
