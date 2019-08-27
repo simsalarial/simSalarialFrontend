@@ -131,7 +131,8 @@
                 <ng-template #template>
                   <div class="modal-header cardHead">
                     <h4 class="modal-title pull-left">Extras</h4>
-                    <button type="button" class="close pull-right" aria-label="Close" (click)="onCloseModal()" style="color: white">
+                    <button type="button" class="close pull-right" aria-label="Close" (click)="onCloseModal()"
+                      style="color: white">
                       <span aria-hidden="true">&times;</span>
                     </button>
                   </div>
@@ -139,19 +140,18 @@
                     <div class="container mb-3">
                       <ngx-datatable class="bootstrap" [rows]="rows" [loadingIndicator]="loadingIndicator"
                         [columns]="keysTA" [columnMode]="'force'" [headerHeight]="40" [summaryRow]="true"
-                        [summaryPosition]="'bottom'" [footerHeight]="40" [limit]="5" [rowHeight]="'auto'"
-                        [reorderable]="reorderable">
+                        [summaryPosition]="'bottom'" [footerHeight]="40" [limit]="5" [rowHeight]="'auto'">
                         <ngx-datatable-column>
                           <ng-template let-column="column" ngx-datatable-header-template>
-                            Extras
+                            <span class="mobile-hidden">Extras</span>
                           </ng-template>
-                          <ng-template let-row="row" ngx-datatable-cell-template>
+                          <ng-template let-value="value" let-row="row" ngx-datatable-cell-template>
                             {{ row.name }}
                           </ng-template>
                         </ngx-datatable-column>
                         <ngx-datatable-column>
                           <ng-template let-column="column" ngx-datatable-header-template>
-                            Tributação autónoma
+                            Tributação Autónoma
                           </ng-template>
                           <ng-template let-row="row" ngx-datatable-cell-template>
                             {{ row.tA }}
@@ -161,7 +161,8 @@
                           <ng-template let-column="column" ngx-datatable-header-template>
                           </ng-template>
                           <ng-template let-row="row" ngx-datatable-cell-template>
-                            <button class="btn btn-link btn-sm" style="color: red" (click)="deleteExtra(row.name)">
+                            <button class="btn btn-link btn-sm" style="color: red; float: right"
+                              (click)="deleteExtra(row.name)">
                               <fa-icon [icon]="faTrashAlt"></fa-icon>
                             </button>
                           </ng-template>
@@ -172,15 +173,15 @@
                 </ng-template>
               </div>
               <div class="row" style="margin-top: 13%">
-                  <div class="col-9 pr-0" style="text-align: right">
-                    <a style="cursor: pointer;position: relative; left: 10%" class="btn btn-blue" (click)="viewExtra(template)">Ver
-                      Extras</a>
-                  </div>
-                  <div class="col-3 pl-0" style="text-align: right">
-                    <a style="cursor: pointer;" class="btn btn-mycolor"
-                      (click)="newExtra(template)">Guardar</a>
-                  </div>
+                <div class="col-9 pr-0" style="text-align: right">
+                  <a style="cursor: pointer;position: relative; left: 10%" class="btn btn-blue"
+                    (click)="viewExtra(template)">Ver
+                    Extras</a>
                 </div>
+                <div class="col-3 pl-0" style="text-align: right">
+                  <a style="cursor: pointer;" class="btn btn-mycolor" (click)="newExtra(template)">Guardar</a>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -286,7 +287,7 @@
               Importar Tabela de IRS
             </div>
             <div class="card-body">
-                <app-import-table></app-import-table>
+              <app-import-table></app-import-table>
             </div>
           </div>
         </div>

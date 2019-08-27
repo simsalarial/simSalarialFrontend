@@ -24,7 +24,7 @@ export class TablesComponent implements OnInit {
   //temp = [];
   rows = [];
   @ViewChild(DatatableComponent, { static: false }) table: DatatableComponent;
-  selectedValue="5";
+  selectedValue=6;
 
   constructor(private modalService: BsModalService, private accountService:AccountServiceService) { 
     this.keys = [

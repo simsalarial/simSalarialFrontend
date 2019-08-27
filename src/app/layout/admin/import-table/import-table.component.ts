@@ -27,6 +27,7 @@ export class ImportTableComponent implements OnInit {
   select: String;
   state: string;
   fileName: string;
+  showSave = true;
 
   constructor(
     private excelService: ExcelServiceService,
@@ -61,6 +62,8 @@ export class ImportTableComponent implements OnInit {
     this.state = 'import';
     localStorage.setItem('IRStable', this.file.name);
     this.fileName = this.file.name;
+
+    this.showSave = false;
   }
 
   onCloseModal() { 
@@ -73,6 +76,7 @@ export class ImportTableComponent implements OnInit {
 
   importExcel() {
     this.select = "botao";
+    this.showSave = true;
     this.isLoading$.next(true);
     this.excelService.importExcelFile(this.file).subscribe(
       (response: any[]): void => {
