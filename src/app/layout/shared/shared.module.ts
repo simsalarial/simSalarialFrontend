@@ -11,10 +11,12 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { SliderComponent } from './components/slider/slider.component';
 import { Ng5SliderModule } from 'ng5-slider';
 import { ShowHidePasswordModule } from 'ngx-show-hide-password';
+import { SimDetailComponent } from './components/sim-detail/sim-detail.component';
+import { CompareSimComponent } from './components/compare-sim/compare-sim.component';
 
 
 @NgModule({
-  declarations: [HeaderComponent, SimuladorComponent, TablesComponent, FieldTaxComponent, SliderComponent],
+  declarations: [HeaderComponent, SimuladorComponent, TablesComponent, FieldTaxComponent, SliderComponent, SimDetailComponent, CompareSimComponent],
   imports: [
     CommonModule,
     RouterModule,
@@ -30,7 +32,9 @@ import { ShowHidePasswordModule } from 'ngx-show-hide-password';
     FieldTaxComponent,
     TablesComponent,
     SliderComponent,
-    SimuladorComponent,
+    SimuladorComponent, 
+    SimDetailComponent, 
+    CompareSimComponent
 
   ]
 })

@@ -1,4 +1,5 @@
-<!--     <div class="container-fluid p-2">
+   <div  *ngIf="state == 'simList'">
+    <div class="container-fluid p-2">
         <div class="row">
             <div class="input-group mb-3 mt-3 col-4">
                 <div class="input-group-prepend">
@@ -9,7 +10,7 @@
                 <input (keyup)="search($event)" type="text" class="form-control" placeholder="Filtrar por nome" >
             </div>
            
-            <div class="col-4 input-group mb-3 mt-3 pl-0">
+            <!-- <div class="col-4 input-group mb-3 mt-3 pl-0">
                 <div class="input-group-prepend">
                     <span class="input-group-text transparentBg" id="basic-addon1">
                         <fa-icon [icon]="faCalendarAlt"></fa-icon>
@@ -20,7 +21,7 @@
                 <div class="input-group-append  transparentBg">
                     <button class="btn btn-mycolor" (click)="filterByDate()">Filtrar</button>
                 </div>
-            </div>
+            </div> -->
 
             <select [(ngModel)]="selectedValue" class="custom-select mb-3 mt-3 col-4">
                 <option value="6" selected>Visualização por página</option>
@@ -37,7 +38,7 @@
             <ngx-datatable-column>
                 <ng-template let-column="column" ngx-datatable-header-template>
                     <p>
-                        <fa-icon [icon]="faUser"></fa-icon>
+                        <fa-icon [icon]="faUsers"></fa-icon>
                     </p>Comercial
                 </ng-template>
                 <ng-template let-row="row" ngx-datatable-cell-template>
@@ -133,5 +134,9 @@
 
     </div>
 </div>
+   </div>
+  
 
- -->
+<div *ngIf="state == 'simDetail'">
+    <app-compare-sim [simulations]="selectedSimulations" style="zoom: 70%"></app-compare-sim>
+</div>
