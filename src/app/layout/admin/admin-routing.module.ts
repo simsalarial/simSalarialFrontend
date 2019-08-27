@@ -5,6 +5,7 @@ import { SimuladorComponent } from '../shared/components/simulador/simulador.com
 import { AccountManagComponent } from './account-manag/account-manag.component';
 import { SimManagComponent } from './sim-manag/sim-manag.component';
 import { ImportTableComponent } from './import-table/import-table.component';
+import { SimListComponent } from './sim-list/sim-list.component';
 
 const routes: Routes = [
   {
@@ -15,6 +16,7 @@ const routes: Routes = [
       {path: "gestaodecontas", component: AccountManagComponent},
       {path: "gestaosimulador", component: SimManagComponent},
       {path: "importarIRS", component: ImportTableComponent},
+      {path: "listarsimulacoes", component: SimListComponent},
       {path: "", redirectTo: "gestaodecontas", pathMatch: "full"}
     ]
   }
