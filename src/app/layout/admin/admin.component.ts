@@ -3,7 +3,7 @@ import { FoodSubsidy } from './../../core/models/foodSubsidy';
 import { DataService } from './../../core/services/data-service/data.service';
 import { Component, OnInit } from '@angular/core';
 import { AccountServiceService } from 'src/app/core/services';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { faUsers, faCalculator, faTasks, faTable, faClipboardList } from '@fortawesome/free-solid-svg-icons';
 import { Margin } from 'src/app/core/models/margin';
 import { Taxation } from 'src/app/core/models/taxation';
@@ -46,8 +46,10 @@ export class AdminComponent implements OnInit {
   constructor(
     private accountApi: AccountServiceService,
     private readonly router: Router,
-    private simulationService: SimulationService
-  ) { }
+    private simulationService: SimulationService,
+    route: ActivatedRoute
+  ) { 
+  }
 
   ngOnInit() {
     this.role = this.accountApi.getAccountRole();

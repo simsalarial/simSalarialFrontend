@@ -26,7 +26,7 @@ export class SimulationService {
   marginValues$ = new ReplaySubject<Margin[]>();
   taxation$ = new ReplaySubject<Taxation[]>();
   extras$ = new ReplaySubject<Extras[]>();
-
+  public allSims$:  ReplaySubject<any> = new ReplaySubject();
 
   constructor(
     private dataService: DataService,
@@ -36,6 +36,13 @@ export class SimulationService {
   getSimulationsByPerson(): Observable<SimulationByPerson[]> {
     return this.http.get<SimulationByPerson[]>("http://localhost:8080/simuladorsalarial/api/simulations");
 
+  }
+
+  getAllSimulations() {
+    return this.http.get('http://localhost:8080/simuladorsalarial/api/accounts/allSimsForAccounts', {responseType: "json"}).subscribe((res: any) => {
+      console.log(res);
+      this.allSims$.next(res);
+   });
   }
 
   getSimulationById(id) {

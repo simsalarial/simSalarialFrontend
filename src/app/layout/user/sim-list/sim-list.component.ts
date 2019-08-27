@@ -45,6 +45,7 @@ export class SimListComponent implements OnInit {
   bothDates: any;
   // DATE VARIABLES //
   selectedSimulations: any;
+  selectedValue = 6;
 
   tempMail = this.accountService.getCurrentEmail();
 
@@ -53,6 +54,7 @@ export class SimListComponent implements OnInit {
 
 
     this.keys = [
+      {prop: 'date'},
       {prop: 'name'},
       {prop: 'simulation'},
       {prop: 'marginPercentage'},
@@ -72,6 +74,7 @@ export class SimListComponent implements OnInit {
           element.simulations.forEach(simulation => {
             this.colaborator.name = element.name;
             this.colaborator.simulation = simulation.id;
+            this.colaborator.date = moment(simulation.date).format('DD-MM-YYYY');
             simulation.simFieldsData.forEach(field => {
               this.colaborator[field.name] = field.value;
             });
@@ -193,6 +196,11 @@ export class SimListComponent implements OnInit {
   compareSims() {
     console.log(this.selectedSimulations);
     this.state = 'simDetail';
+  }
+
+  goBack() {
+    this.selectedSimulations = [];
+    this.state = 'simList';
   }
 
 

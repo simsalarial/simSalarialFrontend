@@ -1,11 +1,13 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Input, Output } from '@angular/core';
 import { AccountServiceService } from 'src/app/core';
 import { BsLocaleService } from 'ngx-bootstrap/datepicker';
-import { faSearch, faEuroSign, faPercentage, faCalculator, faCalendarAlt, faBalanceScaleRight, faUser } from '@fortawesome/free-solid-svg-icons';
+import { faSearch, faEuroSign, faPercentage, faCalculator, faCalendarAlt, faBalanceScaleRight, faUser, faUsers } from '@fortawesome/free-solid-svg-icons';
 import { DatatableComponent } from '@swimlane/ngx-datatable';
 import { defineLocale } from 'ngx-bootstrap/chronos';
 import { ptBrLocale } from 'ngx-bootstrap/locale';
 import * as moment from 'moment';
+import { SimulationService } from 'src/app/core/services/simulation-data/simulation.service';
+import { ReplaySubject } from 'rxjs';
 
 @Component({
   selector: 'app-sim-list',
@@ -13,9 +15,10 @@ import * as moment from 'moment';
   styleUrls: ['./sim-list.component.scss']
 })
 export class SimListComponent implements OnInit {
-public keys;
-
+@Input() simulation: any;
+@Output() colNumber = 'col-10';
 faSearch = faSearch;
+faUsers = faUsers;
 faEuroSign = faEuroSign;
 faPercentage = faPercentage;
 faCalculator = faCalculator;
@@ -23,38 +26,86 @@ faCalendarAlt = faCalendarAlt;
 faBalanceScaleRight = faBalanceScaleRight;
 faUser = faUser;
 
+state: string;
+selectedSimulations: any;
+selectedValue = 6;
+public keys;
+rows = [];
+temp = [];
 data = [];
  // DATE VARIABLES //
  bothDates: any;
  // DATE VARIABLES //
- selectedSimulations: any;
 
  tempMail = this.accountService.getCurrentEmail();
 
+ public allSims$:  ReplaySubject<any> = new ReplaySubject();
+ account: any = {};
 @ViewChild(DatatableComponent, { static: false }) table: DatatableComponent;
 
 
-  constructor( private accountService: AccountServiceService, private localeService: BsLocaleService) {
+  constructor( private accountService: AccountServiceService, private localeService: BsLocaleService, private simulationService: SimulationService) {
     this.keys = [
+      {prop: 'data'},
       {prop: 'user'},
       {prop: 'name'},
       {prop: 'simulation'},
       {prop: 'marginPercentage'},
       {prop: 'anualRate'},
-      {prop: 'anualTotalCost'},
-      {prop: 'netSalaryWithoutDuo'},
-      {prop: 'netSalaryWithDuo'}
+      {prop: 'anualTotalCost'}
     ]
+    this.allSims$ = this.simulationService.allSims$;
+    this.allSims$.subscribe( res => {
+      console.log(res);
+  
+      res.forEach( (element: any) => {
+  
+          if (element.colaborators.length > 0) {
+            element.colaborators.forEach(col => {
+            
+              if (col.simulations.length > 0) {
+                col.simulations.forEach(simulation => {
+                  this.account.user = element.name;
+                  this.account.name = col.name;
+                  this.account.simulation = simulation.id;
+                  this.account.date = moment(simulation.date).format('DD-MM-YYYY');
+                    simulation.simFieldsData.forEach(field => {
+                      this.account[field.name] = field.value;
+                    });
+               });
+               this.data.push({...this.account});
+               this.account = {};
+              }
+            });
+          }
+          
+      });
+      console.log(this.data);
+      this.rows = this.data;
+    });
   }
 
   ngOnInit() {
+    this.state = 'simList';
     this.data = [];
     this.selectedSimulations = [];
-    
-    let email = this.accountService.getCurrentEmail();
-    this.accountService.getAllSimulationsFromAccount(email);
+    this.simulationService.getAllSimulations();
+
     defineLocale('pt-br', ptBrLocale);
     this.localeService.use('pt-br');
+  }
+
+  search(event) {
+    const val = event.target.value.toLowerCase();
+    // filter data
+    // tslint:disable-next-line: only-arrow-functions
+    this.temp = this.data.filter( function(d) {
+      return d.user.toLowerCase().indexOf(val) !== -1 || !val;
+    });
+    // update the rows
+    this.rows = this.temp;
+    // Whenever the filter changes, always go back to the first page
+    this.table.offset = 0;
   }
 
   filterByDate() {
@@ -80,6 +131,30 @@ data = [];
       firstDate = firstDate - 2000000;
 
     }
+
+    this.accountService.getAllSimulationsByDate(firstDate, secondDate, this.tempMail).subscribe((res => {
+      console.log(this.tempMail);
+      console.log(firstDate);
+      console.log(secondDate);
+      console.log(res);
+    }))
   }
 
+
+  clickRow(row) {
+    console.log(row);
+    //this.clickedRow.emit(row);
+    this.selectedSimulations.push(row);
+
+  }
+
+  compareSims() {
+    console.log(this.selectedSimulations);
+    this.state = 'simDetail';
+  }
+  
+  goBack() {
+    this.selectedSimulations = [];
+    this.state = 'simList';
+  }
 }

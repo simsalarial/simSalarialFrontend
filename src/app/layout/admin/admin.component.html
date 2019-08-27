@@ -25,7 +25,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-8 mr-auto ml-auto">
+        <div class="mr-auto ml-auto" [ngClass]="{'col-10': router?.url.substring(14)==='listarsimulacoes', 'col-8': router?.url.substring(14)!=='listarsimulacoes'}">
             <router-outlet></router-outlet>
         </div>
     </section>
