@@ -9,7 +9,21 @@
                 </div>
                 <input (keyup)="search($event)" type="text" class="form-control" placeholder="Filtrar por nome" >
             </div>
-            <select [(ngModel)]="selectedValue" class="custom-select mb-3 mt-3 col-2 offset-sm-6">
+            <!-- DATA -->
+            <div class="col-4 input-group mb-3 mt-3 pl-0">
+                <div class="input-group-prepend">
+                    <span class="input-group-text transparentBg" id="basic-addon1">
+                        <fa-icon [icon]="faCalendarAlt"></fa-icon>
+                    </span>
+                </div>
+                <input type="text" placeholder="Escolha uma data" class="form-control" bsDaterangepicker
+                    [bsConfig]="{ isAnimated: true,  containerClass: 'theme-dark-blue', adaptivePosition: true }" [(ngModel)]="bothDates">
+                <div class="input-group-append  transparentBg">
+                    <button class="btn btn-mycolor" (click)="filterByDate()">Filtar</button>
+                </div>
+            </div>
+            <!-- DATA -->
+            <select [(ngModel)]="selectedValue" class="custom-select mb-3 mt-3 col-4">
                 <option value="6" selected>Visualização por página</option>
                 <option value="12">12</option>
                 <option value="24">24</option>
@@ -18,7 +32,7 @@
         </div>
     </div>
     <!-- DATA -->
-    <div class="container-fluid p-2">
+  <!--   <div class="container-fluid p-2">
         <div class="col-4 input-group p-0">
             <div class="input-group-prepend">
                 <span class="input-group-text transparentBg" id="basic-addon1">
@@ -26,12 +40,12 @@
                 </span>
             </div>
             <input type="text" placeholder="Escolha uma data" class="form-control" bsDaterangepicker
-                [bsConfig]="{ isAnimated: true,  containerClass: 'theme-dark-blue'}" [(ngModel)]="bothDates">
+                [bsConfig]="{ isAnimated: true,  containerClass: 'theme-dark-blue', adaptivePosition: true }" [(ngModel)]="bothDates">
             <div class="input-group-append  transparentBg">
-                <button class="btn btn-mycolor" (click)="filterByDate()">Filtar por Data</button>
+                <button class="btn btn-mycolor" (click)="filterByDate()">Filtar</button>
             </div>
         </div>
-    </div>
+    </div> -->
 
     <!-- DATA -->
     <div class="container-fluid p-2">

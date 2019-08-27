@@ -16,7 +16,7 @@ export class AccountManagComponent implements OnInit {
   msg: string;
 
   receivedData = false;
-  constructor( private modalService: BsModalService, private accountService:AccountServiceService) { }
+  constructor( private modalService: BsModalService, private accountService: AccountServiceService) { }
 
   ngOnInit() {
     console.log('entrei');
@@ -32,7 +32,7 @@ export class AccountManagComponent implements OnInit {
      // this.data = res;
       this.receivedData = true;
     })
-  }  
+  }
 
   onDelete(email) {
       this.data = this.data.filter(function( obj ) {
@@ -49,11 +49,11 @@ export class AccountManagComponent implements OnInit {
       // create shallow copy of array, since this is a new array (and new reference) ngOnChanges hook of the ng-table.component will fire
       this.data = this.data.slice(0);
       //console.log(this.data);
-      
+
     })
   }
 
-  
-  
+
+
 }
 
