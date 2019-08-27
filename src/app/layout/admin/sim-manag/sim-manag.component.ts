@@ -113,11 +113,20 @@ export class SimManagComponent implements OnInit {
       this.rows.push(...this.extrasWithoutTa);
       // this.rows =  this.rows.slice(0);
       console.log(this.rows);
+      this.rows.sort(function(a,b) {
+        if ( a.name < b.name )
+            return -1;
+        if ( a.name > b.name )
+            return 1;
+        return 0;
+    } );
+      console.log(this.rows);
       this.extrasWithTa = new Array<any>();
       this.extrasWithoutTa = new Array<any>();
 
       console.log(this.extrasWithTa);
       console.log(this.extrasWithoutTa);
+
     });
 
     this.foodSubsidy$.subscribe( (foodSubsidyValue: any) => {

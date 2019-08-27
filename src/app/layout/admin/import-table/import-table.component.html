@@ -23,8 +23,8 @@
             </div>
           </div>
           <!--Gravar na BD-->
-          <button *ngIf="select =='botao'" (click)="saveInDB(template)" class="btn btn-mycolor mb-5"
-            style="width: 113%">
+          <button *ngIf="select =='botao' && showSave == true" (click)="saveInDB(template)" class="btn btn-mycolor mb-5"
+            style="width: 131%">
             Guardar
           </button>
           <div class="row m-auto" *ngIf="fileName" style="width: 99%">

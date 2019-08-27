@@ -26,7 +26,7 @@
                   <select class="custom-select"
                     [ngClass]="{'is-invalid' : profileForm.controls['dependents'].invalid && submitClicked}"
                     formControlName="dependents" id="selectDependents" required>
-                    <option disabled="true" [selected]="true">Número de Dependentes</option>
+                    <option disabled="true" [selected]="true" hidden>Número de Dependentes</option>
                     <option value="0">0</option>
                     <option value="1">1</option>
                     <option value="2">2</option>
@@ -43,7 +43,7 @@
                   <select class="custom-select" formControlName="status"
                     [ngClass]="{'is-invalid' : profileForm.controls['status'].invalid && submitClicked}"
                     id="selectStatus" required>
-                    <option disabled="true" [selected]="true">Número Titulares de Rendimento</option>
+                    <option disabled="true" [selected]="true" hidden>Número Titulares de Rendimento</option>
                     <option value="NÃO CASADO">Não Casado</option>
                     <option value="CASADO UNICO TITULAR">Casado Único Titular</option>
                     <option value="CASADO DOIS TITULARES">Casado Dois Titulares</option>
@@ -69,7 +69,7 @@
 <div *ngIf="state == 'second'" class="row custom-row">
   <div class="col-sm-12 container">
     <fieldset>
-      <div class="card mt-5" id="simtopdf">
+      <div class="card mt-5 mb-3" id="simtopdf">
         <div class="card-header cardHead">
           <h6>SIMULAÇÃO | CÁLCULO | COLABORADOR: {{col.name}}</h6>
         </div>
@@ -95,7 +95,14 @@
                 <small *ngIf="simForm.value.baseSalary >= 654 && simForm.value.baseSalary <= 25200"
                   style="padding-left: 0.5%">Este Salário Base encontra-se no escalão entre os {{this.salaryBelow}} e os
                   {{this.salaryAbove}}.</small>
-                <small *ngIf="simForm.value.baseSalary > 25200" style="padding-left: 0.5%">Este Salário Base encontra-se
+                <small *ngIf="simForm.value.baseSalary > 25200 && this.col.status != 'CASADO UNICO TITULAR'"
+                  style="padding-left: 0.5%">Este Salário Base encontra-se
+                  no último escalão, acima dos {{this.maxSalary}}.</small>
+                <small *ngIf="simForm.value.baseSalary >= 25200 && simForm.value.baseSalary <= 28224 && this.col.status == 'CASADO UNICO TITULAR'"
+                  style="padding-left: 0.5%">Este Salário Base encontra-se no escalão entre os {{this.salaryBelow}} e os
+                  {{this.salaryAbove}}.</small>
+                <small *ngIf="simForm.value.baseSalary > 28224 && this.col.status == 'CASADO UNICO TITULAR'"
+                  style="padding-left: 0.5%">Este Salário Base encontra-se
                   no último escalão, acima dos {{this.maxSalary}}.</small>
                 <div class="input-group mt-3 son1">
                   <div class="input-group-prepend">
@@ -362,12 +369,13 @@
               </div>
               <div class="col md-7 offset-md-4" style="text-align: right">
                 <button type="button" class="btn  btn-blue" (click)="reset()">Reset</button>
-                <button type="button" class="btn  btn-blue ml-1 dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Exportar PDF</button>
+                <button type="button" class="btn  btn-blue ml-1 dropdown-toggle" data-toggle="dropdown"
+                  aria-haspopup="true" aria-expanded="false">Exportar PDF</button>
                 <div class="dropdown-menu">
-                    <a class="dropdown-item" style="cursor: pointer" (click)="exportToPDF()" >Colaborador</a>
-                    <div role="separator" class="dropdown-divider"></div>
-                    <a class="dropdown-item" style="cursor: pointer" (click)="exportPDFforComercial()">Comercial</a>
-                  </div>
+                  <a class="dropdown-item" (click)="exportToPDF()" style="cursor: pointer">Colaborador</a>
+                  <div role="separator" class="dropdown-divider"></div>
+                  <a class="dropdown-item" style="cursor: pointer" (click)="exportPDFforComercial()">Comercial</a>
+                </div>
                 <button type="button" class="btn btn-mycolor ml-1" (click)="saveThisSim()">Guardar</button>
               </div>
             </div>
