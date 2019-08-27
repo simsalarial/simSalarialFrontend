@@ -11,7 +11,7 @@
             href="http://info.portaldasfinancas.gov.pt/pt/apoio_contribuinte/tabela_ret_doclib/Pages/default.aspx">Faça aqui download da tabela mais recente.</a>
         </div>
         <div *ngIf="!(isLoading$ | async)">
-          <div class="input-group my-input-group mt-2 mb-2" style="width: 113%">
+          <div class="input-group my-input-group mt-2 mb-2" style="width: 131%">
             <div class="input-group-prepend" (click)="importExcel()">
               <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
             </div>
@@ -28,7 +28,7 @@
             Guardar
           </button>
           <div class="row m-auto" *ngIf="fileName" style="width: 99%">
-            <p style="color: #334D65; text-align: right; width: 100%; position: relative; left: 4%">Tabela Importada: {{fileName}}</p>
+            <p style="color: #334D65; text-align: right; width: 100%; position: relative; left: 14%">Tabela Importada: {{fileName}}</p>
           </div>
       </div>
     </div>
