@@ -21,7 +21,6 @@ export class AdminComponent implements OnInit {
   faTasks = faTasks;
   faTable = faTable;
   faClipboardList = faClipboardList;
-  colNumber = 'col-8';
 
   workInsuranceVariable: number;
   varAccountedForWorkInsurance: number;
@@ -50,7 +49,6 @@ export class AdminComponent implements OnInit {
     private simulationService: SimulationService,
     route: ActivatedRoute
   ) { 
-    console.log(route.snapshot.url);
   }
 
   ngOnInit() {

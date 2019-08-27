@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, Input } from '@angular/core';
+import { Component, OnInit, ViewChild, Input, Output } from '@angular/core';
 import { AccountServiceService } from 'src/app/core';
 import { BsLocaleService } from 'ngx-bootstrap/datepicker';
 import { faSearch, faEuroSign, faPercentage, faCalculator, faCalendarAlt, faBalanceScaleRight, faUser, faUsers } from '@fortawesome/free-solid-svg-icons';
@@ -16,6 +16,7 @@ import { ReplaySubject } from 'rxjs';
 })
 export class SimListComponent implements OnInit {
 @Input() simulation: any;
+@Output() colNumber = 'col-10';
 faSearch = faSearch;
 faUsers = faUsers;
 faEuroSign = faEuroSign;
@@ -75,17 +76,13 @@ data = [];
                this.data.push({...this.account});
                this.account = {};
               }
-
             });
-            
           }
           
       });
       console.log(this.data);
       this.rows = this.data;
     });
-      
-       
   }
 
   ngOnInit() {
