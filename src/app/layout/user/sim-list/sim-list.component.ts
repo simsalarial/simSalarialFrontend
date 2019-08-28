@@ -48,7 +48,7 @@ export class SimListComponent implements OnInit {
   selectedValue = 6;
 
   tempMail = this.accountService.getCurrentEmail();
-
+  toFilterByDate: any = [];
 
   constructor(private modalService: BsModalService, private accountService: AccountServiceService, private localeService: BsLocaleService) {
 
@@ -66,7 +66,7 @@ export class SimListComponent implements OnInit {
     this.simByEmail$ = this.accountService.simByEmail$;
     this.simByEmail$.subscribe( res => {
     console.log(res);
-
+    this.toFilterByDate = res;
     res.forEach( (element: any) => {
 
         if (element.simulations.length > 0) {
@@ -91,6 +91,7 @@ export class SimListComponent implements OnInit {
 
 
   ngOnInit() {
+    console.log("AQUI");
     this.data = [];
     this.selectedSimulations = [];
     this.state = 'simList';
@@ -108,22 +109,8 @@ export class SimListComponent implements OnInit {
   }
 
   filterByDate() {
-
-    console.log(this.bothDates);
-    console.log(this.bothDates[0]);
-    let now = moment().format('LLLL');
-    console.log(now);
-    let x = moment(this.bothDates[0]).valueOf();
-    console.log(x);
-    let y = moment(x).format('DD MM YYYY');
-    console.log(y);
-
     let firstDate = moment(this.bothDates[0]).valueOf();
     let secondDate = moment(this.bothDates[1]).valueOf();
-    console.log(firstDate);
-    console.log(secondDate);
-
-
 
     if (firstDate === secondDate) {
       secondDate = firstDate  + 86400000;
@@ -131,18 +118,52 @@ export class SimListComponent implements OnInit {
 
     }
 
-    this.accountService.getAllSimulationsByDate(firstDate, secondDate, this.tempMail).subscribe((res => {
-      console.log(this.tempMail);
-      console.log(firstDate);
-      console.log(secondDate);
-      console.log(res);
-    }));
+    let dateInMilli: any = [];
+
+    for (let i = 0; i < this.toFilterByDate.length; i++) {
+      if (this.toFilterByDate[i].simulations.length > 0) {
+        dateInMilli.push(this.toFilterByDate[i]);
+      }
+    }
+    console.log(dateInMilli);
+    console.log(dateInMilli[0].simulations[0].date);
+
+    console.log(firstDate);
+    console.log(secondDate);
+    let filteredSimsByDate: any = [];
+    for (let j = 0; j < dateInMilli.length; j++) {
+      console.log("AQUI");
+      if (dateInMilli[j].simulations[0].date > firstDate && dateInMilli[j].simulations[0].date < secondDate) {
+        console.log("entra"+j);
+        console.log(moment(dateInMilli[j].date).valueOf());
+        filteredSimsByDate.push(dateInMilli[j]);
+      }
+    }
+
+    this.data = [];
+
+    // Table with Filtered Data by Date //
+    filteredSimsByDate.forEach( (element: any) => {
 
 
+        element.simulations.forEach(simulation => {
+          this.colaborator.name = element.name;
+          this.colaborator.simulation = simulation.id;
+          this.colaborator.date = moment(simulation.date).format('DD-MM-YYYY');
+          simulation.simFieldsData.forEach(field => {
+            this.colaborator[field.name] = field.value;
+          });
+          this.data.push(this.colaborator);
+          this.colaborator = {};
+        });
 
+      });
 
-
+    console.log(this.data);
+    this.rows = this.data;
   }
+
+
   /* showConfirmModal(template: TemplateRef<any>, row) {
     console.log(row);
     this.simToDelete = row.email;
@@ -174,33 +195,33 @@ export class SimListComponent implements OnInit {
   } */
 
   search(event) {
-    const val = event.target.value.toLowerCase();
-    // filter data
-    // tslint:disable-next-line: only-arrow-functions
-    this.temp = this.data.filter( function(d) {
-      return d.name.toLowerCase().indexOf(val) !== -1 || !val;
-    });
-    // update the rows
-    this.rows = this.temp;
-    // Whenever the filter changes, always go back to the first page
-    this.table.offset = 0;
+      const val = event.target.value.toLowerCase();
+      // filter data
+      // tslint:disable-next-line: only-arrow-functions
+      this.temp = this.data.filter( function(d) {
+        return d.name.toLowerCase().indexOf(val) !== -1 || !val;
+      });
+      // update the rows
+      this.rows = this.temp;
+      // Whenever the filter changes, always go back to the first page
+      this.table.offset = 0;
   }
 
   clickRow(row) {
-    console.log(row);
-    //this.clickedRow.emit(row);
-    this.selectedSimulations.push(row);
+      console.log(row);
+      //this.clickedRow.emit(row);
+      this.selectedSimulations.push(row);
 
   }
 
   compareSims() {
-    console.log(this.selectedSimulations);
-    this.state = 'simDetail';
+      console.log(this.selectedSimulations);
+      this.state = 'simDetail';
   }
 
   goBack() {
-    this.selectedSimulations = [];
-    this.state = 'simList';
+      this.selectedSimulations = [];
+      this.state = 'simList';
   }
 
 

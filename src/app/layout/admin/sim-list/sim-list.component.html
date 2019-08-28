@@ -24,7 +24,7 @@
                     </span>
                 </div>
                 <input type="text" placeholder="Escolha uma data" class="form-control" bsDaterangepicker
-                    [bsConfig]="{ isAnimated: true,  containerClass: 'theme-dark-blue', adaptivePosition: true }" [(ngModel)]="bothDates">
+                    [bsConfig]="{ isAnimated: true,  containerClass: 'theme-dark-blue', adaptivePosition: true }" [(ngModel)]="bothDates" (change)="ngOnInit()">
                 <div class="input-group-append  transparentBg">
                     <button class="btn btn-mycolor" (click)="filterByDate()">Filtrar</button>
                 </div>
@@ -114,7 +114,7 @@
                                 {{row.anualTotalCost}}
                             </ng-template>
                         </ngx-datatable-column>
-                        
+
                         <ngx-datatable-column>
                             <ng-template let-column="column" ngx-datatable-header-template>
                                 <p>
@@ -142,5 +142,5 @@
         <div class="row" style="width: 100%">
             <app-compare-sim [simulations]="selectedSimulations" style="zoom: 80%"></app-compare-sim>
         </div>
-    
+
     </div>
