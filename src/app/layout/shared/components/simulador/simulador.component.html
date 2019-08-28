@@ -239,8 +239,8 @@
                       [ngClass]="{'borderedRed' : simForm.value.marginPercentage < 0}">%</span>
                   </div>
                 </div>
-                <span><input class="form-control" [ngClass]="{'below0' : simForm.value.marginPercentage < 0}"
-                    type="range" class="custom-range" min="-100" max="250" step="1" value="0"
+                <span><input class="form-control" [ngClass]="{'below0' : simForm.value.marginPercentage < this.margin_min}"
+                    type="range" class="custom-range" min="-100" max="250" step="1" value="{{this.margin_min}}"
                     (input)="func2($event)"></span>
                 <div class="input-group mt-3 son1">
                   <div class="input-group-prepend">
