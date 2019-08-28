@@ -181,17 +181,7 @@
               <!--ACABA A COLUNA DA ESQUERDA-->
               <div class="col-sm border-left father1">
                 <div class="input-group son1">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text transparentBg">Custo Mensal</span>
-                  </div>
-                  <input type="number" min="0" class="form-control inputAlignRigth" formControlName="monthlyTotalCost"
-                    type="number" value={{simForm.value.monthlyTotalCost}} id="monthlyTotalCost" disabled>
-                  <div class="input-group-append">
-                    <span class="input-group-text transparentBg">€</span>
-                  </div>
-                </div>
-                <div class="input-group son1">
-                  <div class="input-group mt-3">
+                  <div class="input-group">
                     <div class="input-group-prepend">
                       <span class="input-group-text transparentBg">Salário Líquido S/ Duodécimos</span>
                     </div>
@@ -208,6 +198,29 @@
                     </div>
                     <input class="form-control inputAlignRigth" formControlName="netSalaryWithDuo"
                       value="{{simForm.value.netSalaryWithDuo}}" type="number" min="0" id="netSalaryWithDuo" disabled>
+                    <div class="input-group-append">
+                      <span class="input-group-text transparentBg">€</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="input-group son1">
+                  <div class="input-group mt-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text transparentBg">Package Salarial S/ Duodécimos</span>
+                    </div>
+                    <input class="form-control inputAlignRigth" formControlName="salaryPackageWithoutDuo"
+                      value="{{simForm.value.salaryPackageWithoutDuo}}" type="number" min="0" id="salaryPackageWithoutDuo"
+                      disabled>
+                    <div class="input-group-append">
+                      <span class="input-group-text transparentBg">€</span>
+                    </div>
+                  </div>
+                  <div class="input-group mt-0">
+                    <div class="input-group-prepend" style="padding-left: 20%;">
+                      <span class="input-group-text transparentBg">C/ Duodécimos</span>
+                    </div>
+                    <input class="form-control inputAlignRigth" formControlName="salaryPackageWithDuo"
+                      value="{{simForm.value.salaryPackageWithDuo}}" type="number" min="0" id="salaryPackageWithDuo" disabled>
                     <div class="input-group-append">
                       <span class="input-group-text transparentBg">€</span>
                     </div>
@@ -369,13 +382,7 @@
               </div>
               <div class="col md-7 offset-md-4" style="text-align: right">
                 <button type="button" class="btn  btn-blue" (click)="reset()">Reset</button>
-                <button type="button" class="btn  btn-blue ml-1 dropdown-toggle" data-toggle="dropdown"
-                  aria-haspopup="true" aria-expanded="false">Exportar PDF</button>
-                <div class="dropdown-menu">
-                  <a class="dropdown-item" (click)="exportToPDF()" style="cursor: pointer">Colaborador</a>
-                  <div role="separator" class="dropdown-divider"></div>
-                  <a class="dropdown-item" style="cursor: pointer" (click)="exportPDFforComercial()">Comercial</a>
-                </div>
+                <button type="button" class="btn  btn-blue ml-1" (click)="exportToPDF()">Exportar PDF</button>
                 <button type="button" class="btn btn-mycolor ml-1" (click)="saveThisSim()">Guardar</button>
               </div>
             </div>
