@@ -20,7 +20,7 @@ export class DataService {
   }
 
   postNewTaxes(data) {
-    return this.http.post('http://localhost:8080/simuladorsalarial/api/taxes/', data);
+    return this.http.put('http://localhost:8080/simuladorsalarial/api/taxes/edit', data, {responseType: 'text'});
   }
 
   // EXTRAS //

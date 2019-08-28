@@ -37,11 +37,11 @@ export class ExcelServiceService {
 
   saveInDB(data){
     console.log(data);
-    return this.http.post('http://localhost:8080/simuladorsalarial/api/irstable',data)
+    return this.http.post('http://localhost:8080/simuladorsalarial/api/irstable',data, {responseType: 'text'});
   }
 
   retrieveFromDB(colaborator) {
-      return this.http.post('http://localhost:8080/simuladorsalarial/api/irstable/filtertable', colaborator)
+      return this.http.post('http://localhost:8080/simuladorsalarial/api/irstable/filtertable', colaborator );
   }
 
 
