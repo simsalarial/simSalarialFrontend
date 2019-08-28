@@ -98,7 +98,8 @@
                 <small *ngIf="simForm.value.baseSalary > 25200 && this.col.status != 'CASADO UNICO TITULAR'"
                   style="padding-left: 0.5%">Este Salário Base encontra-se
                   no último escalão, acima dos {{this.maxSalary}}.</small>
-                <small *ngIf="simForm.value.baseSalary >= 25200 && simForm.value.baseSalary <= 28224 && this.col.status == 'CASADO UNICO TITULAR'"
+                <small
+                  *ngIf="simForm.value.baseSalary >= 25200 && simForm.value.baseSalary <= 28224 && this.col.status == 'CASADO UNICO TITULAR'"
                   style="padding-left: 0.5%">Este Salário Base encontra-se no escalão entre os {{this.salaryBelow}} e os
                   {{this.salaryAbove}}.</small>
                 <small *ngIf="simForm.value.baseSalary > 28224 && this.col.status == 'CASADO UNICO TITULAR'"
@@ -209,8 +210,8 @@
                       <span class="input-group-text transparentBg">Package Salarial S/ Duodécimos</span>
                     </div>
                     <input class="form-control inputAlignRigth" formControlName="salaryPackageWithoutDuo"
-                      value="{{simForm.value.salaryPackageWithoutDuo}}" type="number" min="0" id="salaryPackageWithoutDuo"
-                      disabled>
+                      value="{{simForm.value.salaryPackageWithoutDuo}}" type="number" min="0"
+                      id="salaryPackageWithoutDuo" disabled>
                     <div class="input-group-append">
                       <span class="input-group-text transparentBg">€</span>
                     </div>
@@ -220,7 +221,8 @@
                       <span class="input-group-text transparentBg">C/ Duodécimos</span>
                     </div>
                     <input class="form-control inputAlignRigth" formControlName="salaryPackageWithDuo"
-                      value="{{simForm.value.salaryPackageWithDuo}}" type="number" min="0" id="salaryPackageWithDuo" disabled>
+                      value="{{simForm.value.salaryPackageWithDuo}}" type="number" min="0" id="salaryPackageWithDuo"
+                      disabled>
                     <div class="input-group-append">
                       <span class="input-group-text transparentBg">€</span>
                     </div>
@@ -233,14 +235,16 @@
                   </div>
                   <input type="number" min="0" class="form-control inputAlignRigth" formControlName="marginPercentage"
                     id="marginPercentage" value="{{simForm.value.marginPercentage}}"
-                    [ngClass]="{'borderedRed' : simForm.value.marginPercentage < this.margin_min}" disabled>
+                    [ngClass]="{'borderedRed' : simForm.value.marginPercentage < this.margin_min}"
+                    placeholder="{{this.margin_min}}" disabled>
                   <div class="input-group-append">
                     <span class="input-group-text transparentBg"
                       [ngClass]="{'borderedRed' : simForm.value.marginPercentage < this.margin_min}">%</span>
                   </div>
                 </div>
-                <span><input class="form-control" [ngClass]="{'below0' : simForm.value.marginPercentage < this.margin_min}"
-                    type="range" class="custom-range" min="-100" max="250" step="1" value="{{this.margin_min}}"
+                <span><input class="form-control"
+                    [ngClass]="{'below0' : simForm.value.marginPercentage < this.margin_min}" type="range"
+                    class="custom-range" min="-100" max="250" step="1" value="{{this.margin_min}}"
                     (input)="func2($event)"></span>
                 <div class="input-group mt-3 son1">
                   <div class="input-group-prepend">
@@ -334,8 +338,9 @@
                         <li class="list-group-item son p-0">
                           <div class="input-group border-0">
                             <div class="input-group-prepend border-0">
-                              <span class="input-group-text transparentBg border-0">Mensal <fa-icon style="color: #334D65; margin: 0px 4px" tooltip="Cálculo realizado a 11 meses."
-                                placement="right" [icon]="faInfoCircle"></fa-icon></span>
+                              <span class="input-group-text transparentBg border-0">Mensal <fa-icon
+                                  style="color: #334D65; margin: 0px 4px" tooltip="Cálculo realizado a 11 meses."
+                                  placement="right" [icon]="faInfoCircle"></fa-icon></span>
                             </div>
                             <input formControlName="monthlyRate" type="number" value="{{simForm.value.monthlyRate}}"
                               class="form-control inputAlignRigth border-top-0 border-bottom-0" disabled>
