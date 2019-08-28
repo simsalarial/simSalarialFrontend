@@ -713,7 +713,7 @@ export class SimuladorComponent implements OnInit {
       doc.text(165, 117, "" + oBonus);
       doc.text(180, 117, " €");
     }
-
+    doc.setTextColor(300)
     doc.text(30, 237, "Package Mensal com Duodécimos: ");
     doc.text(165, 237, "" + packageWithDuo);
     doc.text(180, 237, " €");
@@ -729,7 +729,7 @@ export class SimuladorComponent implements OnInit {
     doc.text(180, 267, " €");
 
     doc.setFontSize(12);
-
+    doc.setTextColor(0)
     let extras = "Extras: ";
 
     if (outrosExtras.length > 0 ) {
