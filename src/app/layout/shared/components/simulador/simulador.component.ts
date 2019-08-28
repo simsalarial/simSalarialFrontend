@@ -614,6 +614,10 @@ export class SimuladorComponent implements OnInit {
     console.log(this.col.account);
     let doc = new jsPDF();
     let salesPerson = this.col.account.name;
+    if (this.col.account.name == null) {
+    salesPerson = "Admin";
+    } 
+
     let consultant = this.col.name;
     let bSalary = this.simForm.value.baseSalary;
     let fSubsidy = this.simForm.value.foodSubsidy;
@@ -727,11 +731,8 @@ export class SimuladorComponent implements OnInit {
   }
     ///// footer /////
     doc.setFontSize(8);
-    if (this.col.account.name == null) {
-    doc.text(145, 285, "Simulação feita por Admin");
-    } else {
-    doc.text(145, 285, "Simulação feita por" + salesPerson);
-    }
+  
+    doc.text(145, 285, "Simulação feita por " + salesPerson);
 
     doc.save('Simulação ' + consultant + '.pdf');
 
