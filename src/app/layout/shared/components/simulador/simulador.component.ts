@@ -139,6 +139,8 @@ export class SimuladorComponent implements OnInit {
       anualTotalCost: [0],
       netSalaryWithoutDuo: [0],
       netSalaryWithDuo: [0],
+      salaryPackageWithoutDuo: [0],
+      salaryPackageWithDuo: [0],
       grossSalary: [0],
       usagePercentage: [100],
       marginPercentage: [0],
@@ -462,6 +464,8 @@ export class SimuladorComponent implements OnInit {
     this.calculateAverageGrossSalary();
     this.calculateNetSalaryWithoutDuo();
     this.calculateRate();
+    this.calculateSalaryPackageWithoutDuo();
+    this.calculateSalaryPackageWithDuo();
   }
 
   calculateMonthlyTotalCost() {
@@ -570,6 +574,38 @@ export class SimuladorComponent implements OnInit {
     this.goBack()
 
 
+  }
+
+  calculateSalaryPackageWithoutDuo() {
+    console.log(this.simForm.value.workInsurance);
+
+    this.simForm.value.salaryPackageWithoutDuo = this.simForm.value.netSalaryWithoutDuo + this.simForm.value.healthInsurance + this.simForm.value.workInsurance;
+
+    for (let i = 0; i < this.simForm.value.extrasWithTa.length; i++) {
+      console.log(i, this.simForm.value.extrasWithTa[i]);
+      this.simForm.value.salaryPackageWithoutDuo += (this.simForm.value.extrasWithTa[i].value);
+    }
+    for (let j = 0; j < this.simForm.value.extrasWithoutTa.length; j++) {
+      console.log(j, this.simForm.value.extrasWithoutTa[j]);
+      this.simForm.value.salaryPackageWithoutDuo += (this.simForm.value.extrasWithoutTa[j].value);
+    }
+
+    this.simForm.value.salaryPackageWithoutDuo = Number((this.simForm.value.salaryPackageWithoutDuo).toFixed(2));
+  }
+
+  calculateSalaryPackageWithDuo() {
+    this.simForm.value.salaryPackageWithDuo = this.simForm.value.netSalaryWithDuo + this.simForm.value.healthInsurance + this.simForm.value.workInsurance;
+
+    for (let i = 0; i < this.simForm.value.extrasWithTa.length; i++) {
+      console.log(i, this.simForm.value.extrasWithTa[i]);
+      this.simForm.value.salaryPackageWithDuo += (this.simForm.value.extrasWithTa[i].value);
+    }
+    for (let j = 0; j < this.simForm.value.extrasWithoutTa.length; j++) {
+      console.log(j, this.simForm.value.extrasWithoutTa[j]);
+      this.simForm.value.salaryPackageWithDuo += (this.simForm.value.extrasWithoutTa[j].value);
+    }
+
+    this.simForm.value.salaryPackageWithDuo = Number((this.simForm.value.salaryPackageWithDuo).toFixed(2));
   }
 
   exportToPDF() {
@@ -782,7 +818,7 @@ export class SimuladorComponent implements OnInit {
       doc.text(180, 147 + (10 * (index + 1)), " €");
     });
 
-    doc.text(40, 237, "Margem: " + margem  + " %");
+    doc.text(40, 237, "Margem: " + margem + " %");
     doc.text(130, 237, "Utiizacao: " + utilizacao + " %");
 
     doc.setFontSize(14);

@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, Input, Output } from '@angular/core';
 import { AccountServiceService } from 'src/app/core';
 import { BsLocaleService } from 'ngx-bootstrap/datepicker';
-import { faSearch, faEuroSign, faPercentage, faCalculator, faCalendarAlt, faBalanceScaleRight, faUser, faUsers } from '@fortawesome/free-solid-svg-icons';
+import { faSearch, faEuroSign, faPercentage, faCalculator, faCalendarAlt, faBalanceScaleRight, faUser, faUsers, faEye } from '@fortawesome/free-solid-svg-icons';
 import { DatatableComponent } from '@swimlane/ngx-datatable';
 import { defineLocale } from 'ngx-bootstrap/chronos';
 import { ptBrLocale } from 'ngx-bootstrap/locale';
@@ -25,6 +25,7 @@ faCalculator = faCalculator;
 faCalendarAlt = faCalendarAlt;
 faBalanceScaleRight = faBalanceScaleRight;
 faUser = faUser;
+faEye = faEye;
 
 state: string;
 selectedSimulations: any;
@@ -193,11 +194,26 @@ data = [];
   }
 
 
-  clickRow(row) {
+  clickRow(row, event) {
     console.log(row);
-    //this.clickedRow.emit(row);
-    this.selectedSimulations.push(row);
+    if (event.target.checked) {
+      this.selectedSimulations.push(row);
+    } else {
+      for (let index = 0; index < this.selectedSimulations.length; index++) {
+        const element = this.selectedSimulations[index];
+        if (element.simulation == row.simulation) {
+          this.selectedSimulations.splice(index, 1);
+          console.log(this.selectedSimulations)
+        }
+      }
+    }
+  }
 
+  viewSim(row) {
+    console.log(row);
+    this.selectedSimulations.push(row);
+    console.log(this.selectedSimulations);
+    this.state = 'simDetail';
   }
 
   compareSims() {
