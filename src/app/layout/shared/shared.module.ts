@@ -13,7 +13,7 @@ import { Ng5SliderModule } from 'ng5-slider';
 import { ShowHidePasswordModule } from 'ngx-show-hide-password';
 import { SimDetailComponent } from './components/sim-detail/sim-detail.component';
 import { CompareSimComponent } from './components/compare-sim/compare-sim.component';
-
+import { TooltipModule } from 'ngx-bootstrap';
 
 @NgModule({
   declarations: [HeaderComponent, SimuladorComponent, TablesComponent, FieldTaxComponent, SliderComponent, SimDetailComponent, CompareSimComponent],
@@ -25,7 +25,8 @@ import { CompareSimComponent } from './components/compare-sim/compare-sim.compon
     FontAwesomeModule,
     Ng5SliderModule,
     NgxDatatableModule,
-    ShowHidePasswordModule
+    ShowHidePasswordModule,
+    TooltipModule.forRoot()
   ],
   exports: [
     HeaderComponent,

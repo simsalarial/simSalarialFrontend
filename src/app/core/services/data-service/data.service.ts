@@ -49,7 +49,7 @@ export class DataService {
   }
 
   postNewWorkInsuranceVariables(workInsurance) {
-    return this.http.post('http://localhost:8080/simuladorsalarial/api/workinsurance/newvalue', workInsurance);
+    return this.http.put('http://localhost:8080/simuladorsalarial/api/workinsurance/1', workInsurance);
   }
 
   retriveWorkInsuranceVariable(workIns) {
@@ -63,9 +63,7 @@ export class DataService {
   }
 
   postNewMarginValues(margin) {
-    console.log("entrei")
-    console.log(margin);
-    return this.http.post('http://localhost:8080/simuladorsalarial/api/margin/newvalue', margin);
+    return this.http.put('http://localhost:8080/simuladorsalarial/api/margin/1', margin);
   }
 
 
