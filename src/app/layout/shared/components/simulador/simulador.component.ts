@@ -146,7 +146,7 @@ export class SimuladorComponent implements OnInit {
       salaryPackageWithDuo: [0],
       grossSalary: [0],
       usagePercentage: [100],
-      marginPercentage: [0],
+      marginPercentage: [this.margin_min + 1],
       monthlyTotalCost: [0],
       dailyTotalCost: [0],
       hourlyTotalCost: [0],

@@ -229,14 +229,14 @@
                 <div class="input-group mt-4 son1">
                   <div class="input-group-prepend">
                     <span class="input-group-text transparentBg"
-                      [ngClass]="{'borderedRed' : simForm.value.marginPercentage < 0}">Margem</span>
+                      [ngClass]="{'borderedRed' : simForm.value.marginPercentage < this.margin_min}">Margem</span>
                   </div>
                   <input type="number" min="0" class="form-control inputAlignRigth" formControlName="marginPercentage"
                     id="marginPercentage" value="{{simForm.value.marginPercentage}}"
-                    [ngClass]="{'borderedRed' : simForm.value.marginPercentage < 0}" disabled>
+                    [ngClass]="{'borderedRed' : simForm.value.marginPercentage < this.margin_min}" disabled>
                   <div class="input-group-append">
                     <span class="input-group-text transparentBg"
-                      [ngClass]="{'borderedRed' : simForm.value.marginPercentage < 0}">%</span>
+                      [ngClass]="{'borderedRed' : simForm.value.marginPercentage < this.margin_min}">%</span>
                   </div>
                 </div>
                 <span><input class="form-control" [ngClass]="{'below0' : simForm.value.marginPercentage < this.margin_min}"
