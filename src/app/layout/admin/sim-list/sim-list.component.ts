@@ -54,6 +54,7 @@ data = [];
       {prop: 'name'},
       {prop: 'simulation'},
       {prop: 'marginPercentage'},
+      {prop: 'dailyRate'},
       {prop: 'anualRate'},
       {prop: 'anualTotalCost'}
     ]
