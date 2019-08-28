@@ -20,7 +20,8 @@ import { Margin } from 'src/app/core/models/margin';
 import { AccountServiceService } from 'src/app/core';
 import { element } from 'protractor';
 import { Content } from '@angular/compiler/src/render3/r3_ast';
-
+import { faInfoCircle } from '@fortawesome/free-solid-svg-icons';
+import { TooltipModule } from 'ngx-bootstrap';
 
 @Component({
   selector: 'app-simulador',
@@ -32,7 +33,7 @@ export class SimuladorComponent implements OnInit {
   sim: Simulation;
   profileForm: any;
   simForm: any;
-
+  faInfoCircle = faInfoCircle;
   colaboratorId: number;
 
   private col: Colaborator;
