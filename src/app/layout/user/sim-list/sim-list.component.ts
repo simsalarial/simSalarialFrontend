@@ -1,7 +1,7 @@
 import { BsLocaleService } from 'ngx-bootstrap/datepicker';
 import { Component, OnInit, Input, Output, EventEmitter, ViewChild, SimpleChanges, TemplateRef } from '@angular/core';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
-import { faSearch, faEuroSign, faPercentage, faUser, faCalculator, faBalanceScaleRight, faCalendarAlt} from '@fortawesome/free-solid-svg-icons';
+import { faSearch, faEuroSign, faPercentage, faUser, faCalculator, faBalanceScaleRight, faCalendarAlt } from '@fortawesome/free-solid-svg-icons';
 import { DatatableComponent } from '@swimlane/ngx-datatable';
 import { AccountServiceService } from 'src/app/core';
 import { ReplaySubject } from 'rxjs';
@@ -38,7 +38,7 @@ export class SimListComponent implements OnInit {
   data = [];
   colaborator: any = {};
   msg: string;
-  public simByEmail$:  ReplaySubject<any> = new ReplaySubject();
+  public simByEmail$: ReplaySubject<any> = new ReplaySubject();
   @ViewChild(DatatableComponent, { static: false }) table: DatatableComponent;
 
   // DATE VARIABLES //
@@ -47,27 +47,34 @@ export class SimListComponent implements OnInit {
   selectedSimulations: any;
   selectedValue = 6;
 
+  checked = false;
+
+
   tempMail = this.accountService.getCurrentEmail();
+  count = 0;
+
+  isDisabled = false;
+
 
 
   constructor(private modalService: BsModalService, private accountService: AccountServiceService, private localeService: BsLocaleService) {
 
 
     this.keys = [
-      {prop: 'date'},
-      {prop: 'name'},
-      {prop: 'simulation'},
-      {prop: 'marginPercentage'},
-      {prop: 'anualRate'},
-      {prop: 'anualTotalCost'},
-      {prop: 'netSalaryWithoutDuo'},
-      {prop: 'netSalaryWithDuo'}
+      { prop: 'date' },
+      { prop: 'name' },
+      { prop: 'simulation' },
+      { prop: 'marginPercentage' },
+      { prop: 'anualRate' },
+      { prop: 'anualTotalCost' },
+      { prop: 'netSalaryWithoutDuo' },
+      { prop: 'netSalaryWithDuo' }
     ]
     this.simByEmail$ = this.accountService.simByEmail$;
-    this.simByEmail$.subscribe( res => {
-    console.log(res);
+    this.simByEmail$.subscribe(res => {
+      console.log(res);
 
-    res.forEach( (element: any) => {
+      res.forEach((element: any) => {
 
         if (element.simulations.length > 0) {
 
@@ -78,16 +85,16 @@ export class SimListComponent implements OnInit {
             simulation.simFieldsData.forEach(field => {
               this.colaborator[field.name] = field.value;
             });
-            this.data.push({...this.colaborator});
+            this.data.push({ ...this.colaborator });
             this.colaborator = {};
           });
         }
 
-        });
-    console.log(this.data);
-    this.rows = this.data;
       });
-    }
+      console.log(this.data);
+      this.rows = this.data;
+    });
+  }
 
 
   ngOnInit() {
@@ -126,7 +133,7 @@ export class SimListComponent implements OnInit {
 
 
     if (firstDate === secondDate) {
-      secondDate = firstDate  + 86400000;
+      secondDate = firstDate + 86400000;
       firstDate = firstDate - 2000000;
 
     }
@@ -177,7 +184,7 @@ export class SimListComponent implements OnInit {
     const val = event.target.value.toLowerCase();
     // filter data
     // tslint:disable-next-line: only-arrow-functions
-    this.temp = this.data.filter( function(d) {
+    this.temp = this.data.filter(function (d) {
       return d.name.toLowerCase().indexOf(val) !== -1 || !val;
     });
     // update the rows
@@ -188,20 +195,75 @@ export class SimListComponent implements OnInit {
 
   clickRow(row) {
     console.log(row);
+    this.clickCount();
     //this.clickedRow.emit(row);
     this.selectedSimulations.push(row);
+    console.log(this.selectedSimulations);
+    this.selectedSimulations = this.checkForRepetitions();
 
   }
 
   compareSims() {
     console.log(this.selectedSimulations);
     this.state = 'simDetail';
-    
   }
 
   goBack() {
     this.selectedSimulations = [];
     this.state = 'simList';
+  }
+
+  checkForRepetitions() {
+
+
+    const selectedSimulationsWithoutRepetitions = [];
+    const duplicatesIndices = [];
+
+    // Loop through each item in the original array
+    this.selectedSimulations.forEach((current, index) => {
+
+      if (duplicatesIndices.includes(index)) return;
+
+      selectedSimulationsWithoutRepetitions.push(current);
+
+      // Loop through each other item on array after the current one
+      for (let comparisonIndex = index + 1; comparisonIndex < this.selectedSimulations.length; comparisonIndex++) {
+
+        const comparison = this.selectedSimulations[comparisonIndex];
+        const currentKeys = Object.keys(current);
+        const comparisonKeys = Object.keys(comparison);
+
+        // Check number of keys in objects
+        if (currentKeys.length !== comparisonKeys.length) continue;
+
+        // Check key names
+        const currentKeysString = currentKeys.sort().join("").toLowerCase();
+        const comparisonKeysString = comparisonKeys.sort().join("").toLowerCase();
+        if (currentKeysString !== comparisonKeysString) continue;
+
+        // Check values
+        let valuesEqual = true;
+        for (let i = 0; i < currentKeys.length; i++) {
+          const key = currentKeys[i];
+          if (current[key] !== comparison[key]) {
+            valuesEqual = false;
+            break;
+          }
+        }
+        if (valuesEqual) duplicatesIndices.push(comparisonIndex);
+
+      } // end for loop
+
+    }); // end arr.forEach()
+
+    console.log(selectedSimulationsWithoutRepetitions);
+
+    return selectedSimulationsWithoutRepetitions;
+  }
+
+  clickCount(){
+    this.count++;
+    console.log(this.count);
   }
 
 

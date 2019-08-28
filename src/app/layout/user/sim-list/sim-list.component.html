@@ -141,7 +141,8 @@
                     <p>
                         <fa-icon [icon]="faBalanceScaleRight"></fa-icon>
                     </p>
-                    <button (click)="compareSims()" class="btn btn-mycolor">Comparar</button>
+                    <button (click)="compareSims()" class="btn btn-mycolor"
+                    [disabled]="this.selectedSimulations.length < 2">Comparar</button>
                 </ng-template>
                 <ng-template let-row="row" ngx-datatable-cell-template>
                     <input type="checkbox" (click)="clickRow(row)">
