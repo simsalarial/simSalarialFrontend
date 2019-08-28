@@ -5,6 +5,7 @@ import { SimulationService } from 'src/app/core/services/simulation-data/simulat
 import { Extras } from 'src/app/core/models/extras';
 import { DataService } from 'src/app/core/services/data-service/data.service';
 import { SimFieldsData } from 'src/app/core/models/simFieldsData';
+import { faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-sim-detail',
@@ -18,6 +19,7 @@ colaborator: any = {};
 extras$: any = [];
 @Input() simulation: any;
 extrasName: any =[];
+faInfoCircle = faInfoCircle;
 
   constructor(private accountService:AccountServiceService, private simulationService: SimulationService, private dataService: DataService) {
     this.dataService.getAllExtras().subscribe((extras: any) => {
