@@ -244,7 +244,7 @@
                     (input)="func2($event)"></span>
                 <div class="input-group mt-3 son1">
                   <div class="input-group-prepend">
-                    <span class="input-group-text transparentBg">Utilização</span>
+                    <span class="input-group-text transparentBg">Alocação do Recurso</span>
                   </div>
                   <input type="number" min="0" class="form-control inputAlignRigth" formControlName="usagePercentage"
                     (change)="calculateTotalAnualCost()" id="usagePercentage" value="{{simForm.value.usagePercentage}}"
@@ -253,7 +253,7 @@
                     <span class="input-group-text transparentBg">%</span>
                   </div>
                 </div>
-                <span><input class="form-control" type="range" class="custom-range" min="0" max="100" step="10"
+                <span><input class="form-control" type="range" class="custom-range" min="0" max="100" step="12.5"
                     value="100" (input)="func($event)"></span>
 
                 <div class="row mt-3">
