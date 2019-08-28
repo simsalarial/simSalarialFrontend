@@ -1,7 +1,7 @@
 import { BsLocaleService } from 'ngx-bootstrap/datepicker';
 import { Component, OnInit, Input, Output, EventEmitter, ViewChild, SimpleChanges, TemplateRef } from '@angular/core';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
-import { faSearch, faEuroSign, faPercentage, faUser, faCalculator, faBalanceScaleRight, faCalendarAlt } from '@fortawesome/free-solid-svg-icons';
+import { faSearch, faEuroSign, faPercentage, faUser, faEye, faCalculator, faBalanceScaleRight, faCalendarAlt } from '@fortawesome/free-solid-svg-icons';
 import { DatatableComponent } from '@swimlane/ngx-datatable';
 import { AccountServiceService } from 'src/app/core';
 import { ReplaySubject } from 'rxjs';
@@ -29,6 +29,7 @@ export class SimListComponent implements OnInit {
   faCalculator = faCalculator;
   faCalendarAlt = faCalendarAlt;
   faBalanceScaleRight = faBalanceScaleRight;
+  faEye = faEye;
   faUser = faUser;
   public keys;
   dataSub = [];
@@ -69,13 +70,15 @@ export class SimListComponent implements OnInit {
       { prop: 'anualRate' },
       { prop: 'anualTotalCost' },
       { prop: 'netSalaryWithoutDuo' },
-      { prop: 'netSalaryWithDuo' }
+      { prop: 'netSalaryWithDuo' },
+      { prop: 'dailyRate' },
+      { prop: 'view' }
     ]
     this.simByEmail$ = this.accountService.simByEmail$;
-    this.simByEmail$.subscribe( res => {
-    console.log(res);
-    this.toFilterByDate = res;
-    res.forEach( (element: any) => {
+    this.simByEmail$.subscribe(res => {
+      console.log(res);
+      this.toFilterByDate = res;
+      res.forEach((element: any) => {
 
         if (element.simulations.length > 0) {
 
@@ -142,7 +145,7 @@ export class SimListComponent implements OnInit {
     for (let j = 0; j < dateInMilli.length; j++) {
       console.log("AQUI");
       if (dateInMilli[j].simulations[0].date > firstDate && dateInMilli[j].simulations[0].date < secondDate) {
-        console.log("entra"+j);
+        console.log("entra" + j);
         console.log(moment(dateInMilli[j].date).valueOf());
         filteredSimsByDate.push(dateInMilli[j]);
       }
@@ -151,21 +154,21 @@ export class SimListComponent implements OnInit {
     this.data = [];
 
     // Table with Filtered Data by Date //
-    filteredSimsByDate.forEach( (element: any) => {
+    filteredSimsByDate.forEach((element: any) => {
 
 
-        element.simulations.forEach(simulation => {
-          this.colaborator.name = element.name;
-          this.colaborator.simulation = simulation.id;
-          this.colaborator.date = moment(simulation.date).format('DD-MM-YYYY');
-          simulation.simFieldsData.forEach(field => {
-            this.colaborator[field.name] = field.value;
-          });
-          this.data.push(this.colaborator);
-          this.colaborator = {};
+      element.simulations.forEach(simulation => {
+        this.colaborator.name = element.name;
+        this.colaborator.simulation = simulation.id;
+        this.colaborator.date = moment(simulation.date).format('DD-MM-YYYY');
+        simulation.simFieldsData.forEach(field => {
+          this.colaborator[field.name] = field.value;
         });
-
+        this.data.push(this.colaborator);
+        this.colaborator = {};
       });
+
+    });
 
     console.log(this.data);
     this.rows = this.data;
@@ -215,24 +218,43 @@ export class SimListComponent implements OnInit {
     this.table.offset = 0;
   }
 
-  clickRow(row) {
+  clickRow(row, event) {
     console.log(row);
+    console.log(event);
     this.clickCount();
     //this.clickedRow.emit(row);
-    this.selectedSimulations.push(row);
+    if (event.target.checked) {
+      this.selectedSimulations.push(row);
+    } else {
+      for (let index = 0; index < this.selectedSimulations.length; index++) {
+        const element = this.selectedSimulations[index];
+        if (element.simulation == row.simulation) {
+          this.selectedSimulations.splice(index, 1);
+          console.log(this.selectedSimulations)
+        }
+      }
+    }
+
     console.log(this.selectedSimulations);
     this.selectedSimulations = this.checkForRepetitions();
 
   }
 
   compareSims() {
-      console.log(this.selectedSimulations);
-      this.state = 'simDetail';
+    console.log(this.selectedSimulations);
+    this.state = 'simDetail';
+  }
+
+  viewSim(row) {
+    console.log(row);
+    this.selectedSimulations.push(row);
+    console.log(this.selectedSimulations);
+    this.state = 'simDetail';
   }
 
   goBack() {
-      this.selectedSimulations = [];
-      this.state = 'simList';
+    this.selectedSimulations = [];
+    this.state = 'simList';
   }
 
   checkForRepetitions() {
@@ -283,7 +305,7 @@ export class SimListComponent implements OnInit {
     return selectedSimulationsWithoutRepetitions;
   }
 
-  clickCount(){
+  clickCount() {
     this.count++;
     console.log(this.count);
   }
