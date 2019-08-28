@@ -89,7 +89,7 @@ export class SimuladorComponent implements OnInit {
   extrasSelectedWithout = new Array<SimFieldsData>();
   extrasSelectedWith = new Array<SimFieldsData>();
   showContainer;
-  
+
 
 
   saveSimulator = Array<SimFieldsData>();
@@ -626,7 +626,7 @@ export class SimuladorComponent implements OnInit {
     let salesPerson = this.col.account.name;
     if (this.col.account.name == null) {
     salesPerson = "Admin";
-    } 
+    }
 
     let consultant = this.col.name;
     let bSalary = this.simForm.value.baseSalary;
@@ -644,48 +644,50 @@ export class SimuladorComponent implements OnInit {
     doc.text(50, 25, "Simulacão: " + consultant);
 
     ///// body /////
-    doc.setDrawColor(230)
-    doc.line(20, 35, 190, 35)
+    doc.setDrawColor(230);
+    doc.line(20, 35, 190, 35);
 
-    doc.rect(20, 50, 170, 210)
+    doc.rect(20, 50, 170, 210);
 
-    doc.line(160, 230, 160, 50) // vertical 1
+    doc.line(160, 230, 160, 50); // vertical 1
 
-    doc.setFillColor(230, 230, 255)
-    doc.rect(20, 50, 170, 20, 'FD')  // rectangulo 1
+    doc.setFillColor(234, 95, 54);
+    doc.rect(20, 50, 170, 20, 'FD');  // rectangulo 1
 
     /*doc.setFillColor(230, 230, 255)
     doc.rect(20, 130, 170, 20, 'F')  // rectangulo 2
     */
-    doc.setFillColor(230, 230, 255)
-    doc.rect(20, 230, 170, 40, 'FD')  // rectangulo 3
+    doc.setFillColor(51, 77, 101);
+    doc.rect(20, 230, 170, 40, 'FD');  // rectangulo 3
 
-    doc.line(20, 80, 190, 80)
-    doc.line(20, 90, 190, 90)
-    doc.line(20, 100, 190, 100)
-    doc.line(20, 110, 190, 110)
-    doc.line(20, 120, 190, 120)
-    doc.line(20, 130, 190, 130)
-    doc.line(20, 140, 190, 140)
+    doc.line(20, 80, 190, 80);
+    doc.line(20, 90, 190, 90);
+    doc.line(20, 100, 190, 100);
+    doc.line(20, 110, 190, 110);
+    doc.line(20, 120, 190, 120);
+    doc.line(20, 130, 190, 130);
+    doc.line(20, 140, 190, 140);
 
-    doc.line(20, 150, 190, 150)
-    doc.line(20, 160, 190, 160)
-    doc.line(20, 170, 190, 170)
-    doc.line(20, 180, 190, 180)
-    doc.line(20, 190, 190, 190)
-    doc.line(20, 200, 190, 200)
-    doc.line(20, 210, 190, 210)
-    doc.line(20, 220, 190, 220)
-    doc.line(20, 230, 190, 230)
-    doc.line(20, 240, 190, 240)
-    doc.line(20, 250, 190, 250)
+    doc.line(20, 150, 190, 150);
+    doc.line(20, 160, 190, 160);
+    doc.line(20, 170, 190, 170);
+    doc.line(20, 180, 190, 180);
+    doc.line(20, 190, 190, 190);
+    doc.line(20, 200, 190, 200);
+    doc.line(20, 210, 190, 210);
+    doc.line(20, 220, 190, 220);
+    doc.line(20, 230, 190, 230);
+    doc.line(20, 240, 190, 240);
+    doc.line(20, 250, 190, 250);
 
-    doc.rect(20, 50, 170, 210)
+    doc.rect(20, 50, 170, 210);
 
-    doc.line(160, 270, 160, 50) // vertical 1
+    doc.line(160, 270, 160, 50); // vertical 1
 
     doc.setFontSize(12);
+    doc.setTextColor(255,255,255);
     doc.text(30, 67, "Total de Abonos: ");
+    doc.setTextColor(0,0,0);
     doc.setFontSize(10);
     doc.text(30, 77, "Salário Base: ");
     doc.text(165, 77, "" + bSalary);
@@ -693,13 +695,13 @@ export class SimuladorComponent implements OnInit {
     doc.text(30, 87, "Subsidio de Alimentacao: ");
     doc.text(165, 87, "" + fSubsidy);
     doc.text(180, 87, " €");
-    
+
     if (wInsurance !== 0) {
       doc.text(30, 97, "Seguro de Trabalho: ");
       doc.text(165, 97, "" + wInsurance);
       doc.text(180, 97, " €");
     }
-    
+
     if (hInsurance !== 0 ) {
       doc.text(30, 107, "Seguro de Saúde: ");
       doc.text(165, 107, "" + hInsurance);
@@ -720,10 +722,10 @@ export class SimuladorComponent implements OnInit {
     doc.text(180, 247, " €");
 
     doc.text(30, 257, "Package Anual com Duodécimos: ");
-    doc.text(165, 257, "" + packageWithDuo * 12);
+    doc.text(165, 257, "" + Number((packageWithDuo * 12)).toFixed(2));
     doc.text(180, 257, " €");
     doc.text(30, 267, "Package Anual sem Duodécimos: ");
-    doc.text(165, 267, "" + packageWithoutDuo * 12);
+    doc.text(165, 267, "" + Number((packageWithoutDuo * 12)).toFixed(2));
     doc.text(180, 267, " €");
 
     doc.setFontSize(12);
@@ -741,7 +743,7 @@ export class SimuladorComponent implements OnInit {
   }
     ///// footer /////
     doc.setFontSize(8);
-  
+
     doc.text(145, 285, "Simulação feita por " + salesPerson);
 
     doc.save('Simulação ' + consultant + '.pdf');
@@ -749,7 +751,7 @@ export class SimuladorComponent implements OnInit {
   }
 
   /* exportPDFforComercial() {
-    
+
     let doc = new jsPDF();
     let salesPerson = this.col.account.name;
     let consultant = this.col.name;

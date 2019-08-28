@@ -74,7 +74,7 @@ export class DataService {
   }
 
   putNewFoodSubsidyValue(foodSubsidyMonth) {
-    return this.http.put('http://localhost:8080/simuladorsalarial/api/foodsubsidy/newvalue', foodSubsidyMonth);
+    return this.http.put('http://localhost:8080/simuladorsalarial/api/foodsubsidy/newvalue', foodSubsidyMonth, {responseType: 'text'});
 
   }
 
