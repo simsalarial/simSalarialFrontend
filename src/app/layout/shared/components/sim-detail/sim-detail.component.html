@@ -81,17 +81,7 @@
               <!--ACABA A COLUNA DA ESQUERDA-->
               <div class="col-sm border-left father1">
                 <div class="input-group son1">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text transparentBg">Custo Mensal</span>
-                  </div>
-                  <input type="number" min="0" class="form-control inputAlignRigth" type="number"
-                    value={{simulation.monthlyTotalCost}} id="monthlyTotalCost" disabled>
-                  <div class="input-group-append">
-                    <span class="input-group-text transparentBg">€</span>
-                  </div>
-                </div>
-                <div class="input-group son1">
-                  <div class="input-group mt-3">
+                  <div class="input-group">
                     <div class="input-group-prepend">
                       <span class="input-group-text transparentBg">Salário Líquido S/ Duodécimos</span>
                     </div>
@@ -112,6 +102,28 @@
                     </div>
                   </div>
                 </div>
+                <div class="input-group son1">
+                    <div class="input-group mt-3">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text transparentBg">Package Salarial S/ Duodécimos</span>
+                      </div>
+                      <input class="form-control inputAlignRigth" value="{{simulation.salaryPackageWithoutDuo}}" type="number"
+                        min="0" id="salaryPackageWithoutDuo" disabled>
+                      <div class="input-group-append">
+                        <span class="input-group-text transparentBg">€</span>
+                      </div>
+                    </div>
+                    <div class="input-group mt-0">
+                      <div class="input-group-prepend" style="padding-left: 20%;">
+                        <span class="input-group-text transparentBg">C/ Duodécimos</span>
+                      </div>
+                      <input class="form-control inputAlignRigth" value="{{simulation.salaryPackageWithDuo}}" type="number"
+                        min="0" id="salaryPackageWithDuo" disabled>
+                      <div class="input-group-append">
+                        <span class="input-group-text transparentBg">€</span>
+                      </div>
+                    </div>
+                  </div>
                 <div class="input-group mt-4 son1">
                   <div class="input-group-prepend">
                     <span class="input-group-text transparentBg">Margem</span>

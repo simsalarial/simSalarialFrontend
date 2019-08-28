@@ -1,6 +1,6 @@
 <div class="mt-2">
     <div class="row">
-        <div class="col-md-6 col-sm-12 w-100" *ngFor="let simulation of simulations">
+        <div class="w-100"  [ngClass]="{'col-md-6 col-sm-12': simulations.length > 1, 'col-md-8 mr-auto ml-auto':simulations.length == 1 }" *ngFor="let simulation of simulations">
             <app-sim-detail [simulation]="simulation" style="zoom: 90%"></app-sim-detail>
         </div>
     </div>
