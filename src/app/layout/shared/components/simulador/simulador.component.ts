@@ -85,7 +85,7 @@ export class SimuladorComponent implements OnInit {
   markUp = 0;
   usagePercentage;
   extras: FormArray;
-  extrasArray: any;
+  extrasArray: any = [];
   extrasSelectedWithout = new Array<SimFieldsData>();
   extrasSelectedWith = new Array<SimFieldsData>();
   showContainer;
