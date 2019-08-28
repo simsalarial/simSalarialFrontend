@@ -479,7 +479,7 @@ export class SimuladorComponent implements OnInit {
     // tslint:disable-next-line: max-line-length
     console.log(this.simForm.value.anualTotalCost, this.simForm.value.usagePercentage);
 
-    this.simForm.value.dailyTotalCost = Number((this.simForm.value.anualTotalCost / this.monthsWithoutVacation / this.averageDaysInAMonth / (this.simForm.value.usagePercentage / 100)).toFixed(2));
+    this.simForm.value.dailyTotalCost = Number((this.simForm.value.anualTotalCost / this.monthsWithoutVacation / this.averageDaysInAMonth).toFixed(2));
     console.log(this.simForm.value.dailyTotalCost);
     this.calculateHourlyCost();
   }
@@ -514,17 +514,18 @@ export class SimuladorComponent implements OnInit {
   }
 
   calculateRate() {
-    console.log(this.markUp);
-    this.simForm.value.anualRate = Number((this.simForm.value.anualTotalCost + this.markUp).toFixed(2));
+    this.simForm.value.anualRate = Number(((this.simForm.value.anualTotalCost + this.markUp) * (this.simForm.value.usagePercentage / 100)).toFixed(2));
+    /* this.simForm.value.anualRate = Number((this.simForm.value.anualTotalCost + this.markUp).toFixed(2)); */
     this.calculateMonthlyRate();
   }
   calculateMonthlyRate() {
-    if (this.markUp < 0) {
+    this.simForm.value.monthlyRate = Number((this.simForm.value.anualRate / this.monthsWithoutVacation).toFixed(2));
+   /*  if (this.markUp < 0) {
       console.log("entrei");
       this.simForm.value.monthlyRate = Number((this.simForm.value.anualRate / this.monthsWithoutVacation / (this.simForm.value.usagePercentage / 100)).toFixed(2));
     } else {
       this.simForm.value.monthlyRate = Number(((this.simForm.value.anualTotalCost + this.markUp) / (this.simForm.value.usagePercentage / 100) / this.monthsWithoutVacation).toFixed(2));
-    }
+    } */
 
     this.calculateDailyRate();
   }
