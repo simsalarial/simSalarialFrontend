@@ -18,7 +18,7 @@
                 </div>
                 <input type="text" placeholder="Escolha uma data" class="form-control" bsDaterangepicker
                     [bsConfig]="{ isAnimated: true,  containerClass: 'theme-dark-blue', adaptivePosition: true }"
-                    [(ngModel)]="bothDates" (change)="ngOnInit()">
+                    [(ngModel)]="bothDates" (change)="filterByDate()">
                 <div class="input-group-append  transparentBg">
                     <button class="btn btn-mycolor" (click)="filterByDate()">Filtrar</button>
                 </div>

@@ -19,6 +19,7 @@ export class SimulationService {
   marginValues = new Array<Margin>();
   taxation = new Array<Taxation>();
   extras = new Array<Extras>();
+  bothDates: any = [];
 
   receiveworkInsurance$ = new ReplaySubject<WorkInsurance[]>();
   foodSubsidy$ = new ReplaySubject<FoodSubsidy[]>();
@@ -46,6 +47,12 @@ export class SimulationService {
 
   getSimulationById(id) {
     return this.http.get('http://localhost:8080/simuladorsalarial/api/simulations/'+ id, {responseType: "text"} );
+  }
+
+  // GET SIMULATIONS BY DATE //
+
+  retrieveSimulationsByDate(firstDate, secondDate) {
+    return this.http.get('http://localhost:8080/simuladorsalarial/api/accounts/accsWithFilterSimsBetweenDates?=startDate'+ firstDate + '&endDate=' + secondDate);
   }
 
   importDataBaseData() {
@@ -114,6 +121,9 @@ export class SimulationService {
     //console.log(newExtras);
     this.extras$.next(newExtras);
   }
+
+
+
 
 
 }

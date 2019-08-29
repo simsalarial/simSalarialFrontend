@@ -1,3 +1,4 @@
+import { Colaborator } from 'src/app/core/models/colaborator';
 import { Component, OnInit, ViewChild, Input, Output } from '@angular/core';
 import { AccountServiceService } from 'src/app/core';
 import { BsLocaleService } from 'ngx-bootstrap/datepicker';
@@ -37,7 +38,7 @@ data = [];
  // DATE VARIABLES //
  bothDates: any;
  // DATE VARIABLES //
-
+allData = [];
  toFilterByDate: any = [];
 
  tempMail = this.accountService.getCurrentEmail();
@@ -62,28 +63,8 @@ data = [];
     this.allSims$ = this.simulationService.allSims$;
     this.allSims$.subscribe( res => {
       this.toFilterByDate = res;
-      res.forEach( (element: any) => {
-
-          if (element.colaborators.length > 0) {
-            element.colaborators.forEach(col => {
-
-              if (col.simulations.length > 0) {
-                col.simulations.forEach(simulation => {
-                  this.account.user = element.name;
-                  this.account.name = col.name;
-                  this.account.simulation = simulation.id;
-                  this.account.date = moment(simulation.date).format('DD-MM-YYYY');
-                  simulation.simFieldsData.forEach(field => {
-                      this.account[field.name] = field.value;
-                    });
-               });
-                this.data.unshift({...this.account});
-                this.account = {};
-              }
-            });
-          }
-      });
-      this.rows = this.data;
+      this.allData = res;
+      this.prepareData(res);
     });
   }
 
@@ -97,65 +78,8 @@ data = [];
     this.localeService.use('pt-br');
   }
 
-  search(event) {
-    const val = event.target.value.toLowerCase();
-    // filter data
-    // tslint:disable-next-line: only-arrow-functions
-    this.temp = this.data.filter( function(d) {
-      return d.user.toLowerCase().indexOf(val) !== -1 || !val;
-    });
-    // update the rows
-    this.rows = this.temp;
-    // Whenever the filter changes, always go back to the first page
-    this.table.offset = 0;
-  }
-
-  filterByDate() {
-    let firstDate = moment(this.bothDates[0]).valueOf();
-    let secondDate = moment(this.bothDates[1]).valueOf();
-
-    if (firstDate === secondDate) {
-      secondDate = firstDate  + 86400000;
-      firstDate = firstDate - 2000000;
-
-    }
-    console.log(this.toFilterByDate);
-    // let dateInMilli: any = [];
-
-    for (let i = 0; i < this.toFilterByDate.length; i++) {
-
-      for (let h = 0; h < this.toFilterByDate[i].colaborators.length; h++) {
-        console.log(this.toFilterByDate[i].colaborators);
-
-        if (this.toFilterByDate[i].colaborators[h].simulations.length === 0) {
-          console.log(this.toFilterByDate[i].colaborators[h]);
-          this.toFilterByDate[i].colaborators.splice(h, 1);
-        }
-      }
-
-    }
-
-    //console.log(firstDate);
-    //console.log(secondDate);
-    let filteredSimsByDate: any = [];
-    for (let j = 0; j < this.toFilterByDate.length; j++) {
-
-      for (let l = 0 ; l < this.toFilterByDate[j].colaborators.length; l++) {
-
-        // tslint:disable-next-line: max-line-length
-        if (this.toFilterByDate[j].colaborators[l].simulations[0].date > firstDate && this.toFilterByDate[j].colaborators[l].simulations[0].date < secondDate) {
-         // console.log("entra"+j);
-         // console.log(moment(this.toFilterByDate[j].colaborators[l].simulations[0].date).valueOf());
-          filteredSimsByDate.push(this.toFilterByDate[j]);
-        }
-      }
-    }
-    filteredSimsByDate = this.filterRepetition(filteredSimsByDate);
-    //console.log(filteredSimsByDate);
-    this.data = [];
-
-    // Table with Filtered Data by Date //
-    filteredSimsByDate.forEach( (element: any) => {
+  prepareData(data) {
+    data.forEach( (element: any) => {
 
       if (element.colaborators.length > 0) {
         element.colaborators.forEach(col => {
@@ -175,10 +99,78 @@ data = [];
           }
         });
       }
-
     });
-    //console.log(this.data);
+   // this.toFilterByDate = this.data;
     this.rows = this.data;
+
+  }
+
+  search(event) {
+    const val = event.target.value.toLowerCase();
+    // filter data
+    // tslint:disable-next-line: only-arrow-functions
+    this.temp = this.data.filter( function(d) {
+      return d.user.toLowerCase().indexOf(val) !== -1 || !val;
+    });
+    // update the rows
+    this.rows = this.temp;
+    // Whenever the filter changes, always go back to the first page
+    this.table.offset = 0;
+  }
+
+  filterByDate() {
+    this.data = [];
+    let firstDate = moment(this.bothDates[0]).valueOf();
+    let secondDate = moment(this.bothDates[1]).valueOf();
+    console.log(firstDate, secondDate);
+
+    if (firstDate === secondDate) {
+      let date = new Date();
+      console.log(firstDate);
+      let hours = date.getHours();
+      console.log(hours);
+
+      firstDate -= hours*3600000;
+      secondDate = firstDate + 86400000;
+    }
+
+    this.simulationService.retrieveSimulationsByDate(firstDate, secondDate).subscribe( res => {
+      console.log(res);
+      this.allSims$.next(res);
+    })
+   /*  console.log(this.toFilterByDate);
+    // let dateInMilli: any = [];
+    this.toFilterByDate.forEach(account => {
+      console.log('account', account);
+      account.colaborators = account.colaborators.filter( colaborator => colaborator.simulations.length > 0);
+    });
+    console.log(this.toFilterByDate);
+    console.log('first',firstDate);
+    console.log('second',secondDate);
+    let filteredSimsByDate: any = [];
+    this.toFilterByDate.forEach(accountFilter => {
+      accountFilter.colaborators.forEach(colaboratorFilter => {
+        colaboratorFilter.simulations = colaboratorFilter.simulations.filter( simulation => simulation.date > firstDate &&  simulation.date < secondDate )
+      });
+    });
+
+    console.log(this.toFilterByDate)
+   /*  for (let j = 0; j < this.toFilterByDate.length; j++) {
+
+      for (let l = 0 ; l < this.toFilterByDate[j].colaborators.length; l++) {
+
+        // tslint:disable-next-line: max-line-length
+        if (this.toFilterByDate[j].colaborators[l].simulations[0].date > firstDate && this.toFilterByDate[j].colaborators[l].simulations[0].date < secondDate) {
+         // console.log("entra"+j);
+         // console.log(moment(this.toFilterByDate[j].colaborators[l].simulations[0].date).valueOf());
+          filteredSimsByDate.push(this.toFilterByDate[j]);
+        }
+      }
+    }
+    //filteredSimsByDate = this.filterRepetition(filteredSimsByDate);
+    //console.log(filteredSimsByDate);
+    this.prepareData(this.toFilterByDate); */
+    // Table with Filtered Data by Date //
   }
 
   clickRow(row, event) {

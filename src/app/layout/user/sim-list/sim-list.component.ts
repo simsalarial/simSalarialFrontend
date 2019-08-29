@@ -123,7 +123,8 @@ export class SimListComponent implements OnInit {
         dateInMilli.push(this.toFilterByDate[i]);
       }
     }
-    
+    console.log(dateInMilli);
+
     let filteredSimsByDate: any = [];
     for (let j = 0; j < dateInMilli.length; j++) {
       if (dateInMilli[j].simulations[0].date > firstDate && dateInMilli[j].simulations[0].date < secondDate) {
