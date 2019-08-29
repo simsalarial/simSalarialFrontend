@@ -25,7 +25,6 @@ public onClose: Subject<any> = new Subject<any>();
       name: ['', Validators.required],
       email: ['', Validators.required]
     })
-
     this.state = 'create';
   }
 
@@ -37,14 +36,13 @@ public onClose: Subject<any> = new Subject<any>();
 
      this.accountService.createAccount(this.newAccount).subscribe(
       (res: any) => {
-        console.log(res)
+        //console.log(res)
         this.state = 'confirm';
       },
       (error) => {
-        console.error(this.msg = error.error);
+        //console.error(this.msg = error.error);
         this.state = 'error';
       })
-      console.log(this.newAccount);
     }
   }
 

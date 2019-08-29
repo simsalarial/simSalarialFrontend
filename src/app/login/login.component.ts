@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Account } from '../core/models';
 import { Router } from '@angular/router';
-
 import { AccountServiceService } from '../core';
 import { FormBuilder, Validators } from '@angular/forms';
 
@@ -34,16 +33,8 @@ export class LoginComponent implements OnInit {
   }
 
   public login() {
-   /*  this.accountApi.login(this.account).subscribe(
-      (account: any) => {
-        const url = '/' + (account.accountRole == "ADMIN") ? 'admin' : 'user';
-        this.router.navigate([url]);
-      },
-      error => console.error(this.msg = error.msg)
-    ); */
     this.submitClicked = true;
     Object.assign(this.account, this.loginForm.value);
-    console.log(this.account);
     if (this.loginForm.status == 'VALID'){
       this.accountApi.login(this.account).subscribe(
         (account: any) => {
@@ -64,6 +55,5 @@ export class LoginComponent implements OnInit {
         }
       );
     }
-    console.log(this.accountApi);
   }
 }

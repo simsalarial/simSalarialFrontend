@@ -49,7 +49,6 @@ export class HeaderComponent implements OnInit {
   showEditAccount(template: TemplateRef<any>) {
     this.state = "edit";
     this.modalRef = this.modalService.show(template);
-
   }
 
   editAccount() {
@@ -57,7 +56,6 @@ export class HeaderComponent implements OnInit {
     if(this.editUserForm.newPass === this.editUserForm.confirmPass && this.editUserForm.status == 'VALID'){
       this.account.password = this.editUserForm.value.confirmPass;
       this.account.email = this.email;
-      console.log(this.account);
 
       this.accountApi.editUserPass(this.account).subscribe(
         (account: any) => {

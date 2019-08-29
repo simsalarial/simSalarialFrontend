@@ -14,6 +14,7 @@ export class ColaboratorServiceService {
   // tslint:disable-next-line: new-parens
   private account = new Account;
 
+  //Save colaborator to find IRS tax
   saveColaboratorInDbAndGetItsID(colaborator) {
     return this.http.post('http://localhost:8080/simuladorsalarial/api/colaborators', colaborator);
   }

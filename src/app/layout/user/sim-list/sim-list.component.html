@@ -32,23 +32,6 @@
             </select>
         </div>
     </div>
-    <!-- DATA -->
-    <!--   <div class="container-fluid p-2">
-        <div class="col-4 input-group p-0">
-            <div class="input-group-prepend">
-                <span class="input-group-text transparentBg" id="basic-addon1">
-                    <fa-icon [icon]="faCalendarAlt"></fa-icon>
-                </span>
-            </div>
-            <input type="text" placeholder="Escolha uma data" class="form-control" bsDaterangepicker
-                [bsConfig]="{ isAnimated: true,  containerClass: 'theme-dark-blue', adaptivePosition: true }" [(ngModel)]="bothDates">
-            <div class="input-group-append  transparentBg">
-                <button class="btn btn-mycolor" (click)="filterByDate()">Filtar</button>
-            </div>
-        </div>
-    </div> -->
-
-    <!-- DATA -->
     <div class="container-fluid p-2">
         <ngx-datatable class="bootstrap" [rows]="rows" [loadingIndicator]="loadingIndicator" [columns]="keys"
             [columnMode]="'force'" [headerHeight]="40" [summaryRow]="true" [summaryPosition]="'bottom'"
@@ -127,15 +110,15 @@
                 </ng-template>
             </ngx-datatable-column>
             <ngx-datatable-column>
-                    <ng-template let-column="column" ngx-datatable-header-template>
-                        <p>
-                            <fa-icon [icon]="faEuroSign"></fa-icon>
-                        </p>Rate diário
-                    </ng-template>
-                    <ng-template let-row="row" ngx-datatable-cell-template>
-                        {{row.dailyRate}}
-                    </ng-template>
-                </ngx-datatable-column>
+                <ng-template let-column="column" ngx-datatable-header-template>
+                    <p>
+                        <fa-icon [icon]="faEuroSign"></fa-icon>
+                    </p>Rate diário
+                </ng-template>
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                    {{row.dailyRate}}
+                </ng-template>
+            </ngx-datatable-column>
             <ngx-datatable-column>
                 <ng-template let-column="column" ngx-datatable-header-template>
                     <p>
@@ -147,15 +130,17 @@
                 </ng-template>
             </ngx-datatable-column>
             <ngx-datatable-column>
-                    <ng-template let-column="column" ngx-datatable-header-template>
-                        <p>
-                            <fa-icon [icon]="faEye"></fa-icon>
-                        </p>Detalhes
-                    </ng-template>
-                    <ng-template let-row="row" ngx-datatable-cell-template>
-                        <button (click)="viewSim(row)" class="btn btn-link" style="color: black"><fa-icon [icon]="faEye"></fa-icon></button>
-                    </ng-template>
-                </ngx-datatable-column>
+                <ng-template let-column="column" ngx-datatable-header-template>
+                    <p>
+                        <fa-icon [icon]="faEye"></fa-icon>
+                    </p>Detalhes
+                </ng-template>
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                    <button (click)="viewSim(row)" class="btn btn-link" style="color: black">
+                        <fa-icon [icon]="faEye"></fa-icon>
+                    </button>
+                </ng-template>
+            </ngx-datatable-column>
 
             <ngx-datatable-column>
                 <ng-template let-column="column" ngx-datatable-header-template>
@@ -169,9 +154,7 @@
                     <input type="checkbox" (click)="clickRow(row, $event)">
                 </ng-template>
             </ngx-datatable-column>
-
         </ngx-datatable>
-
     </div>
 </div>
 <div class="container-fluid mt-3" *ngIf="state == 'simDetail'">
@@ -181,5 +164,4 @@
     <div class="row" style="width: 100%">
         <app-compare-sim [simulations]="selectedSimulations" style="zoom: 93%; width: 100%"></app-compare-sim>
     </div>
-
 </div>
