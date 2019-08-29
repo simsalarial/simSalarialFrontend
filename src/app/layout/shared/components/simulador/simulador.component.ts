@@ -641,11 +641,11 @@ export class SimuladorComponent implements OnInit {
     let wInsurance = this.simForm.value.workInsurance;
     let hInsurance = this.simForm.value.healthInsurance;
     let oBonus = this.simForm.value.otherBonus;
+    let netSalaryWithDuo = this.simForm.value.netSalaryWithDuo;
+    let netSalaryWithoutDuo = this.simForm.value.netSalaryWithoutDuo;
     let packageWithDuo = this.simForm.value.salaryPackageWithDuo;
     let packageWithoutDuo = this.simForm.value.salaryPackageWithoutDuo;
     let outrosExtras = this.simForm.value.extrasWithTa.concat(this.simForm.value.extrasWithoutTa);
-
-
 
     ///// header /////
     doc.addImage(imgData, 'JPEG', 25, 15, 15, 15);
@@ -667,7 +667,7 @@ export class SimuladorComponent implements OnInit {
     doc.rect(20, 130, 170, 20, 'F')  // rectangulo 2
     */
     doc.setFillColor(51, 77, 101);
-    doc.rect(20, 230, 170, 40, 'FD');  // rectangulo 3
+    doc.rect(20, 220, 170, 50, 'FD');  // rectangulo 3
 
     doc.line(20, 80, 190, 80);
     doc.line(20, 90, 190, 90);
@@ -695,55 +695,68 @@ export class SimuladorComponent implements OnInit {
 
     doc.setFontSize(12);
     doc.setTextColor(255,255,255);
-    doc.text(30, 67, "Total de Abonos: ");
+    doc.text(30, 67, "Total de Abonos");
+    doc.text(165, 67, "Valores (€)");
 
     doc.setTextColor(0,0,0);
     doc.setFontSize(10);
-    doc.text(30, 77, "Salário Base: ");
-    doc.text(165, 77, bSalary + " €");
-    doc.text(30, 87, "Subsidio de Alimentacao: ");
-    doc.text(165, 87, fSubsidy + " €");
+    doc.text(30, 77, "Salário Base");
+    doc.text(165, 77, bSalary + "");
+    doc.text(30, 87, "Subsídio de Alimentação");
+    doc.text(165, 87, fSubsidy + "");
 
 
     if (wInsurance !== 0) {
-      doc.text(30, 97, "Seguro de Trabalho: ");
-      doc.text(165, 97, wInsurance + " €");
+      doc.text(30, 97, "Seguro de Trabalho");
+      doc.text(165, 97, wInsurance + "");
     }
 
     if (hInsurance !== 0 ) {
-      doc.text(30, 107, "Seguro de Saúde: ");
-      doc.text(165, 107, hInsurance + " €");
+      doc.text(30, 107, "Seguro de Saúde");
+      doc.text(165, 107, hInsurance + "");
     }
 
     if (oBonus !== 0 ) {
-      doc.text(30, 117, "Prémios: ");
-      doc.text(165, 117, oBonus + " €");
+      doc.text(30, 117, "Prémios");
+      doc.text(165, 117, oBonus + "");
     }
-    doc.setTextColor(300)
-    doc.text(30, 237, "Package Mensal com Duodécimos: ");
-    doc.text(165, 237, packageWithDuo + " €");
-    doc.text(30, 247, "Package Mensal sem Duodécimos: ");
-    doc.text(165, 247, packageWithoutDuo + " €");
-
-    doc.text(30, 257, "Package Anual com Duodécimos: ");
-    doc.text(165, 257, Number((packageWithDuo * 12)).toFixed(2) + " €");
-    doc.text(30, 267, "Package Anual sem Duodécimos: ");
-    doc.text(165, 267, Number((packageWithoutDuo * 12)).toFixed(2) + " €");
 
     doc.setFontSize(12);
     doc.setTextColor(0)
-    let extras = "Extras: ";
-
+    let extras = "Extras";
+    var allExtrasValue = 0;
     if (outrosExtras.length > 0 ) {
-    doc.text(30, 127, extras);
-    doc.setFontSize(10);
-    outrosExtras.forEach((element, index) => {                                     // por cada elemento do array ele adiciona 10 na posicao Y do PDF.
-      doc.text(30, 127 + (10 * (index + 1)), element.name);
-      doc.text(165, 127 + (10 * (index + 1)), element.value + " €");
-    });
-  }
+      doc.text(30, 127, extras);
+      doc.setFontSize(10);
+      outrosExtras.forEach((element, index) => {                                     // por cada elemento do array ele adiciona 10 na posicao Y do PDF.
+        doc.text(30, 127 + (10 * (index + 1)), element.name);
+        doc.text(165, 127 + (10 * (index + 1)), element.value + "");
+        allExtrasValue += element.value;
+      });
+    }
+
+
+    doc.setTextColor(300)
+
+    doc.text(30, 227, "Salário Líquido sem Duodécimos");
+    doc.text(165, 227, netSalaryWithoutDuo + "");
+    doc.text(30, 237, "Salário Líquido com Duodécimos");
+    doc.text(165, 237, netSalaryWithDuo + "");
+    doc.text(30, 247, "Package Mensal sem Duodécimos");
+    doc.text(165, 247, packageWithoutDuo + "");
+    doc.text(30, 257, "Package Mensal com Duodécimos");
+    doc.text(165, 257, packageWithDuo + "");
+
+    console.log(allExtrasValue);
+    doc.text(30, 267, "Package Anual");
+    doc.text(165, 267, Number(((netSalaryWithoutDuo * 15) + (fSubsidy * 11) + (wInsurance * 12) + (oBonus * 12) + (allExtrasValue * 12)).toFixed(2)) + "");
+
+   
+    
+
     ///// footer /////
     doc.setFontSize(8);
+    doc.setTextColor(0,0,0)
 
     doc.text(145, 285, "Simulação feita por " + salesPerson);
 
