@@ -7,7 +7,6 @@ import { DataService } from '../data-service/data.service';
 import { Observable, ReplaySubject } from 'rxjs';
 import { SimulationByPerson } from '../../models/simulationByPerson';
 import { HttpClient } from '@angular/common/http';
-import { SimManagComponent } from 'src/app/layout/admin/sim-manag/sim-manag.component';
 import { Extras } from '../../models/extras';
 
 @Injectable({
@@ -33,9 +32,9 @@ export class SimulationService {
     private readonly http: HttpClient
   ) { }
 
+
   getSimulationsByPerson(): Observable<SimulationByPerson[]> {
     return this.http.get<SimulationByPerson[]>("http://localhost:8080/simuladorsalarial/api/simulations");
-
   }
 
   getAllSimulations() {
@@ -50,7 +49,6 @@ export class SimulationService {
   }
 
   importDataBaseData() {
-
     // GET EXTRAS //
     this.dataService.retrieveDataServiceExtras(this.extras).subscribe((extrasRes) => {
       Object.assign(this.extras, extrasRes);
@@ -90,32 +88,30 @@ export class SimulationService {
    });
    // FOODSUBSIDY VALUES //
 
-
-
   }
 
   parseTaxationToIndividualValue(taxes) {
-   // console.log(taxes);
+   //console.log(taxes);
     this.taxation$.next(taxes);
   }
 
   resolveWorkInsuranceVariables(workInsuranceVariables) {
-   // console.log(workInsuranceVariables);
+   //console.log(workInsuranceVariables);
     this.receiveworkInsurance$.next(workInsuranceVariables);
   }
 
   resolveMarginValues(marginValues) {
-   // console.log(marginValues);
+   //console.log(marginValues);
     this.marginValues$.next(marginValues);
   }
 
   resolveFoodSubsidyValue(foodSubsidyValues) {
-   // console.log(foodSubsidyValues);
+   //console.log(foodSubsidyValues);
     this.foodSubsidy$.next(foodSubsidyValues);
   }
 
   divideExtrasByTributation(newExtras) {
-    console.log(newExtras);
+    //console.log(newExtras);
     this.extras$.next(newExtras);
   }
 

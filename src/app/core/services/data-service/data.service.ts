@@ -1,17 +1,12 @@
-import { FoodSubsidy } from './../../models/foodSubsidy';
-import { WorkInsurance } from './../../models/workInsurance';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { ReplaySubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DataService {
 
-
   constructor(private http: HttpClient) { }
-
 
   // TAXES //
 
@@ -77,8 +72,6 @@ export class DataService {
     return this.http.put('http://localhost:8080/simuladorsalarial/api/foodsubsidy/newvalue', foodSubsidyMonth, {responseType: 'text'});
 
   }
-
-
 
   // SAVE SIMULATION IN DATA BASE //
 
