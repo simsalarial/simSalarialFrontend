@@ -66,10 +66,14 @@ export class SimListComponent implements OnInit {
       { prop: 'view' }
     ]
     this.simByEmail$ = this.accountService.simByEmail$;
-  
+
     this.simByEmail$.subscribe(res => {
       this.toFilterByDate = res;
       res.forEach((element: any) => {
+
+        console.log(element);
+
+
         if (element.simulations.length > 0) {
 
           element.simulations.forEach(simulation => {
@@ -83,7 +87,7 @@ export class SimListComponent implements OnInit {
             this.colaborator = {};
           });
         }
-      });
+  });
       console.log(this.data);
       this.rows = this.data;
     });
@@ -103,54 +107,59 @@ export class SimListComponent implements OnInit {
 
   }
 
+  prepareData(data) {
+    data.forEach((element: any) => {
+
+      console.log(element);
+
+      if (element.colaborators.length > 0) {
+        element.colaborators.forEach(col => {
+
+
+      if (col.simulations.length > 0) {
+
+        col.simulations.forEach(simulation => {
+          this.colaborator.name = col.name;
+          this.colaborator.simulation = simulation.id;
+          this.colaborator.date = moment(simulation.date).format('DD-MM-YYYY');
+          simulation.simFieldsData.forEach(field => {
+            this.colaborator[field.name] = field.value;
+          });
+          this.data.unshift({ ...this.colaborator });
+          this.colaborator = {};
+        });
+      }
+    });
+  };
+});
+    console.log(this.data);
+    this.rows = this.data;
+    }
+
+
+
   ngOnChanges(changes: SimpleChanges) {
     this.rows = changes.temp.currentValue;
   }
 
   filterByDate() {
+    this.data = [];
     let firstDate = moment(this.bothDates[0]).valueOf();
     let secondDate = moment(this.bothDates[1]).valueOf();
 
     if (firstDate === secondDate) {
+      let date = new Date();
+      console.log(firstDate);
+      let hours = date.getHours();
+      console.log(hours);
+
+      firstDate -= hours*3600000;
       secondDate = firstDate + 86400000;
-      firstDate = firstDate - 2000000;
     }
-
-    let dateInMilli: any = [];
-
-    for (let i = 0; i < this.toFilterByDate.length; i++) {
-      if (this.toFilterByDate[i].simulations.length > 0) {
-        dateInMilli.push(this.toFilterByDate[i]);
-      }
-    }
-    console.log(dateInMilli);
-
-    let filteredSimsByDate: any = [];
-    for (let j = 0; j < dateInMilli.length; j++) {
-      if (dateInMilli[j].simulations[0].date > firstDate && dateInMilli[j].simulations[0].date < secondDate) {
-        //console.log(moment(dateInMilli[j].date).valueOf());
-        filteredSimsByDate.push(dateInMilli[j]);
-      }
-    }
-
-    this.data = [];
-
-    // Table with Filtered Data by Date //
-    filteredSimsByDate.forEach((element: any) => {
-
-
-      element.simulations.forEach(simulation => {
-        this.colaborator.name = element.name;
-        this.colaborator.simulation = simulation.id;
-        this.colaborator.date = moment(simulation.date).format('DD-MM-YYYY');
-        simulation.simFieldsData.forEach(field => {
-          this.colaborator[field.name] = field.value;
-        });
-        this.data.unshift({...this.colaborator});
-        this.colaborator = {};
-      });
+    this.accountService.getAllSimulationsByDate(firstDate, secondDate, this.accountService.getCurrentEmail()).subscribe( res => {
+      console.log(res);
+      this.prepareData(res);
     });
-    this.rows = this.data;
   }
 
   search(event) {
