@@ -66,11 +66,10 @@ export class SimListComponent implements OnInit {
       { prop: 'view' }
     ]
     this.simByEmail$ = this.accountService.simByEmail$;
+  
     this.simByEmail$.subscribe(res => {
-      console.log(res);
       this.toFilterByDate = res;
       res.forEach((element: any) => {
-
         if (element.simulations.length > 0) {
 
           element.simulations.forEach(simulation => {
@@ -179,7 +178,7 @@ export class SimListComponent implements OnInit {
         }
       }
     }
-    //this.selectedSimulations = this.checkForRepetitions();
+    this.selectedSimulations = this.checkForRepetitions();
   }
 
   compareSims() {
@@ -196,7 +195,7 @@ export class SimListComponent implements OnInit {
     this.state = 'simList';
   }
 
-  /* checkForRepetitions() {
+  checkForRepetitions() {
 
     const selectedSimulationsWithoutRepetitions = [];
     const duplicatesIndices = [];
@@ -238,7 +237,7 @@ export class SimListComponent implements OnInit {
 
     }); // end arr.forEach()
     return selectedSimulationsWithoutRepetitions;
-  } */
+  }
 
   clickCount() {
     this.count++;
