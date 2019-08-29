@@ -5,7 +5,7 @@
             <div class="d-flex" id="wrapper">
                 <div class="bg-white border-right w-100" id="sidebar-wrapper">
                     <div class="list-group list-group-flush vh-100" style="margin-top: 1px;">
-                            <a [routerLink]="['/layout/admin/gestaodecontas']" routerLinkActive="router-link-active"
+                        <a [routerLink]="['/layout/admin/gestaodecontas']" routerLinkActive="router-link-active"
                             class="list-group-item list-group-item-action">
                             <fa-icon [icon]="faUsers"></fa-icon> Gestão de Contas
                         </a>
@@ -25,7 +25,8 @@
                 </div>
             </div>
         </div>
-        <div class="mr-auto ml-auto" [ngClass]="{'col-10': router?.url.substring(14)==='listarsimulacoes', 'col-8': router?.url.substring(14)!=='listarsimulacoes'}">
+        <div class="mr-auto ml-auto"
+            [ngClass]="{'col-10': router?.url.substring(14)==='listarsimulacoes', 'col-8': router?.url.substring(14)!=='listarsimulacoes'}">
             <router-outlet></router-outlet>
         </div>
     </section>

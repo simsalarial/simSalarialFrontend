@@ -1,6 +1,7 @@
 <nav class="navbar navbar-expand-lg navbar-light row" style="background-color:#334D65;">
   <img style="height: 80px;" class="ml-5" src="assets/img/aubayCopy.png">
-  <a class="navbar-brand mb-0 text-white h1 offset-1" style="position: relative; padding-left: 1%;">SIMULADOR SALARIAL</a>
+  <a class="navbar-brand mb-0 text-white h1 offset-1" style="position: relative; padding-left: 1%;">SIMULADOR
+    SALARIAL</a>
 
   <div class="d-flex align-items-end ml-auto">
     <span class="navbar-text text-white mx-3">{{email}}</span>
@@ -31,7 +32,8 @@
             id="inputnewPass" type="password" class="form-control" formControlName="newPass">
         </div>
         <div *ngIf="editUserForm.controls['newPass'].invalid && submitClicked" class="form-row">
-          <small *ngIf="editUserForm.controls['newPass'].errors.required" class="text-danger ml-2" >Insira uma nova senha.</small>
+          <small *ngIf="editUserForm.controls['newPass'].errors.required" class="text-danger ml-2">Insira uma nova
+            senha.</small>
         </div>
       </div>
       <div class="form-group mt-2 father">
@@ -44,13 +46,14 @@
             type="password" style="width: 185px" class="form-control" formControlName="confirmPass">
 
         </div>
-        <div *ngIf="editUserForm.controls['confirmPass'].invalid && submitClicked" class="form-row" >
-          <small *ngIf="editUserForm.controls['confirmPass'].errors.required" class="text-danger ml-2">Confirme a nova senha.</small>
+        <div *ngIf="editUserForm.controls['confirmPass'].invalid && submitClicked" class="form-row">
+          <small *ngIf="editUserForm.controls['confirmPass'].errors.required" class="text-danger ml-2">Confirme a nova
+            senha.</small>
         </div>
       </div>
       <div class="modal-footer p-0 pt-3">
-          <button type="button" class="btn btn-blue" (click)="resetForm()">Cancelar</button>
-          <button type="button" class="btn btn-mycolor ml-1" (click)="editAccount()">Editar</button>
+        <button type="button" class="btn btn-blue" (click)="resetForm()">Cancelar</button>
+        <button type="button" class="btn btn-mycolor ml-1" (click)="editAccount()">Editar</button>
       </div>
     </form>
   </div>

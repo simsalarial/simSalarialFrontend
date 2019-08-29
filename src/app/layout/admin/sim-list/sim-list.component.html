@@ -14,21 +14,23 @@
                                 <fa-icon [icon]="faSearch"></fa-icon>
                             </span>
                         </div>
-                        <input (keyup)="search($event)" type="text" class="form-control" placeholder="Filtrar por nome do comercial">
+                        <input (keyup)="search($event)" type="text" class="form-control"
+                            placeholder="Filtrar por nome do comercial">
                     </div>
 
                     <div class="col-4 input-group mb-3 mt-3 pl-0">
-                <div class="input-group-prepend">
-                    <span class="input-group-text transparentBg" id="basic-addon1">
-                        <fa-icon [icon]="faCalendarAlt"></fa-icon>
-                    </span>
-                </div>
-                <input type="text" placeholder="Escolha uma data" class="form-control" bsDaterangepicker
-                    [bsConfig]="{ isAnimated: true,  containerClass: 'theme-dark-blue', adaptivePosition: true }" [(ngModel)]="bothDates" (change)="ngOnInit()">
-                <div class="input-group-append  transparentBg">
-                    <button class="btn btn-mycolor" (click)="filterByDate()">Filtrar</button>
-                </div>
-            </div>
+                        <div class="input-group-prepend">
+                            <span class="input-group-text transparentBg" id="basic-addon1">
+                                <fa-icon [icon]="faCalendarAlt"></fa-icon>
+                            </span>
+                        </div>
+                        <input type="text" placeholder="Escolha uma data" class="form-control" bsDaterangepicker
+                            [bsConfig]="{ isAnimated: true,  containerClass: 'theme-dark-blue', adaptivePosition: true }"
+                            [(ngModel)]="bothDates" (change)="ngOnInit()">
+                        <div class="input-group-append  transparentBg">
+                            <button class="btn btn-mycolor" (click)="filterByDate()">Filtrar</button>
+                        </div>
+                    </div>
 
                     <select [(ngModel)]="selectedValue" class="custom-select mb-3 mt-3 col-4">
                         <option value="6">6 visualizações por página</option>
@@ -44,15 +46,15 @@
                         [summaryPosition]="'bottom'" [footerHeight]="40" [limit]="selectedValue" [rowHeight]="'auto'"
                         [reorderable]="reorderable">
                         <ngx-datatable-column>
-                                <ng-template let-column="column" ngx-datatable-header-template>
-                                    <p>
-                                        <fa-icon [icon]="faCalculator"></fa-icon>
-                                    </p>Simulação
-                                </ng-template>
-                                <ng-template let-row="row" ngx-datatable-cell-template>
-                                    {{row.simulation}}
-                                </ng-template>
-                            </ngx-datatable-column>
+                            <ng-template let-column="column" ngx-datatable-header-template>
+                                <p>
+                                    <fa-icon [icon]="faCalculator"></fa-icon>
+                                </p>Simulação
+                            </ng-template>
+                            <ng-template let-row="row" ngx-datatable-cell-template>
+                                {{row.simulation}}
+                            </ng-template>
+                        </ngx-datatable-column>
                         <ngx-datatable-column>
                             <ng-template let-column="column" ngx-datatable-header-template>
                                 <p>
@@ -84,16 +86,16 @@
                             </ng-template>
                         </ngx-datatable-column>
                         <ngx-datatable-column>
-                                <ng-template let-column="column" ngx-datatable-header-template>
-                                    <p>
-                                        <fa-icon [icon]="faEuroSign"></fa-icon>
-                                    </p>Custo total anual
-    
-                                </ng-template>
-                                <ng-template let-row="row" ngx-datatable-cell-template>
-                                    {{row.anualTotalCost}}
-                                </ng-template>
-                            </ngx-datatable-column>
+                            <ng-template let-column="column" ngx-datatable-header-template>
+                                <p>
+                                    <fa-icon [icon]="faEuroSign"></fa-icon>
+                                </p>Custo total anual
+
+                            </ng-template>
+                            <ng-template let-row="row" ngx-datatable-cell-template>
+                                {{row.anualTotalCost}}
+                            </ng-template>
+                        </ngx-datatable-column>
                         <ngx-datatable-column>
                             <ng-template let-column="column" ngx-datatable-header-template>
                                 <p>
@@ -105,15 +107,15 @@
                             </ng-template>
                         </ngx-datatable-column>
                         <ngx-datatable-column>
-                                <ng-template let-column="column" ngx-datatable-header-template>
-                                    <p>
-                                        <fa-icon [icon]="faEuroSign"></fa-icon>
-                                    </p>Rate Diário
-                                </ng-template>
-                                <ng-template let-row="row" ngx-datatable-cell-template>
-                                    {{row.dailyRate}}
-                                </ng-template>
-                            </ngx-datatable-column>
+                            <ng-template let-column="column" ngx-datatable-header-template>
+                                <p>
+                                    <fa-icon [icon]="faEuroSign"></fa-icon>
+                                </p>Rate Diário
+                            </ng-template>
+                            <ng-template let-row="row" ngx-datatable-cell-template>
+                                {{row.dailyRate}}
+                            </ng-template>
+                        </ngx-datatable-column>
                         <ngx-datatable-column>
                             <ng-template let-column="column" ngx-datatable-header-template>
                                 <p>
@@ -125,22 +127,25 @@
                             </ng-template>
                         </ngx-datatable-column>
                         <ngx-datatable-column>
-                                <ng-template let-column="column" ngx-datatable-header-template>
-                                    <p>
-                                        <fa-icon [icon]="faEye"></fa-icon>
-                                    </p>Detalhes
-                                </ng-template>
-                                <ng-template let-row="row" ngx-datatable-cell-template>
-                                    <button (click)="viewSim(row)" class="btn btn-link" style="color: black"><fa-icon [icon]="faEye"></fa-icon></button>
-                                </ng-template>
-                            </ngx-datatable-column>
+                            <ng-template let-column="column" ngx-datatable-header-template>
+                                <p>
+                                    <fa-icon [icon]="faEye"></fa-icon>
+                                </p>Detalhes
+                            </ng-template>
+                            <ng-template let-row="row" ngx-datatable-cell-template>
+                                <button (click)="viewSim(row)" class="btn btn-link" style="color: black">
+                                    <fa-icon [icon]="faEye"></fa-icon>
+                                </button>
+                            </ng-template>
+                        </ngx-datatable-column>
 
                         <ngx-datatable-column>
                             <ng-template let-column="column" ngx-datatable-header-template>
                                 <p>
                                     <fa-icon [icon]="faBalanceScaleRight"></fa-icon>
                                 </p>
-                                <button (click)="compareSims()" class="btn btn-mycolor" [disabled]="this.selectedSimulations.length < 2">Comparar</button>
+                                <button (click)="compareSims()" class="btn btn-mycolor"
+                                    [disabled]="this.selectedSimulations.length < 2">Comparar</button>
                             </ng-template>
                             <ng-template let-row="row" ngx-datatable-cell-template>
                                 <input type="checkbox" (click)="clickRow(row, $event)">
@@ -156,11 +161,11 @@
 </div>
 
 <div class="container-fluid" *ngIf="state == 'simDetail'">
-        <div class="row mt-3 mr-3" style="float: right">
-            <button (click)="goBack()" type="button" class="btn btn-mycolor">Voltar</button>
-        </div>
-        <div class="row" style="width: 100%">
-            <app-compare-sim [simulations]="selectedSimulations" style="zoom: 80%; width: 100%"></app-compare-sim>
-        </div>
-
+    <div class="row mt-3 mr-3" style="float: right">
+        <button (click)="goBack()" type="button" class="btn btn-mycolor">Voltar</button>
     </div>
+    <div class="row" style="width: 100%">
+        <app-compare-sim [simulations]="selectedSimulations" style="zoom: 80%; width: 100%"></app-compare-sim>
+    </div>
+
+</div>

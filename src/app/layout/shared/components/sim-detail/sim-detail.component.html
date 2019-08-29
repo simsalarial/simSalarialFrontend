@@ -1,4 +1,4 @@
-<div class="row custom-row" >
+<div class="row custom-row">
   <div class="col-sm-12 container">
     <fieldset>
       <div class="card mt-5">
@@ -103,27 +103,27 @@
                   </div>
                 </div>
                 <div class="input-group son1">
-                    <div class="input-group mt-3">
-                      <div class="input-group-prepend">
-                        <span class="input-group-text transparentBg">Package Salarial S/ Duodécimos</span>
-                      </div>
-                      <input class="form-control inputAlignRigth" value="{{simulation.salaryPackageWithoutDuo}}" type="number"
-                        min="0" id="salaryPackageWithoutDuo" disabled>
-                      <div class="input-group-append">
-                        <span class="input-group-text transparentBg">€</span>
-                      </div>
+                  <div class="input-group mt-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text transparentBg">Package Salarial S/ Duodécimos</span>
                     </div>
-                    <div class="input-group mt-0">
-                      <div class="input-group-prepend" style="padding-left: 20%;">
-                        <span class="input-group-text transparentBg">C/ Duodécimos</span>
-                      </div>
-                      <input class="form-control inputAlignRigth" value="{{simulation.salaryPackageWithDuo}}" type="number"
-                        min="0" id="salaryPackageWithDuo" disabled>
-                      <div class="input-group-append">
-                        <span class="input-group-text transparentBg">€</span>
-                      </div>
+                    <input class="form-control inputAlignRigth" value="{{simulation.salaryPackageWithoutDuo}}"
+                      type="number" min="0" id="salaryPackageWithoutDuo" disabled>
+                    <div class="input-group-append">
+                      <span class="input-group-text transparentBg">€</span>
                     </div>
                   </div>
+                  <div class="input-group mt-0">
+                    <div class="input-group-prepend" style="padding-left: 20%;">
+                      <span class="input-group-text transparentBg">C/ Duodécimos</span>
+                    </div>
+                    <input class="form-control inputAlignRigth" value="{{simulation.salaryPackageWithDuo}}"
+                      type="number" min="0" id="salaryPackageWithDuo" disabled>
+                    <div class="input-group-append">
+                      <span class="input-group-text transparentBg">€</span>
+                    </div>
+                  </div>
+                </div>
                 <div class="input-group mt-4 son1">
                   <div class="input-group-prepend">
                     <span class="input-group-text transparentBg">Margem</span>
@@ -226,8 +226,9 @@
                         <li class="list-group-item son p-0">
                           <div class="input-group border-0">
                             <div class="input-group-prepend border-0">
-                              <span class="input-group-text transparentBg border-0">M <fa-icon style="color: #334D65; margin: 0px 4px" tooltip="Cálculo realizado a 11 meses."
-                                placement="right" [icon]="faInfoCircle"></fa-icon></span>
+                              <span class="input-group-text transparentBg border-0">M <fa-icon
+                                  style="color: #334D65; margin: 0px 4px" tooltip="Cálculo realizado a 11 meses."
+                                  placement="right" [icon]="faInfoCircle"></fa-icon></span>
                             </div>
                             <input type="number" value="{{simulation.monthlyRate}}"
                               class="form-control inputAlignRigth border-top-0 border-bottom-0" style="padding-left: 0%;

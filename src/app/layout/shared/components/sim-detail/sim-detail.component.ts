@@ -23,12 +23,10 @@ faInfoCircle = faInfoCircle;
 
   constructor(private accountService:AccountServiceService, private simulationService: SimulationService, private dataService: DataService) {
     this.dataService.getAllExtras().subscribe((extras: any) => {
-      console.log(extras);
 
       extras.forEach(element => {
         
         let simKeys = Object.keys(this.simulation);
-        console.log(simKeys);
 
         simKeys.forEach( keys => {
           if (keys === element.name){
@@ -38,24 +36,11 @@ faInfoCircle = faInfoCircle;
             this.extras$.push(extra);
           }
         })
-        
-      });
-
-      console.log(this.extras$);
-      
+      });      
     });
    }
 
   ngOnInit() {
-    console.log(this.simulation);
-   /*  this.simulationService.getSimulationById(this.simulation.simulation).subscribe( res => {
-      this.simulation = JSON.parse(res);
-      console.log(JSON.parse(res));
-    }) */
-
-
-
-
   }
 
 }

@@ -1,6 +1,6 @@
 import { BsLocaleService } from 'ngx-bootstrap/datepicker';
 import { Component, OnInit, Input, Output, EventEmitter, ViewChild, SimpleChanges, TemplateRef } from '@angular/core';
-import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { BsModalService } from 'ngx-bootstrap/modal';
 import { faSearch, faEuroSign, faPercentage, faUser, faEye, faCalculator, faBalanceScaleRight, faCalendarAlt } from '@fortawesome/free-solid-svg-icons';
 import { DatatableComponent } from '@swimlane/ngx-datatable';
 import { AccountServiceService } from 'src/app/core';
@@ -8,8 +8,6 @@ import { ReplaySubject } from 'rxjs';
 import { defineLocale } from 'ngx-bootstrap/chronos';
 import { ptBrLocale } from 'ngx-bootstrap/locale';
 import * as moment from 'moment';
-
-
 
 @Component({
   selector: 'app-sim-list',
@@ -19,9 +17,6 @@ import * as moment from 'moment';
 export class SimListComponent implements OnInit {
   @Input() header: any;
   @Output() clickedRow = new EventEmitter();
-  //@Output() onDelete = new EventEmitter();
-  //simToDelete;
-  //modalRef: BsModalRef;
 
   faSearch = faSearch;
   faEuroSign = faEuroSign;
@@ -50,17 +45,13 @@ export class SimListComponent implements OnInit {
 
   checked = false;
 
-
   tempMail = this.accountService.getCurrentEmail();
   toFilterByDate: any = [];
   count = 0;
 
   isDisabled = false;
 
-
-
   constructor(private modalService: BsModalService, private accountService: AccountServiceService, private localeService: BsLocaleService) {
-
 
     this.keys = [
       { prop: 'date' },
@@ -93,7 +84,6 @@ export class SimListComponent implements OnInit {
             this.colaborator = {};
           });
         }
-
       });
       console.log(this.data);
       this.rows = this.data;
@@ -115,7 +105,6 @@ export class SimListComponent implements OnInit {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    console.log(changes);
     this.rows = changes.temp.currentValue;
   }
 
@@ -126,7 +115,6 @@ export class SimListComponent implements OnInit {
     if (firstDate === secondDate) {
       secondDate = firstDate + 86400000;
       firstDate = firstDate - 2000000;
-
     }
 
     let dateInMilli: any = [];
@@ -136,17 +124,11 @@ export class SimListComponent implements OnInit {
         dateInMilli.push(this.toFilterByDate[i]);
       }
     }
-    console.log(dateInMilli);
-    console.log(dateInMilli[0].simulations[0].date);
-
-    console.log(firstDate);
-    console.log(secondDate);
+    
     let filteredSimsByDate: any = [];
     for (let j = 0; j < dateInMilli.length; j++) {
-      console.log("AQUI");
       if (dateInMilli[j].simulations[0].date > firstDate && dateInMilli[j].simulations[0].date < secondDate) {
-        console.log("entra" + j);
-        console.log(moment(dateInMilli[j].date).valueOf());
+        //console.log(moment(dateInMilli[j].date).valueOf());
         filteredSimsByDate.push(dateInMilli[j]);
       }
     }
@@ -167,43 +149,9 @@ export class SimListComponent implements OnInit {
         this.data.unshift({...this.colaborator});
         this.colaborator = {};
       });
-
     });
-
-    console.log(this.data);
     this.rows = this.data;
   }
-
-
-  /* showConfirmModal(template: TemplateRef<any>, row) {
-    console.log(row);
-    this.simToDelete = row.email;
-    this.state = 'deleteAccount'
-    this.modalRef = this.modalService.show(template);
-    //this.modalRef.content.email = row.email;
-  } */
-
-  /* onCloseModal() {
-    this.modalRef.hide();
-  }
-
-  cancel() {
-    this.modalRef.hide();
-  } */
-
-  /* delete(){
-    this.state = 'confirm';
-   // this.onDelete.emit(this.emailToDelete);
-   let email = this.simToDelete;
-   this.accountService.deleteAccount(this.simToDelete).subscribe ((res:any) => {
-    console.log(res);
-    this.temp = this.temp.filter(function( obj ) {
-      return obj.email !== email;
-    });
-    this.rows = this.temp;
-    this.onDelete.emit(this.simToDelete);
-  });
-  } */
 
   search(event) {
     const val = event.target.value.toLowerCase();
@@ -219,8 +167,6 @@ export class SimListComponent implements OnInit {
   }
 
   clickRow(row, event) {
-    console.log(row);
-    console.log(event);
     this.clickCount();
     //this.clickedRow.emit(row);
     if (event.target.checked) {
@@ -230,25 +176,18 @@ export class SimListComponent implements OnInit {
         const element = this.selectedSimulations[index];
         if (element.simulation == row.simulation) {
           this.selectedSimulations.splice(index, 1);
-          console.log(this.selectedSimulations)
         }
       }
     }
-
-    console.log(this.selectedSimulations);
-    this.selectedSimulations = this.checkForRepetitions();
-
+    //this.selectedSimulations = this.checkForRepetitions();
   }
 
   compareSims() {
-    console.log(this.selectedSimulations);
     this.state = 'simDetail';
   }
 
   viewSim(row) {
-    console.log(row);
     this.selectedSimulations.push(row);
-    console.log(this.selectedSimulations);
     this.state = 'simDetail';
   }
 
@@ -257,8 +196,7 @@ export class SimListComponent implements OnInit {
     this.state = 'simList';
   }
 
-  checkForRepetitions() {
-
+  /* checkForRepetitions() {
 
     const selectedSimulationsWithoutRepetitions = [];
     const duplicatesIndices = [];
@@ -299,11 +237,8 @@ export class SimListComponent implements OnInit {
       } // end for loop
 
     }); // end arr.forEach()
-
-    console.log(selectedSimulationsWithoutRepetitions);
-
     return selectedSimulationsWithoutRepetitions;
-  }
+  } */
 
   clickCount() {
     this.count++;

@@ -48,6 +48,7 @@ data = [];
 
 
   constructor( private accountService: AccountServiceService, private localeService: BsLocaleService, private simulationService: SimulationService) {
+    //Columns
     this.keys = [
       {prop: 'data'},
       {prop: 'user'},
@@ -60,7 +61,6 @@ data = [];
     ]
     this.allSims$ = this.simulationService.allSims$;
     this.allSims$.subscribe( res => {
-      console.log(res);
       this.toFilterByDate = res;
       res.forEach( (element: any) => {
 
@@ -82,9 +82,7 @@ data = [];
               }
             });
           }
-
       });
-      console.log(this.data);
       this.rows = this.data;
     });
   }
@@ -126,23 +124,19 @@ data = [];
 
     for (let i = 0; i < this.toFilterByDate.length; i++) {
 
-
       for (let h = 0; h < this.toFilterByDate[i].colaborators.length; h++) {
         console.log(this.toFilterByDate[i].colaborators);
 
         if (this.toFilterByDate[i].colaborators[h].simulations.length === 0) {
           console.log(this.toFilterByDate[i].colaborators[h]);
           this.toFilterByDate[i].colaborators.splice(h, 1);
-
         }
       }
 
     }
-    console.log(this.toFilterByDate);
 
-
-    console.log(firstDate);
-    console.log(secondDate);
+    //console.log(firstDate);
+    //console.log(secondDate);
     let filteredSimsByDate: any = [];
     for (let j = 0; j < this.toFilterByDate.length; j++) {
 
@@ -150,19 +144,14 @@ data = [];
 
         // tslint:disable-next-line: max-line-length
         if (this.toFilterByDate[j].colaborators[l].simulations[0].date > firstDate && this.toFilterByDate[j].colaborators[l].simulations[0].date < secondDate) {
-          console.log("entra"+j);
-          console.log(moment(this.toFilterByDate[j].colaborators[l].simulations[0].date).valueOf());
+         // console.log("entra"+j);
+         // console.log(moment(this.toFilterByDate[j].colaborators[l].simulations[0].date).valueOf());
           filteredSimsByDate.push(this.toFilterByDate[j]);
         }
       }
-
     }
     filteredSimsByDate = this.filterRepetition(filteredSimsByDate);
-
-
-    console.log(filteredSimsByDate);
-
-
+    //console.log(filteredSimsByDate);
     this.data = [];
 
     // Table with Filtered Data by Date //
@@ -181,22 +170,19 @@ data = [];
                   this.account[field.name] = field.value;
                 });
            });
-            this.data.push({...this.account});
+            this.data.unshift({...this.account});
             this.account = {};
           }
         });
       }
 
     });
-    console.log(this.data);
+    //console.log(this.data);
     this.rows = this.data;
-
-
   }
 
-
   clickRow(row, event) {
-    console.log(row);
+    //push to array when check and remove from array when undo check
     if (event.target.checked) {
       this.selectedSimulations.push(row);
     } else {
@@ -204,21 +190,17 @@ data = [];
         const element = this.selectedSimulations[index];
         if (element.simulation == row.simulation) {
           this.selectedSimulations.splice(index, 1);
-          console.log(this.selectedSimulations)
         }
       }
     }
   }
 
   viewSim(row) {
-    console.log(row);
     this.selectedSimulations.push(row);
-    console.log(this.selectedSimulations);
     this.state = 'simDetail';
   }
 
   compareSims() {
-    console.log(this.selectedSimulations);
     this.state = 'simDetail';
   }
 
@@ -226,7 +208,6 @@ data = [];
     this.selectedSimulations = [];
     this.state = 'simList';
   }
-
 
   filterRepetition(filteredSimsByDate) {
     const result = [];
@@ -268,9 +249,6 @@ data = [];
       } // end for loop
 
     }); // end arr.forEach()
-
-    console.log(result);
-
     return result;
   }
 }

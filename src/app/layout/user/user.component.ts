@@ -13,6 +13,5 @@ state: string;
   ngOnInit() {
     this.state = 'simulator';
   }
-
-
+  
 }

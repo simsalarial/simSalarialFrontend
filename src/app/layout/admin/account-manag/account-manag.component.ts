@@ -19,18 +19,20 @@ export class AccountManagComponent implements OnInit {
 
   ngOnInit() {
     this.state = 'table';
+    //Table rows
     this.accountService.getAllAccounts().subscribe( (res:any) => {
       res.forEach(element => {
         let account = new Account();
         account.name = element.name;
         account.email = element.email;
-        this.data.unshift(account);
+        this.data.unshift(account); //Unshif for sort
       });
      // this.data = res;
       this.receivedData = true;
     })
   }
 
+  //Send email to dlete account
   onDelete(email) {
       this.data = this.data.filter(function( obj ) {
         return obj.email !== email;

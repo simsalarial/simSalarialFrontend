@@ -21,7 +21,6 @@ export class TablesComponent implements OnInit {
   emailToDelete;
   faSearch = faSearch;
   faTrashAlt = faTrashAlt;
-  //temp = [];
   rows = [];
   @ViewChild(DatatableComponent, { static: false }) table: DatatableComponent;
   selectedValue=6;
@@ -35,21 +34,17 @@ export class TablesComponent implements OnInit {
     }
   
   ngOnInit() {
-    //this.temp = this.data;
     this.rows = this.temp;
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    //console.log(changes);
     this.rows = changes.temp.currentValue;
   }
 
   showConfirmModal(template: TemplateRef<any>, row) {
-    //console.log(row);
     this.emailToDelete = row.email;
     this.state = 'deleteAccount'
     this.modalRef = this.modalService.show(template);
-    //this.modalRef.content.email = row.email;
   }
 
   onCloseModal() { 
@@ -62,10 +57,8 @@ export class TablesComponent implements OnInit {
 
   delete(){
     this.state = 'confirm';
-   // this.onDelete.emit(this.emailToDelete);
-   let email = this.emailToDelete;
-   this.accountService.deleteAccount(this.emailToDelete).subscribe ((res:any) => {
-    //console.log(res);
+    let email = this.emailToDelete;
+    this.accountService.deleteAccount(this.emailToDelete).subscribe ((res:any) => {
     this.temp = this.temp.filter(function( obj ) {
       return obj.email !== email;
     });
