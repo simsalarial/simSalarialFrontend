@@ -77,7 +77,7 @@ data = [];
                       this.account[field.name] = field.value;
                     });
                });
-                this.data.push({...this.account});
+                this.data.unshift({...this.account});
                 this.account = {};
               }
             });

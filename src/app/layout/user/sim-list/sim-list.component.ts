@@ -89,7 +89,7 @@ export class SimListComponent implements OnInit {
             simulation.simFieldsData.forEach(field => {
               this.colaborator[field.name] = field.value;
             });
-            this.data.push({ ...this.colaborator });
+            this.data.unshift({ ...this.colaborator });
             this.colaborator = {};
           });
         }
@@ -164,7 +164,7 @@ export class SimListComponent implements OnInit {
         simulation.simFieldsData.forEach(field => {
           this.colaborator[field.name] = field.value;
         });
-        this.data.push(this.colaborator);
+        this.data.unshift({...this.colaborator});
         this.colaborator = {};
       });
 
