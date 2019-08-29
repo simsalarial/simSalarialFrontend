@@ -82,6 +82,7 @@ export class SimuladorComponent implements OnInit {
   marginValues = new Array<Margin>();
   margin_min: number;
   margin_max: number;
+  actualMargin: number;
   markUp = 0;
   usagePercentage;
   extras: FormArray;
@@ -119,10 +120,10 @@ export class SimuladorComponent implements OnInit {
     console.log(this.profileForm);
     // this.usagePercentage = 100;
     this.initializeForms();
+    // console.log(this.simForm.value);
     // this.simForm.reset();
     // this.simForm.value.extras = [];
-    //this.usagePercentage = 100;
-    console.log(this.simForm.value);
+    // this.usagePercentage = 100;
     this.col = new Colaborator();
     this.sim = new Simulation();
     this.taxation = new Taxation();
@@ -146,7 +147,7 @@ export class SimuladorComponent implements OnInit {
       salaryPackageWithDuo: [0],
       grossSalary: [0],
       usagePercentage: [100],
-      marginPercentage: [this.margin_min + 1],
+      marginPercentage: [0],
       monthlyTotalCost: [0],
       dailyTotalCost: [0],
       hourlyTotalCost: [0],
@@ -168,6 +169,7 @@ export class SimuladorComponent implements OnInit {
   }
 
   func2(event) {
+    this.actualMargin = Number(event.target.value);
     this.simForm.value.marginPercentage = Number(event.target.value);
     this.calculateMarkUp();
   }
@@ -301,6 +303,7 @@ export class SimuladorComponent implements OnInit {
 
     }
 
+
   }
   createColaboratorWithAccountId() {
     console.log(this.col);
@@ -325,6 +328,9 @@ export class SimuladorComponent implements OnInit {
 
     this.margin_max = marginValues[0].margin_max;
     this.margin_min = marginValues[0].margin_min;
+    this.actualMargin = this.margin_min;
+    this.simForm.value.marginPercentage = this.actualMargin;
+    //this.changeDetectorRef.detectChanges();
     console.log(this.margin_max);
     console.log(this.margin_min);
 
@@ -466,7 +472,7 @@ export class SimuladorComponent implements OnInit {
     this.calculateMonthlyTotalCost();
     this.calculateAverageGrossSalary();
     this.calculateNetSalaryWithoutDuo();
-    this.calculateRate();
+    this.calculateMarkUp();
     this.calculateSalaryPackageWithoutDuo();
     this.calculateSalaryPackageWithDuo();
   }
@@ -511,7 +517,8 @@ export class SimuladorComponent implements OnInit {
 
     console.log(this.markUp);
     console.log(this.simForm.value.marginPercentage);
-    this.markUp = Number((this.simForm.value.anualTotalCost * (this.simForm.value.marginPercentage / 100)).toFixed(2));
+    console.log(this.actualMargin);
+    this.markUp = Number((this.simForm.value.anualTotalCost * (this.actualMargin / 100)).toFixed(2));
     this.calculateRate();
   }
 
@@ -575,7 +582,7 @@ export class SimuladorComponent implements OnInit {
     this.saveSimulator = [];
     this.initializeForms();
     // this.ngOnInit();
-    this.goBack()
+    this.goBack();
 
 
   }
@@ -638,6 +645,8 @@ export class SimuladorComponent implements OnInit {
     let packageWithoutDuo = this.simForm.value.salaryPackageWithoutDuo;
     let outrosExtras = this.simForm.value.extrasWithTa.concat(this.simForm.value.extrasWithoutTa);
 
+
+
     ///// header /////
     doc.addImage(imgData, 'JPEG', 25, 15, 15, 15);
     doc.setFontSize(18);
@@ -687,46 +696,39 @@ export class SimuladorComponent implements OnInit {
     doc.setFontSize(12);
     doc.setTextColor(255,255,255);
     doc.text(30, 67, "Total de Abonos: ");
+
     doc.setTextColor(0,0,0);
     doc.setFontSize(10);
     doc.text(30, 77, "Salário Base: ");
-    doc.text(165, 77, "" + bSalary);
-    doc.text(180, 77, " €");
+    doc.text(165, 77, bSalary + " €");
     doc.text(30, 87, "Subsidio de Alimentacao: ");
-    doc.text(165, 87, "" + fSubsidy);
-    doc.text(180, 87, " €");
+    doc.text(165, 87, fSubsidy + " €");
+
 
     if (wInsurance !== 0) {
       doc.text(30, 97, "Seguro de Trabalho: ");
-      doc.text(165, 97, "" + wInsurance);
-      doc.text(180, 97, " €");
+      doc.text(165, 97, wInsurance + " €");
     }
 
     if (hInsurance !== 0 ) {
       doc.text(30, 107, "Seguro de Saúde: ");
-      doc.text(165, 107, "" + hInsurance);
-      doc.text(180, 107, " €");
+      doc.text(165, 107, hInsurance + " €");
     }
 
     if (oBonus !== 0 ) {
       doc.text(30, 117, "Prémios: ");
-      doc.text(165, 117, "" + oBonus);
-      doc.text(180, 117, " €");
+      doc.text(165, 117, oBonus + " €");
     }
     doc.setTextColor(300)
     doc.text(30, 237, "Package Mensal com Duodécimos: ");
-    doc.text(165, 237, "" + packageWithDuo);
-    doc.text(180, 237, " €");
+    doc.text(165, 237, packageWithDuo + " €");
     doc.text(30, 247, "Package Mensal sem Duodécimos: ");
-    doc.text(165, 247, "" + packageWithoutDuo);
-    doc.text(180, 247, " €");
+    doc.text(165, 247, packageWithoutDuo + " €");
 
     doc.text(30, 257, "Package Anual com Duodécimos: ");
-    doc.text(165, 257, "" + Number((packageWithDuo * 12)).toFixed(2));
-    doc.text(180, 257, " €");
+    doc.text(165, 257, Number((packageWithDuo * 12)).toFixed(2) + " €");
     doc.text(30, 267, "Package Anual sem Duodécimos: ");
-    doc.text(165, 267, "" + Number((packageWithoutDuo * 12)).toFixed(2));
-    doc.text(180, 267, " €");
+    doc.text(165, 267, Number((packageWithoutDuo * 12)).toFixed(2) + " €");
 
     doc.setFontSize(12);
     doc.setTextColor(0)
@@ -736,9 +738,8 @@ export class SimuladorComponent implements OnInit {
     doc.text(30, 127, extras);
     doc.setFontSize(10);
     outrosExtras.forEach((element, index) => {                                     // por cada elemento do array ele adiciona 10 na posicao Y do PDF.
-      doc.text(30, 127 + (10 * (index + 1)), "" + element.name);
-      doc.text(165, 127 + (10 * (index + 1)), "" + element.value);
-      doc.text(180, 127 + (10 * (index + 1)), " €");
+      doc.text(30, 127 + (10 * (index + 1)), element.name);
+      doc.text(165, 127 + (10 * (index + 1)), element.value + " €");
     });
   }
     ///// footer /////
